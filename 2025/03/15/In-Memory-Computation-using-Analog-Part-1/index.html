@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>In-Memory Computation using Analog Part-1 | da1729&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Von Neumann BottleneckThere has been an improvement in the number of transistors on a chip. More transistors mean that we have increased our ability to store more memory in less physical space. Memory">
+<meta property="og:type" content="article">
+<meta property="og:title" content="In-Memory Computation using Analog Part-1">
+<meta property="og:url" content="https://da1729.github.io/project/2025/03/15/In-Memory-Computation-using-Analog-Part-1/index.html">
+<meta property="og:site_name" content="da1729&#39;s Blog">
+<meta property="og:description" content="Von Neumann BottleneckThere has been an improvement in the number of transistors on a chip. More transistors mean that we have increased our ability to store more memory in less physical space. Memory">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://da1729.github.io/project/images/1.png">
+<meta property="og:image" content="https://da1729.github.io/project/images/2.png">
+<meta property="article:published_time" content="2025-03-14T19:05:01.897Z">
+<meta property="article:modified_time" content="2025-03-14T19:05:01.897Z">
+<meta property="article:author" content="Daksh Pandey">
+<meta property="article:tag" content="Analog">
+<meta property="article:tag" content="VLSI">
+<meta property="article:tag" content="Hardware Acceleration">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://da1729.github.io/project/images/1.png">
+  
+    <link rel="alternate" href="/project/atom.xml" title="da1729's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/project/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/project/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/project/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/project/" id="logo">da1729&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/project/" id="subtitle">embedded, rf, vlsi, comp eng, ...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/project/">Home</a>
+        
+          <a class="main-nav-link" href="/project/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/project/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://DA1729.github.io/project"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-In-Memory-Computation-using-Analog-Part-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/project/2025/03/15/In-Memory-Computation-using-Analog-Part-1/" class="article-date">
+  <time class="dt-published" datetime="2025-03-14T19:05:01.897Z" itemprop="datePublished">2025-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      In-Memory Computation using Analog Part-1
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Von-Neumann-Bottleneck"><a href="#Von-Neumann-Bottleneck" class="headerlink" title="Von Neumann Bottleneck"></a>Von Neumann Bottleneck</h2><p>There has been an improvement in the number of transistors on a chip. More transistors mean that we have increased our ability to store more memory in less physical space. Memory storage is more efficient than ever.</p>
+<p>Today, AI and machine learning are being studied. This requires us to store and process a large density of data, which is possible given the environment: processors and storage solutions. Also, Von Neumann Architecture requires us to store data in a separate block, and the processor needs an individual block. These different blocks are connected by buses. Given this architecture, to process these large-density data, the transfer rates must also be at par with the processing speed, maybe even faster. However, over the years, the increase in transfer speedhas only made a few gains.</p>
+<p>When the processor has to stay idle to fetch the data from the memory block, this condition is called the <strong>Von-Neumann Bottleneck</strong>.</p>
+<p>Some attempts to surpass this limitation have been made like: </p>
+<ul>
+<li><p><strong>Caching</strong>: Chaches are temporary storage units between the main memory block and the processor. It can store a subset of data so that future requests for that data can be served faster. For example, they store results of earlier computations or a copy of data stored elsewhere.</p>
+</li>
+<li><p><strong>Hardware Acceleration</strong>: Hardware like GPUs, FPGAs, and ASICs are brought into the picture for faster response from the hardware side.</p>
+</li>
+</ul>
+<p>But these come with some limitations: </p>
+<ul>
+<li><p><strong>Limitations of Caching</strong>:</p>
+<ul>
+<li><p><strong>Size</strong>: Larger caches increase hit rates but consume more silicon area and power. </p>
+</li>
+<li><p>In multicore systems, maintaining consistency across caches is difficult.</p>
+</li>
+<li><p><strong>Memory Latency and Bandwidth Issues</strong>: If the working set exceeds capacity, frequent primary memory access still causes stalls.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Hardware Accelerators’ Limitations</strong>:</p>
+<ul>
+<li><p><strong>Domain-Specificity</strong>: FPGAs, TPUs, and GPUs lack generality. They are often made for specific tasks, which, economically speaking, makes them challenging to produce. </p>
+</li>
+<li><p>At the end of the day, communications are still being made over buses, so the transfer limitation persists. </p>
+</li>
+<li><p><strong>Software and Compatibility Issues</strong>: These devices run on specific firmware and can cause compatibility issues. </p>
+</li>
+<li><p><strong>Power and Heat Management</strong>: These hardware accelerators generate much heat and consume much power, which obviously isn’t preferable.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Now, we dive into analog methods of overcoming this phenomenon. Of course, some digital methods have been proposed but let’s stick to the title of the blog for now and maybe (definitely) I’ll discuss digital methods in a future blog.</p>
+<h2 id="Analog-Implementation-of-MACS"><a href="#Analog-Implementation-of-MACS" class="headerlink" title="Analog Implementation of MACS"></a>Analog Implementation of MACS</h2><p>MAC, or Multiply-Accumulate Operation, is a common step which computes the product of two numbers and adds that product to an accumulator. MAC operations account for over 90% of Neural Network and AI computations. Yeah, so they are “kind of” important.</p>
+<p>In the following circuit, we have 10 MOSFETs in total (5 PMOS, 5 CMOS), let us label them: <strong>PM<sub>1</sub></strong>, <strong>PM<sub>2</sub></strong>, <strong>PM<sub>3</sub></strong>, <strong>PM<sub>4</sub></strong>, <strong>PM<sub>5</sub></strong>, <strong>NM<sub>1</sub></strong>, <strong>NM<sub>2</sub></strong>, <strong>NM<sub>3</sub></strong>, <strong>NM<sub>4</sub></strong>, <strong>NM<sub>5</sub></strong>.</p>
+<p>These MOSFETs are linearly biased (if you somewhat unfamiliar with working of MOSFET, go watch Engineering Mindset’s video on MOSFET on YouTube, I found it very good for a quick get around). We are applying differential inputs <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>+</mo><mi mathvariant="normal">Δ</mi><mi>x</mi><mo separator="true">,</mo><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>x</mi><mo separator="true">,</mo><mo>+</mo><mi mathvariant="normal">Δ</mi><mi>w</mi><mo separator="true">,</mo><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">+\Delta x, -\Delta x, +\Delta w , -\Delta w </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">+</span><span class="mord">Δ</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">Δ</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">+</span><span class="mord">Δ</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">−</span><span class="mord">Δ</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span>.</p>
+<p>The given transistors are now arranged in the following circuit (Image Courtesy: Reference [1]):</p>
+<p><img src="/project/images/1.png" alt="MAC Operator"></p>
+<p>Now, let’s get into some transistor math. </p>
+<p>Since, all the transistors are operating in linear region, drain current <strong>I<sub>d2</sub></strong> is given by: </p>
+<p style="text-align:center;"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mrow><mi>d</mi><mn>2</mn></mrow></msub><mo>=</mo><msub><mi>K</mi><mi>n</mi></msub><mo>∗</mo><mo stretchy="false">[</mo><msub><mi>V</mi><mi>b</mi></msub><mo>−</mo><mi mathvariant="normal">Δ</mi><mi>w</mi><mo>−</mo><msub><mi>V</mi><mrow><mi>t</mi><mi>h</mi><mi>n</mi></mrow></msub><mo>−</mo><mfrac><mrow><msub><mi>V</mi><mi>b</mi></msub><mo>+</mo><mi mathvariant="normal">Δ</mi><mi>x</mi></mrow><mn>2</mn></mfrac><mo stretchy="false">]</mo><mo>∗</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>b</mi></msub><mo>+</mo><mi mathvariant="normal">Δ</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">I_{d2} =K_{n}*[V_{b}-\Delta w - V_{thn} - \frac{V_{b} + \Delta x}{2}]*(V_{b}+\Delta x) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">d</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0715em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">Δ</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight">hn</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.2392em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8942em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4159em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3488em;margin-left:-0.2222em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1512em;"><span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">Δ</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Δ</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span> </p>
+
+<p>For knowing what each term means, refer to [1]. </p>
+<p>Now, we are taking the transconductance factors and threshold voltages of the N and P MOSFETS to be equal, we get the following expression for the output current: </p>
+<p style="text-align:center;"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub><mo>=</mo><mn>4</mn><mo>∗</mo><mi>K</mi><mo>∗</mo><mi mathvariant="normal">Δ</mi><mi>w</mi><mo>∗</mo><mi mathvariant="normal">Δ</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">I_{out} = 4*K*\Delta w * \Delta x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">Δ</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">Δ</span><span class="mord mathnormal">x</span></span></span></span></p>
+
+<p>If you observer the above expression, we have multiplied two numbers! Now, all we have left to do is accumulate.</p>
+<p>The load MOSFETS: <strong>PM<sub>5</sub></strong> and <strong>NM<sub>5</sub></strong> can seen as an equivalent load resistor, which will convert the output current to an output voltage:</p>
+<p style="text-align:center;"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>y</mi><mo>=</mo><msub><mi>V</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi></mrow></msub><mo>−</mo><msub><mi>V</mi><mrow><mi>o</mi><mi>u</mi><mi>t</mi><mi>b</mi><mi>i</mi><mi>a</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Delta y = V_{out}-V_{outbias} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">Δ</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.2222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight">bia</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+
+<p>This can be easily visualized in the figure below: </p>
+<p><img src="/project/images/2.png" alt="Image Courtesy : [1]"></p>
+<p>Now, closely look at the (b) part of the above image, what we are doing is we are adding output currents of multiple sources (or I should say <strong>multipliers</strong>), such that the output voltage can be given by: </p>
+<p style="text-align:center;"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><mo>∗</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></msubsup><msub><mi>I</mi><mi>i</mi></msub><mo>∗</mo><msub><mi>R</mi><mrow><mi>l</mi><mi>o</mi><mi>a</mi><mi>d</mi></mrow></msub></mrow><annotation encoding="application/x-tex">V = \frac{1}{N}*\sum_{i=1}^{N} I_{i}*R_{load}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.2809em;vertical-align:-0.2997em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9812em;"><span style="top:-2.4003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2997em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0785em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">d</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+
+<p>With this, we have successfully created our analog MAC unit. Let us end this part-1 here. Next part, we will delve into experimental results, architecture, and maybe hybrid models proposed. </p>
+<p>peace. da1729</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] J. Zhu, B. Chen, Z. Yang, L. Meng and T. T. Ye, “Analog Circuit Implementation of Neural Networks for In-Sensor Computing,” 2021 IEEE Computer Society Annual Symposium on VLSI (ISVLSI), Tampa, FL, USA, 2021, pp. 150-156, doi: 10.1109&#x2F;ISVLSI51109.2021.00037. keywords: {Convolution;Neural networks;Linearity;Analog circuits;Very large scale integration;CMOS process;Silicon;Analog Computing;In-Sensor Computing;Edge Computing},</p>
+<p>[2] Robert Sheldon, “von Neumann bottleneck”, TechTarget, <a target="_blank" rel="noopener" href="https://www.techtarget.com/whatis/definition/von-Neumann-bottleneck#:~:text=The%20von%20Neumann%20bottleneck%20is,processing%20while%20they%20were%20running">https://www.techtarget.com/whatis/definition/von-Neumann-bottleneck#:~:text=The%20von%20Neumann%20bottleneck%20is,processing%20while%20they%20were%20running</a>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://da1729.github.io/project/2025/03/15/In-Memory-Computation-using-Analog-Part-1/" data-id="cm895r7fa0000blbn0d82cuvm" data-title="In-Memory Computation using Analog Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/project/tags/Analog/" rel="tag">Analog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/project/tags/Hardware-Acceleration/" rel="tag">Hardware Acceleration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/project/tags/VLSI/" rel="tag">VLSI</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/project/tags/Analog/" rel="tag">Analog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/project/tags/Hardware-Acceleration/" rel="tag">Hardware Acceleration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/project/tags/VLSI/" rel="tag">VLSI</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/project/tags/Analog/" style="font-size: 10px;">Analog</a> <a href="/project/tags/Hardware-Acceleration/" style="font-size: 10px;">Hardware Acceleration</a> <a href="/project/tags/VLSI/" style="font-size: 10px;">VLSI</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/project/archives/2025/03/">March 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/project/2025/03/15/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 Daksh Pandey<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/project/" class="mobile-nav-link">Home</a>
+  
+    <a href="/project/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/project/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/project/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/project/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
