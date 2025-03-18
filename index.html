@@ -81,8 +81,8 @@
   
     <article id="post-In-Memory-Computation-using-Analog-Part-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2025/03/15/In-Memory-Computation-using-Analog-Part-1/" class="article-date">
-  <time class="dt-published" datetime="2025-03-14T19:05:01.897Z" itemprop="datePublished">2025-03-15</time>
+    <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-1/" class="article-date">
+  <time class="dt-published" datetime="2025-03-18T17:48:49.252Z" itemprop="datePublished">2025-03-18</time>
 </a>
     
   </div>
@@ -93,7 +93,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/03/15/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
+      <a class="p-name article-title" href="/2025/03/18/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
     </h1>
   
 
@@ -167,7 +167,55 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/03/15/In-Memory-Computation-using-Analog-Part-1/" data-id="cm896ily800009sbn0mw34gyq" data-title="In-Memory Computation using Analog Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/03/18/In-Memory-Computation-using-Analog-Part-1/" data-id="cm8etqh420000kcbn178h1vhu" data-title="In-Memory Computation using Analog Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Analog/" rel="tag">Analog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hardware-Acceleration/" rel="tag">Hardware Acceleration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VLSI/" rel="tag">VLSI</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-In-Memory-Computation-using-Analog-Part-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-2/" class="article-date">
+  <time class="dt-published" datetime="2025-03-18T17:46:46.000Z" itemprop="datePublished">2025-03-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2025/03/18/In-Memory-Computation-using-Analog-Part-2/">In Memory Computation using Analog Part 2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Matrix-Multiplication-through-MAC-operations"><a href="#Matrix-Multiplication-through-MAC-operations" class="headerlink" title="Matrix Multiplication through MAC operations"></a>Matrix Multiplication through MAC operations</h2><p>Below, I have presented a python code, illustrating matrix multiplication using MAC operation. But, why matrix multiplication only? Because everything is a fking MATRIX!!! (that’s why the film is called Matrix). Physicists, electrical engineers, computer scientists&#x2F;engineers just love representing everything in matrix, and why not, they make everything more streamlined and easy to represent. Since, we are representing everything in matrices, especially in machine learning and AI, like we have the weights matrices, input vectors, output vectors, etc., we have to do a lot of matrix multiplication and in hardware, using MAC operators, we can easily perform it. Now, carefully look and understand the python code below: </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">matrix_multiply_mac</span>(<span class="params">A, B</span>):</span><br><span class="line"></span><br><span class="line">    A = np.array(A)</span><br><span class="line">    B = np.array(B)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> A.shape[<span class="number">1</span>] != B.shape[<span class="number">0</span>]:</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;Matrix dimensions do not match for multiplication.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    C = np.zeros((A.shape[<span class="number">0</span>], B.shape[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Can you explicitly see me using the MAC operation here? what is the accumulator?</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(A.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(B.shape[<span class="number">1</span>]):</span><br><span class="line">            mac = <span class="number">0</span>  </span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(A.shape[<span class="number">1</span>]):</span><br><span class="line">                mac += A[i][k] * B[k][j]  </span><br><span class="line">            C[i][j] = mac</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> C</span><br><span class="line"></span><br><span class="line">A = [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]]</span><br><span class="line">B = [[<span class="number">7</span>, <span class="number">8</span>], [<span class="number">9</span>, <span class="number">10</span>], [<span class="number">11</span>, <span class="number">12</span>]]</span><br><span class="line">result = matrix_multiply_mac(A, B)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Resultant Matrix:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
+
+<p>Now, that (I hope) you have read and understood the code above, one can realize that we can use the circuit we designed in the previous part for the same operation. Hence, we can do matrix multiplication through analog computing now, how cool!</p>
+<p>But why should we go for analog rather than digital? In digital, the energy complexity grows a lot faster as the number of bits are increased, speaking with numbers, an 8-bit MAC energy can be 100 times the energy for 1 bit. </p>
+<p>Let’s end this part here for now, as I wrote this very impulsively out a sudden motivation (and too keep the momentum going) and did not plan it too much before writing LMAO.</p>
+<p>peace. da1729</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] J. -s. Seo et al., “Digital Versus Analog Artificial Intelligence Accelerators: Advances, trends, and emerging designs,” in IEEE Solid-State Circuits Magazine, vol. 14, no. 3, pp. 65-79, Summer 2022, doi: 10.1109&#x2F;MSSC.2022.3182935.<br>keywords: {AI accelerators;Market research;In-memory computing;Hardware;System analysis and design;Switching circuits},</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://da1729.github.io/2025/03/18/In-Memory-Computation-using-Analog-Part-2/" data-id="cm8etqh460001kcbn5ffs3r8s" data-title="In Memory Computation using Analog Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -226,7 +274,11 @@
       <ul>
         
           <li>
-            <a href="/2025/03/15/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
+            <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-2/">In Memory Computation using Analog Part 2</a>
           </li>
         
       </ul>
