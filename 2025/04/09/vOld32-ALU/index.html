@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>vOld32 ALU | da1729&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="You can find the relevant ALU files on this repo: vOld32 ALU.  Working of an ALU is very easy to understand and easy for our intuitions. A basic ALU, which is used extensively even today, works on the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vOld32 ALU">
+<meta property="og:url" content="https://da1729.github.io/2025/04/09/vOld32-ALU/index.html">
+<meta property="og:site_name" content="da1729&#39;s Blog">
+<meta property="og:description" content="You can find the relevant ALU files on this repo: vOld32 ALU.  Working of an ALU is very easy to understand and easy for our intuitions. A basic ALU, which is used extensively even today, works on the">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://da1729.github.io/images/3.png">
+<meta property="og:image" content="https://da1729.github.io/images/4.png">
+<meta property="og:image" content="https://da1729.github.io/images/5.png">
+<meta property="og:image" content="https://da1729.github.io/images/6.png">
+<meta property="og:image" content="https://da1729.github.io/images/7.png">
+<meta property="article:published_time" content="2025-04-09T11:35:35.000Z">
+<meta property="article:modified_time" content="2025-04-09T20:00:36.740Z">
+<meta property="article:author" content="Daksh Pandey">
+<meta property="article:tag" content="digital design">
+<meta property="article:tag" content="vlsi">
+<meta property="article:tag" content="microprocessors">
+<meta property="article:tag" content="verilog">
+<meta property="article:tag" content="FPGA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://da1729.github.io/images/3.png">
+  
+    <link rel="alternate" href="/atom.xml" title="da1729's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">da1729&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">embedded, rf, vlsi, comp eng, ...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://DA1729.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vOld32-ALU" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/04/09/vOld32-ALU/" class="article-date">
+  <time class="dt-published" datetime="2025-04-09T11:35:35.000Z" itemprop="datePublished">2025-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      vOld32 ALU
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>You can find the relevant ALU files on this repo: <a target="_blank" rel="noopener" href="https://github.com/DA1729/ALU_8BIT">vOld32 ALU</a>. </p>
+<p>Working of an ALU is very easy to understand and easy for our intuitions. A basic ALU, which is used extensively even today, works on the following statement: “All the operations are evaluated for all the inputs, but are driven using the input Operation Code (OpCode) to get only one desired output.”</p>
+<span id="more"></span>
+
+
+<p>Reading the words driven using OpCode must strike the idea of using a Multiplexer (Mux). And indeed, a Mux is used to drive the desired output. </p>
+<p>ALU by its name, Arithemetic and Logic Unit contains both Arithmetic Operations (Add, Subtract) and Logic Operations (AND, XOR, Comparators, etc.). For each Operation, we have a unique Operation Code (OpCode from now on). This OpCode is used as a select input for the Mux to get the desired Operator’s result. </p>
+<p>Apart from the Arithmetic and Logical results, we also have four flag outputs: </p>
+<ul>
+<li><p>Overflow: Set when the result of a signed arithmetic operation is too large to fit in the destination register. This is a very very very critical flag. See the story of Ariane-5 Rocket Blast. </p>
+</li>
+<li><p>Negative: Set when the result of an operation is negative (most significant bit is 1).</p>
+</li>
+<li><p>Zero: Set when the result of an operation is exactly 0. </p>
+</li>
+<li><p>Carry: Set when an addition produces a carry out or a subtraction requires a borrow into the highest bit.</p>
+</li>
+</ul>
+<h2 id="Arithmetic-Circuits"><a href="#Arithmetic-Circuits" class="headerlink" title="Arithmetic Circuits"></a>Arithmetic Circuits</h2><p>For arithmetic circuits, I have implemented only two modules (circuits), namely, Carry Propagation Adder (CPA_adder) and a Subtractor (sub). </p>
+<p>I am not implementing Multiplier and Divide circuits (although I have reserved OpCodes for them, see later) as they are not the most efficient at hardware level. I can always implement them at the software level, which happens to be more efficient. I have reserved OpCodes for them as I aim to do a lot of experimentations with this microprocessor, like implementing a super efficient Multiplier Circuit which outperforms multiplication at software level. </p>
+<p>I have refered [1] for the construction of CPA and the subtractor. Also note that the flags I mentioned above relevant only the case of Addition and Subtraction Operations.</p>
+<p>Below are the block diagrams of the CPA_adder and sub modules: </p>
+<p><img src="/images/3.png" alt="Carry Propagation Adder"></p>
+<p>Below is the subtraction module’s block diagram: </p>
+<p><img src="/images/4.png" alt="Subtractor"></p>
+<h2 id="Logic-Circuits"><a href="#Logic-Circuits" class="headerlink" title="Logic Circuits"></a>Logic Circuits</h2><p>There are total of 11 modules in the logic_cicuits directory (see the repo). All of them are very simple to make and simple to understand. But, we shall look into the comp.sv file. This module(comparator) was created for comparisons. This single module, consists of 6 different operations: </p>
+<ul>
+<li>Equal to </li>
+<li>Not equal to </li>
+<li>Lesser than</li>
+<li>Lesser than or equal to </li>
+<li>Greater than</li>
+<li>Greater than or equal to</li>
+</ul>
+<p>We will use a 6-to-1 mux to get only the desired comparison operation out of this module. </p>
+<h2 id="Operation-Codes-OpCodes"><a href="#Operation-Codes-OpCodes" class="headerlink" title="Operation Codes (OpCodes)"></a>Operation Codes (OpCodes)</h2><p>Below is the Operation Code (OpCode) table designating a unique OpCode to each Operation. </p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>OpCode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADD</td>
+<td>00000</td>
+</tr>
+<tr>
+<td>SUB</td>
+<td>00001</td>
+</tr>
+<tr>
+<td>MUL</td>
+<td>00010</td>
+</tr>
+<tr>
+<td>DIV</td>
+<td>00011</td>
+</tr>
+<tr>
+<td>AND</td>
+<td>00100</td>
+</tr>
+<tr>
+<td>OR</td>
+<td>00101</td>
+</tr>
+<tr>
+<td>XOR</td>
+<td>00110</td>
+</tr>
+<tr>
+<td>NOR</td>
+<td>00111</td>
+</tr>
+<tr>
+<td>NAND</td>
+<td>01000</td>
+</tr>
+<tr>
+<td>XNOR</td>
+<td>01001</td>
+</tr>
+<tr>
+<td>EQ (Equal)</td>
+<td>01010</td>
+</tr>
+<tr>
+<td>NEQ (Not Eq.)</td>
+<td>01011</td>
+</tr>
+<tr>
+<td>LT (Less Than)</td>
+<td>01100</td>
+</tr>
+<tr>
+<td>LTE (≤)</td>
+<td>01101</td>
+</tr>
+<tr>
+<td>GT (Greater)</td>
+<td>01110</td>
+</tr>
+<tr>
+<td>GTE (≥)</td>
+<td>01111</td>
+</tr>
+<tr>
+<td>Shift Left</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>Shift Right</td>
+<td>10001</td>
+</tr>
+<tr>
+<td>Rotate Left</td>
+<td>10010</td>
+</tr>
+<tr>
+<td>Rotate Right</td>
+<td>10011</td>
+</tr>
+</tbody></table>
+<p>See, that there are two extra operations for Multiplication and Division, for which I have not made the modules of. These OpCodes are reserved for future experimentation purposes, as I have mentioned that I am making this processor for performing various Optimization and Complex experiments. </p>
+<p>Till now, if the OpCodes 00010 (MUL) and 00011 (DIV) are chosen, all the outputs are driven to 0. </p>
+<h2 id="Block-Diagram-of-the-ALU"><a href="#Block-Diagram-of-the-ALU" class="headerlink" title="Block Diagram of the ALU"></a>Block Diagram of the ALU</h2><p>I am deploying three Muxes (2-to-1, 6-to-1 and 20-to-1). I am using the 2-to-1 Mux to get the values of the flags from the Adder and Subtractor Operations.</p>
+<p>6-to-1 Mux is being used to get the desired Comparator output. If you notice carefully, I can tell which comparator operator is being called using the last three bits of the whole OpCode. But note that we will still get the mux output even if the OpCode doesn’t call a comparison. There is no way to tell the mux given that we are using only the last three bits that the comparison isn’t being called so give the default output. It doesn’t cost us much of our efficieny.  Below is the block diagram for this 6-to-1 mux. Bit combination over the data input wire tells us the combination of the select input for which the given data will be steered towards the output of the mux. </p>
+<p><img src="/images/5.png" alt="6-to-1 MUX for Comparison Operation Selection"></p>
+<p>Now coming over to flag selection, for each flag I have deployed a 2-to-1 Mux, which outputs the flag from the chosen operator (ADD or SUB). Consider any flag say X, then let the value of X from ADD Operation be X_add and from the SUB Operation be X_sub. We can get X from the logic in the diagram below: </p>
+<p><img src="/images/6.png" alt="2-to-1 MUX for Flag Outputs"></p>
+<p>Note that for the select input of the mux, I am using the whole OpCode as I only need the meaningful values of flags for the ADD and SUB operators.</p>
+<p>Now that we are done selecting these side details, we now use a 20-to-1 Mux for bringing all the Operations, Modules and Muxes together to form the full ALU. Below is the block diagram for it.</p>
+<p><img src="/images/7.png" alt="20-to-1 Mux for ALU (other than flags) Output"></p>
+<p>One must observe, that the input to the data input d10 (i.e. Comparison Mux Output) can be driven to the output on 6 different selection inputs (OpCodes). </p>
+<p>This completes our ALU, further I’ll write it’s testbenches to identify any further logical bugs, but one can get the full idea of basic ALU construction from this. Refer to the repository along with the blog to get the full idea. </p>
+<p>I have started working on the Memory of the processor now…</p>
+<p>peace. da1729</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://da1729.github.io/2025/04/09/vOld32-ALU/" data-id="cm9acus2900031sbn47ylb59z" data-title="vOld32 ALU" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FPGA/" rel="tag">FPGA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/digital-design/" rel="tag">digital design</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microprocessors/" rel="tag">microprocessors</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/verilog/" rel="tag">verilog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vlsi/" rel="tag">vlsi</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/04/09/vOld32-microprocessor/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vOld32 microprocessor</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Analog/" rel="tag">Analog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FPGA/" rel="tag">FPGA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hardware-Acceleration/" rel="tag">Hardware Acceleration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLSI/" rel="tag">VLSI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/digital-design/" rel="tag">digital design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microprocessors/" rel="tag">microprocessors</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/verilog/" rel="tag">verilog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vlsi/" rel="tag">vlsi</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Analog/" style="font-size: 10px;">Analog</a> <a href="/tags/FPGA/" style="font-size: 10px;">FPGA</a> <a href="/tags/Hardware-Acceleration/" style="font-size: 10px;">Hardware Acceleration</a> <a href="/tags/VLSI/" style="font-size: 10px;">VLSI</a> <a href="/tags/digital-design/" style="font-size: 10px;">digital design</a> <a href="/tags/microprocessors/" style="font-size: 10px;">microprocessors</a> <a href="/tags/verilog/" style="font-size: 10px;">verilog</a> <a href="/tags/vlsi/" style="font-size: 10px;">vlsi</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">April 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/04/09/vOld32-ALU/">vOld32 ALU</a>
+          </li>
+        
+          <li>
+            <a href="/2025/04/09/vOld32-microprocessor/">vOld32 microprocessor</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-2/">In Memory Computation using Analog Part 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2025 Daksh Pandey<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
