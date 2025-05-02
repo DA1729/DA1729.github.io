@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Lottery Ticket Hypothesis for Beginners Part 2 | da1729&#39;s Blog</title>
+  <meta name="author" content="Daksh Pandey">
+  
+  <meta name="description" content="Iterative Pruning and Finding the Winning TicketSo far, we’ve talked about the idea that there’s a smaller subnetwork—our so-called winning ticket—hidden within a big neural network. But how do we actually find this winning ticket? That’s where iterative pruning steps in.
+The Iterative Pruning Process">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Lottery Ticket Hypothesis for Beginners Part 2"/>
+  <meta property="og:site_name" content="da1729&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'G-FRJ7L43FFF', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">da1729&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Lottery Ticket Hypothesis for Beginners Part 2</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="Iterative-Pruning-and-Finding-the-Winning-Ticket"><a href="#Iterative-Pruning-and-Finding-the-Winning-Ticket" class="headerlink" title="Iterative Pruning and Finding the Winning Ticket"></a>Iterative Pruning and Finding the Winning Ticket</h2><p>So far, we’ve talked about the idea that there’s a smaller subnetwork—our so-called winning ticket—hidden within a big neural network. But how do we actually find this winning ticket? That’s where <strong>iterative pruning</strong> steps in.</p>
+<h3 id="The-Iterative-Pruning-Process"><a href="#The-Iterative-Pruning-Process" class="headerlink" title="The Iterative Pruning Process"></a>The Iterative Pruning Process</h3><span id="more"></span>
+
+<p>Instead of pruning once and hoping we get lucky, iterative pruning does the following:</p>
+<ul>
+<li><strong>Train the full network</strong> for a fixed number of iterations.</li>
+<li><strong>Prune a small percentage</strong> (say, 10%-20%) of the lowest magnitude weights.</li>
+<li><strong>Reset the remaining weights back</strong> to their original initialization.</li>
+<li><strong>Repeat steps 1–3</strong> for several rounds.</li>
+</ul>
+<p>This slow and steady process lets us uncover subnetworks that are small but still highly capable—our winning tickets.</p>
+<h3 id="Why-Iterative-Pruning-Works-Better"><a href="#Why-Iterative-Pruning-Works-Better" class="headerlink" title="Why Iterative Pruning Works Better"></a>Why Iterative Pruning Works Better</h3><p>Turns out, one-shot pruning (cutting lots of weights at once) often fails to find the best subnetworks, especially when we go too small. Iterative pruning, on the other hand, carefully preserves the parts of the network that matter, leading to <strong>better performance at smaller sizes</strong>.</p>
+<hr>
+<p>In the experiments, they could reduce the network size by up to 90%, and the resulting subnetworks still learned faster and better than the full network!</p>
+<hr>
+<h2 id="Do-Winning-Tickets-Generalize-Better"><a href="#Do-Winning-Tickets-Generalize-Better" class="headerlink" title="Do Winning Tickets Generalize Better?"></a>Do Winning Tickets Generalize Better?</h2><p>Now here’s where things get spicy. When comparing test accuracies, the researchers noticed something curious:</p>
+<ul>
+<li>The winning tickets not only learned faster,</li>
+<li>They often had <strong>better generalization</strong> than the original model!</li>
+</ul>
+<p>This means that they didn’t just memorize training data—they actually learned to perform better on unseen test data.</p>
+<p>This idea is related to something called <strong>Occam’s Hill</strong>—too big and you overfit, too small and you underfit. Winning tickets land at a sweet spot: small enough to avoid overfitting, but just right to still learn effectively.</p>
+<h2 id="Initialization-Matters-A-Lot"><a href="#Initialization-Matters-A-Lot" class="headerlink" title="Initialization Matters (A Lot)"></a>Initialization Matters (A Lot)</h2><p>Another key takeaway: it’s not just the structure of the subnetwork that matters. It’s also the <strong>exact initial weights</strong>.</p>
+<p>If you take a winning ticket’s structure and randomly reinitialize it, it <strong>loses its magic</strong>—learning slows down and performance drops.</p>
+<h2 id="Expanding-to-Convolutional-Networks"><a href="#Expanding-to-Convolutional-Networks" class="headerlink" title="Expanding to Convolutional Networks"></a>Expanding to Convolutional Networks</h2><p>The authors didn’t just test on simple fully-connected networks like LeNet on MNIST. They also ran experiments on <strong>convolutional networks</strong> like Conv-2, Conv-4, and Conv-6 on CIFAR-10.</p>
+<p>Surprise surprise: they found <strong>winning tickets</strong> there too. In fact, the same pattern repeated:</p>
+<ul>
+<li>Winning tickets learn faster</li>
+<li>They reach higher accuracy</li>
+<li>They generalize better</li>
+<li>Initialization still matters</li>
+</ul>
+<p>The success wasn’t limited to toy datasets—this was happening on moderately complex image classification tasks too.</p>
+<h2 id="Drop-Out-Pruning"><a href="#Drop-Out-Pruning" class="headerlink" title="Drop-Out + Pruning"></a>Drop-Out + Pruning</h2><p>What happens when you combine <strong>dropout</strong> with pruning?*</p>
+<p>Turns out, dropout helps too! Dropout already encourages the network to be robust to missing connections. So when you prune, the network is more resilient.</p>
+<p>When they trained networks <strong>with dropout</strong> and applied iterative pruning, the test accuracy <strong>improved even further</strong>. This hints that dropout may help in preparing the network for successful pruning.</p>
+<h2 id="The-Big-Leagues-VGG-19-and-RESNET-18"><a href="#The-Big-Leagues-VGG-19-and-RESNET-18" class="headerlink" title="The Big Leagues: VGG-19 and RESNET-18"></a>The Big Leagues: VGG-19 and RESNET-18</h2><p>Taking it up a notch, the paper also tested on deeper, real-world architectures:</p>
+<ul>
+<li><strong>VGG-19</strong></li>
+<li><strong>ResNet-18</strong></li>
+</ul>
+<p>The pattern mostly held up—but with a twist. For these deep networks, iterative pruning only worked well if they used <strong>learning rate warm-up</strong>.</p>
+<p>Without warm-up, pruning failed to find winning tickets. With warm-up (i.e., slowly increasing the learning rate at the beginning of training), they were back in business.</p>
+<p>So yes—winning tickets exist even in deep networks, but only if you treat them with care.</p>
+<h2 id="Key-Takeaways"><a href="#Key-Takeaways" class="headerlink" title="Key Takeaways"></a>Key Takeaways</h2><ul>
+<li>Big neural networks contain hidden winning tickets—smaller subnetworks that can be trained to match or exceed full network performance.</li>
+<li>You find them by <strong>pruning</strong> and <strong>resetting</strong> repeatedly.</li>
+<li>These subnetworks not only match accuracy, but often learn <strong>faster</strong> and generalize <strong>better</strong>.</li>
+<li>The <strong>initialization</strong> is crucial—you can’t just randomly reinitialize and expect the same results.</li>
+<li>Even deeper networks like VGG and ResNet have winning tickets, but they may require careful tuning (e.g., learning rate warm-up).</li>
+<li>Pruning isn’t just for compression—it might teach us something deep about how neural networks work.</li>
+</ul>
+<p>Now, what I am trying to do is replecating the results found by the authors myself. So stick around and keep a look over my <a target="_blank" rel="noopener" href="https://github.com/DA1729">GitHub</a>.</p>
+<p>peace. da1729</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] @misc{frankle2019lotterytickethypothesisfinding,<br>      title&#x3D;{The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks},<br>      author&#x3D;{Jonathan Frankle and Michael Carbin},<br>      year&#x3D;{2019},<br>      eprint&#x3D;{1803.03635},<br>      archivePrefix&#x3D;{arXiv},<br>      primaryClass&#x3D;{cs.LG},<br>      url&#x3D;{<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03635">https://arxiv.org/abs/1803.03635</a>},<br>}</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/2025/04/13/Lottery-Ticket-Hypothesis-for-Beginners/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2025-04-16 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/AI-Acceleration/">AI Acceleration<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2025 Daksh Pandey
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
