@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>Lottery Ticket Hypothesis for Beginners Part 2</title>
+      <title>Lottery Ticket Hypothesis Part 2</title>
       <link href="/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/"/>
       <url>/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/</url>
       
@@ -23,7 +23,7 @@
     
     
     <entry>
-      <title>Lottery Ticket Hypothesis for Beginners Part-1</title>
+      <title>Lottery Ticket Hypothesis Part-1</title>
       <link href="/2025/04/13/Lottery-Ticket-Hypothesis-for-Beginners/"/>
       <url>/2025/04/13/Lottery-Ticket-Hypothesis-for-Beginners/</url>
       
@@ -34,93 +34,6 @@
         <tags>
             
             <tag> AI - Acceleration </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>vOld32!</title>
-      <link href="/2025/04/11/vOld32/"/>
-      <url>/2025/04/11/vOld32/</url>
-      
-        <content type="html"><![CDATA[<p>Alongside the 8-bit processor, I have started working on vOl32, the 32 bit version of vOld series.</p><span id="more"></span><p>Here is the github repo link: <a href="https://github.com/DA1729/vOld32">vOld32-repository</a>.</p><p>I have started this so that I can look into incorporating RISC-V in it. </p><p>peace. da1729</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> VLSI </tag>
-            
-            <tag> digital design </tag>
-            
-            <tag> microprocessors </tag>
-            
-            <tag> verilog </tag>
-            
-            <tag> FPGA </tag>
-            
-            <tag> vOld </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>vOld8 ALU</title>
-      <link href="/2025/04/09/vOld32-ALU/"/>
-      <url>/2025/04/09/vOld32-ALU/</url>
-      
-        <content type="html"><![CDATA[<p>You can find the relevant ALU files on this repo: <a href="https://github.com/DA1729/ALU_8BIT">vOld8 ALU</a>. </p><p>Working of an ALU is very easy to understand and easy for our intuitions. A basic ALU, which is used extensively even today, works on the following statement: “All the operations are evaluated for all the inputs, but are driven using the input Operation Code (OpCode) to get only one desired output.”</p><span id="more"></span><p>Reading the words driven using OpCode must strike the idea of using a Multiplexer (Mux). And indeed, a Mux is used to drive the desired output. </p><p>ALU by its name, Arithemetic and Logic Unit contains both Arithmetic Operations (Add, Subtract) and Logic Operations (AND, XOR, Comparators, etc.). For each Operation, we have a unique Operation Code (OpCode from now on). This OpCode is used as a select input for the Mux to get the desired Operator’s result. </p><p>Apart from the Arithmetic and Logical results, we also have four flag outputs: </p><ul><li><p>Overflow: Set when the result of a signed arithmetic operation is too large to fit in the destination register. This is a very very very critical flag. See the story of Ariane-5 Rocket Blast. </p></li><li><p>Negative: Set when the result of an operation is negative (most significant bit is 1).</p></li><li><p>Zero: Set when the result of an operation is exactly 0. </p></li><li><p>Carry: Set when an addition produces a carry out or a subtraction requires a borrow into the highest bit.</p></li></ul><h2 id="Arithmetic-Circuits"><a href="#Arithmetic-Circuits" class="headerlink" title="Arithmetic Circuits"></a>Arithmetic Circuits</h2><p>For arithmetic circuits, I have implemented only two modules (circuits), namely, Carry Propagation Adder (CPA_adder) and a Subtractor (sub). </p><p>I am not implementing Multiplier and Divide circuits (although I have reserved OpCodes for them, see later) as they are not the most efficient at hardware level. I can always implement them at the software level, which happens to be more efficient. I have reserved OpCodes for them as I aim to do a lot of experimentations with this microprocessor, like implementing a super efficient Multiplier Circuit which outperforms multiplication at software level. </p><p>I have refered [1] for the construction of CPA and the subtractor. Also note that the flags I mentioned above relevant only the case of Addition and Subtraction Operations.</p><p>Below are the block diagrams of the CPA_adder and sub modules: </p><p><img src="/images/3.png" alt="Carry Propagation Adder"></p><p>Below is the subtraction module’s block diagram: </p><p><img src="/images/4.png" alt="Subtractor"></p><h2 id="Logic-Circuits"><a href="#Logic-Circuits" class="headerlink" title="Logic Circuits"></a>Logic Circuits</h2><p>There are total of 11 modules in the logic_cicuits directory (see the repo). All of them are very simple to make and simple to understand. But, we shall look into the comp.sv file. This module(comparator) was created for comparisons. This single module, consists of 6 different operations: </p><ul><li>Equal to </li><li>Not equal to </li><li>Lesser than</li><li>Lesser than or equal to </li><li>Greater than</li><li>Greater than or equal to</li></ul><p>We will use a 6-to-1 mux to get only the desired comparison operation out of this module. </p><h2 id="Operation-Codes-OpCodes"><a href="#Operation-Codes-OpCodes" class="headerlink" title="Operation Codes (OpCodes)"></a>Operation Codes (OpCodes)</h2><p>Below is the Operation Code (OpCode) table designating a unique OpCode to each Operation. </p><table><thead><tr><th>Operation</th><th>OpCode</th></tr></thead><tbody><tr><td>ADD</td><td>00000</td></tr><tr><td>SUB</td><td>00001</td></tr><tr><td>MUL</td><td>00010</td></tr><tr><td>DIV</td><td>00011</td></tr><tr><td>AND</td><td>00100</td></tr><tr><td>OR</td><td>00101</td></tr><tr><td>XOR</td><td>00110</td></tr><tr><td>NOR</td><td>00111</td></tr><tr><td>NAND</td><td>01000</td></tr><tr><td>XNOR</td><td>01001</td></tr><tr><td>EQ (Equal)</td><td>01010</td></tr><tr><td>NEQ (Not Eq.)</td><td>01011</td></tr><tr><td>LT (Less Than)</td><td>01100</td></tr><tr><td>LTE (≤)</td><td>01101</td></tr><tr><td>GT (Greater)</td><td>01110</td></tr><tr><td>GTE (≥)</td><td>01111</td></tr><tr><td>Shift Left</td><td>10000</td></tr><tr><td>Shift Right</td><td>10001</td></tr><tr><td>Rotate Left</td><td>10010</td></tr><tr><td>Rotate Right</td><td>10011</td></tr></tbody></table><p>See, that there are two extra operations for Multiplication and Division, for which I have not made the modules of. These OpCodes are reserved for future experimentation purposes, as I have mentioned that I am making this processor for performing various Optimization and Complex experiments. </p><p>Till now, if the OpCodes 00010 (MUL) and 00011 (DIV) are chosen, all the outputs are driven to 0. </p><h2 id="Block-Diagram-of-the-ALU"><a href="#Block-Diagram-of-the-ALU" class="headerlink" title="Block Diagram of the ALU"></a>Block Diagram of the ALU</h2><p>I am deploying three Muxes (2-to-1, 6-to-1 and 20-to-1). I am using the 2-to-1 Mux to get the values of the flags from the Adder and Subtractor Operations.</p><p>6-to-1 Mux is being used to get the desired Comparator output. If you notice carefully, I can tell which comparator operator is being called using the last three bits of the whole OpCode. But note that we will still get the mux output even if the OpCode doesn’t call a comparison. There is no way to tell the mux given that we are using only the last three bits that the comparison isn’t being called so give the default output. It doesn’t cost us much of our efficieny.  Below is the block diagram for this 6-to-1 mux. Bit combination over the data input wire tells us the combination of the select input for which the given data will be steered towards the output of the mux. </p><p><img src="/images/5.png" alt="6-to-1 MUX for Comparison Operation Selection"></p><p>Now coming over to flag selection, for each flag I have deployed a 2-to-1 Mux, which outputs the flag from the chosen operator (ADD or SUB). Consider any flag say X, then let the value of X from ADD Operation be X_add and from the SUB Operation be X_sub. We can get X from the logic in the diagram below: </p><p><img src="/images/6.png" alt="2-to-1 MUX for Flag Outputs"></p><p>Note that for the select input of the mux, I am using the whole OpCode as I only need the meaningful values of flags for the ADD and SUB operators.</p><p>Now that we are done selecting these side details, we now use a 20-to-1 Mux for bringing all the Operations, Modules and Muxes together to form the full ALU. Below is the block diagram for it.</p><p><img src="/images/7.png" alt="20-to-1 Mux for ALU (other than flags) Output"></p><p>One must observe, that the input to the data input d10 (i.e. Comparison Mux Output) can be driven to the output on 6 different selection inputs (OpCodes). </p><p>This completes our ALU, further I’ll write it’s testbenches to identify any further logical bugs, but one can get the full idea of basic ALU construction from this. Refer to the repository along with the blog to get the full idea. </p><p>I have started working on the Memory of the processor now…</p><p>peace. da1729</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> VLSI </tag>
-            
-            <tag> digital design </tag>
-            
-            <tag> microprocessors </tag>
-            
-            <tag> verilog </tag>
-            
-            <tag> FPGA </tag>
-            
-            <tag> vOld </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>vOld8 microprocessor</title>
-      <link href="/2025/04/09/vOld32-microprocessor/"/>
-      <url>/2025/04/09/vOld32-microprocessor/</url>
-      
-        <content type="html"><![CDATA[<p>I have started working on making my own 8-bit microprocessor I am calling vOld32 (I’ll tell the history behind the name in the future). </p><p>I am doing 8-bits for now to understand the workings of the computers and microprocessors, later I am pretty sure I’ll make a super complex and optimized 32 (vOld32) or 64 (vOld64)  bits microprocessor. 8-bits feels like a good starting point. </p><p>Below is the github repository on which I’ll be taking forward this project: </p><span id="more"></span><p><a href="https://github.com/DA1729/vOld32">vOld32 Repository</a></p><p>I’ll be posting my progress, procedure and working of the blocks which I’ll be making in order to complete this microprocessor. </p><p>Also, I am writing the files in SystemVerilog. I’ll also mention the sources I refer, so it will be useful for someone else to make their own processor. </p><p>Wish me luck ig. </p><p>peace. da1729</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> VLSI </tag>
-            
-            <tag> digital design </tag>
-            
-            <tag> microprocessors </tag>
-            
-            <tag> verilog </tag>
-            
-            <tag> FPGA </tag>
-            
-            <tag> vOld </tag>
             
         </tags>
       
