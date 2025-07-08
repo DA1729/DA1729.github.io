@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Breaking LWE Encryption Part 2</title>
+      <link href="/2025/07/05/Breaking-LWE-Encryption-Part-2/"/>
+      <url>/2025/07/05/Breaking-LWE-Encryption-Part-2/</url>
+      
+        <content type="html"><![CDATA[<p>Last part, I started out with a Machine Learning attack for LWE Encryption, exploiting parameters selection. Keep in mind with suitable parameters and careful implementation, <strong>LWE is a secure scheme</strong> and a Machine Learning Hard Problem.</p><p>We generated the training data and created the model. Now, an independent model is used to predict each bit of the secret key. Which means that we have to train 512 models, each corresponds to a single bit of the secret key.</p><p>For the training part, I switched to Google Colab, as I didn’t want to bother my CPU along with the other stuff I was doing, so Colab did all the training for me on the cloud and results were good.</p><p>Let’s finish off seeing the training code. But this code was never actually used. I uploaded a <code>.ipynb</code> file on the github, which was used for training the model.</p><span id="more"></span><h3 id="Training-the-Models"><a href="#Training-the-Models" class="headerlink" title="Training the Models"></a>Training the Models</h3>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Breaking LWE Encryption Part 1</title>
       <link href="/2025/07/03/Breaking-LWE-Encryption/"/>
       <url>/2025/07/03/Breaking-LWE-Encryption/</url>

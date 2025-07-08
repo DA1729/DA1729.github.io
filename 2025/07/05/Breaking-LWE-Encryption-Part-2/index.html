@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Tag: Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption | da1729&#39;s Blog</title>
+  <title>Breaking LWE Encryption Part 2 | da1729&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="da1729&#39;s Blog">
-<meta property="og:url" content="https://da1729.github.io/tags/Cryptography-Cryptanalysis-Post-Quantum-Cryptography-Fully-Homomorphic-Encryption/index.html">
+  <meta name="description" content="Last part, I started out with a Machine Learning attack for LWE Encryption, exploiting parameters selection. Keep in mind with suitable parameters and careful implementation, LWE is a secure scheme an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Breaking LWE Encryption Part 2">
+<meta property="og:url" content="https://da1729.github.io/2025/07/05/Breaking-LWE-Encryption-Part-2/index.html">
 <meta property="og:site_name" content="da1729&#39;s Blog">
+<meta property="og:description" content="Last part, I started out with a Machine Learning attack for LWE Encryption, exploiting parameters selection. Keep in mind with suitable parameters and careful implementation, LWE is a secure scheme an">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-05T06:57:02.000Z">
+<meta property="article:modified_time" content="2025-07-05T07:58:42.276Z">
 <meta property="article:author" content="Daksh Pandey">
+<meta property="article:tag" content="Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="da1729's Blog" type="application/atom+xml">
@@ -87,58 +92,60 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2025" class="archive-year">2025</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2025/07/05/Breaking-LWE-Encryption-Part-2/" class="archive-article-date">
-  <time class="dt-published" datetime="2025-07-05T06:57:02.000Z" itemprop="datePublished">Jul 5</time>
+        <section id="main"><article id="post-Breaking-LWE-Encryption-Part-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2025/07/05/Breaking-LWE-Encryption-Part-2/" class="article-date">
+  <time class="dt-published" datetime="2025-07-05T06:57:02.000Z" itemprop="datePublished">2025-07-05</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2025/07/05/Breaking-LWE-Encryption-Part-2/">Breaking LWE Encryption Part 2</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      Breaking LWE Encryption Part 2
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2025/07/03/Breaking-LWE-Encryption/" class="archive-article-date">
-  <time class="dt-published" datetime="2025-07-03T04:11:40.000Z" itemprop="datePublished">Jul 3</time>
-</a>
+    <div class="e-content article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2025/07/03/Breaking-LWE-Encryption/">Breaking LWE Encryption Part 1</a>
-    </h1>
-  
+        <p>Last part, I started out with a Machine Learning attack for LWE Encryption, exploiting parameters selection. Keep in mind with suitable parameters and careful implementation, <strong>LWE is a secure scheme</strong> and a Machine Learning Hard Problem.</p>
+<p>We generated the training data and created the model. Now, an independent model is used to predict each bit of the secret key. Which means that we have to train 512 models, each corresponds to a single bit of the secret key.</p>
+<p>For the training part, I switched to Google Colab, as I didn’t want to bother my CPU along with the other stuff I was doing, so Colab did all the training for me on the cloud and results were good.</p>
+<p>Let’s finish off seeing the training code. But this code was never actually used. I uploaded a <code>.ipynb</code> file on the github, which was used for training the model.</p>
+<span id="more"></span>
 
-    </header>
+<h3 id="Training-the-Models"><a href="#Training-the-Models" class="headerlink" title="Training the Models"></a>Training the Models</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://da1729.github.io/2025/07/05/Breaking-LWE-Encryption-Part-2/" data-id="cmcv5shxe0002lcbnd4gt8zsn" data-title="Breaking LWE Encryption Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cryptography-Cryptanalysis-Post-Quantum-Cryptography-Fully-Homomorphic-Encryption/" rel="tag">Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2025/07/03/Breaking-LWE-Encryption/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Breaking LWE Encryption Part 1</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
