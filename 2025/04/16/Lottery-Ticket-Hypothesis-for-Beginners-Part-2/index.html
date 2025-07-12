@@ -114,8 +114,8 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Iterative-Pruning-and-Finding-the-Winning-Ticket"><a href="#Iterative-Pruning-and-Finding-the-Winning-Ticket" class="headerlink" title="Iterative Pruning and Finding the Winning Ticket"></a>Iterative Pruning and Finding the Winning Ticket</h2><p>So far, we’ve talked about the idea that there’s a smaller subnetwork—our so-called winning ticket—hidden within a big neural network. But how do we actually find this winning ticket? That’s where <strong>iterative pruning</strong> steps in.</p>
-<h3 id="The-Iterative-Pruning-Process"><a href="#The-Iterative-Pruning-Process" class="headerlink" title="The Iterative Pruning Process"></a>The Iterative Pruning Process</h3><span id="more"></span>
+        <h2><span id="iterative-pruning-and-finding-the-winning-ticket">Iterative Pruning and Finding the Winning Ticket</span></h2><p>So far, we’ve talked about the idea that there’s a smaller subnetwork—our so-called winning ticket—hidden within a big neural network. But how do we actually find this winning ticket? That’s where <strong>iterative pruning</strong> steps in.</p>
+<h3><span id="the-iterative-pruning-process">The Iterative Pruning Process</span></h3><span id="more"></span>
 
 <p>Instead of pruning once and hoping we get lucky, iterative pruning does the following:</p>
 <ul>
@@ -125,20 +125,20 @@
 <li><strong>Repeat steps 1–3</strong> for several rounds.</li>
 </ul>
 <p>This slow and steady process lets us uncover subnetworks that are small but still highly capable—our winning tickets.</p>
-<h3 id="Why-Iterative-Pruning-Works-Better"><a href="#Why-Iterative-Pruning-Works-Better" class="headerlink" title="Why Iterative Pruning Works Better"></a>Why Iterative Pruning Works Better</h3><p>Turns out, one-shot pruning (cutting lots of weights at once) often fails to find the best subnetworks, especially when we go too small. Iterative pruning, on the other hand, carefully preserves the parts of the network that matter, leading to <strong>better performance at smaller sizes</strong>.</p>
+<h3><span id="why-iterative-pruning-works-better">Why Iterative Pruning Works Better</span></h3><p>Turns out, one-shot pruning (cutting lots of weights at once) often fails to find the best subnetworks, especially when we go too small. Iterative pruning, on the other hand, carefully preserves the parts of the network that matter, leading to <strong>better performance at smaller sizes</strong>.</p>
 <hr>
 <p>In the experiments, they could reduce the network size by up to 90%, and the resulting subnetworks still learned faster and better than the full network!</p>
 <hr>
-<h2 id="Do-Winning-Tickets-Generalize-Better"><a href="#Do-Winning-Tickets-Generalize-Better" class="headerlink" title="Do Winning Tickets Generalize Better?"></a>Do Winning Tickets Generalize Better?</h2><p>Now here’s where things get spicy. When comparing test accuracies, the researchers noticed something curious:</p>
+<h2><span id="do-winning-tickets-generalize-better">Do Winning Tickets Generalize Better?</span></h2><p>Now here’s where things get spicy. When comparing test accuracies, the researchers noticed something curious:</p>
 <ul>
 <li>The winning tickets not only learned faster,</li>
 <li>They often had <strong>better generalization</strong> than the original model!</li>
 </ul>
 <p>This means that they didn’t just memorize training data—they actually learned to perform better on unseen test data.</p>
 <p>This idea is related to something called <strong>Occam’s Hill</strong>—too big and you overfit, too small and you underfit. Winning tickets land at a sweet spot: small enough to avoid overfitting, but just right to still learn effectively.</p>
-<h2 id="Initialization-Matters-A-Lot"><a href="#Initialization-Matters-A-Lot" class="headerlink" title="Initialization Matters (A Lot)"></a>Initialization Matters (A Lot)</h2><p>Another key takeaway: it’s not just the structure of the subnetwork that matters. It’s also the <strong>exact initial weights</strong>.</p>
+<h2><span id="initialization-matters-a-lot">Initialization Matters (A Lot)</span></h2><p>Another key takeaway: it’s not just the structure of the subnetwork that matters. It’s also the <strong>exact initial weights</strong>.</p>
 <p>If you take a winning ticket’s structure and randomly reinitialize it, it <strong>loses its magic</strong>—learning slows down and performance drops.</p>
-<h2 id="Expanding-to-Convolutional-Networks"><a href="#Expanding-to-Convolutional-Networks" class="headerlink" title="Expanding to Convolutional Networks"></a>Expanding to Convolutional Networks</h2><p>The authors didn’t just test on simple fully-connected networks like LeNet on MNIST. They also ran experiments on <strong>convolutional networks</strong> like Conv-2, Conv-4, and Conv-6 on CIFAR-10.</p>
+<h2><span id="expanding-to-convolutional-networks">Expanding to Convolutional Networks</span></h2><p>The authors didn’t just test on simple fully-connected networks like LeNet on MNIST. They also ran experiments on <strong>convolutional networks</strong> like Conv-2, Conv-4, and Conv-6 on CIFAR-10.</p>
 <p>Surprise surprise: they found <strong>winning tickets</strong> there too. In fact, the same pattern repeated:</p>
 <ul>
 <li>Winning tickets learn faster</li>
@@ -147,10 +147,10 @@
 <li>Initialization still matters</li>
 </ul>
 <p>The success wasn’t limited to toy datasets—this was happening on moderately complex image classification tasks too.</p>
-<h2 id="Drop-Out-Pruning"><a href="#Drop-Out-Pruning" class="headerlink" title="Drop-Out + Pruning"></a>Drop-Out + Pruning</h2><p>What happens when you combine <strong>dropout</strong> with pruning?*</p>
+<h2><span id="drop-out-pruning">Drop-Out + Pruning</span></h2><p>What happens when you combine <strong>dropout</strong> with pruning?*</p>
 <p>Turns out, dropout helps too! Dropout already encourages the network to be robust to missing connections. So when you prune, the network is more resilient.</p>
 <p>When they trained networks <strong>with dropout</strong> and applied iterative pruning, the test accuracy <strong>improved even further</strong>. This hints that dropout may help in preparing the network for successful pruning.</p>
-<h2 id="The-Big-Leagues-VGG-19-and-RESNET-18"><a href="#The-Big-Leagues-VGG-19-and-RESNET-18" class="headerlink" title="The Big Leagues: VGG-19 and RESNET-18"></a>The Big Leagues: VGG-19 and RESNET-18</h2><p>Taking it up a notch, the paper also tested on deeper, real-world architectures:</p>
+<h2><span id="the-big-leagues-vgg-19-and-resnet-18">The Big Leagues: VGG-19 and RESNET-18</span></h2><p>Taking it up a notch, the paper also tested on deeper, real-world architectures:</p>
 <ul>
 <li><strong>VGG-19</strong></li>
 <li><strong>ResNet-18</strong></li>
@@ -158,7 +158,7 @@
 <p>The pattern mostly held up—but with a twist. For these deep networks, iterative pruning only worked well if they used <strong>learning rate warm-up</strong>.</p>
 <p>Without warm-up, pruning failed to find winning tickets. With warm-up (i.e., slowly increasing the learning rate at the beginning of training), they were back in business.</p>
 <p>So yes—winning tickets exist even in deep networks, but only if you treat them with care.</p>
-<h2 id="Key-Takeaways"><a href="#Key-Takeaways" class="headerlink" title="Key Takeaways"></a>Key Takeaways</h2><ul>
+<h2><span id="key-takeaways">Key Takeaways</span></h2><ul>
 <li>Big neural networks contain hidden winning tickets—smaller subnetworks that can be trained to match or exceed full network performance.</li>
 <li>You find them by <strong>pruning</strong> and <strong>resetting</strong> repeatedly.</li>
 <li>These subnetworks not only match accuracy, but often learn <strong>faster</strong> and generalize <strong>better</strong>.</li>
@@ -168,12 +168,12 @@
 </ul>
 <p>Now, what I am trying to do is replecating the results found by the authors myself. So stick around and keep a look over my <a target="_blank" rel="noopener" href="https://github.com/DA1729">GitHub</a>.</p>
 <p>peace. da1729</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>[1] @misc{frankle2019lotterytickethypothesisfinding,<br>      title&#x3D;{The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks},<br>      author&#x3D;{Jonathan Frankle and Michael Carbin},<br>      year&#x3D;{2019},<br>      eprint&#x3D;{1803.03635},<br>      archivePrefix&#x3D;{arXiv},<br>      primaryClass&#x3D;{cs.LG},<br>      url&#x3D;{<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03635">https://arxiv.org/abs/1803.03635</a>},<br>}</p>
+<h2><span id="references">References</span></h2><p>[1] @misc{frankle2019lotterytickethypothesisfinding,<br>      title&#x3D;{The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks},<br>      author&#x3D;{Jonathan Frankle and Michael Carbin},<br>      year&#x3D;{2019},<br>      eprint&#x3D;{1803.03635},<br>      archivePrefix&#x3D;{arXiv},<br>      primaryClass&#x3D;{cs.LG},<br>      url&#x3D;{<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1803.03635">https://arxiv.org/abs/1803.03635</a>},<br>}</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/" data-id="cmd01rmwe0005rdbn6jmlcbmg" data-title="Lottery Ticket Hypothesis Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/" data-id="cmd032bro00063ybn6gyl804m" data-title="Lottery Ticket Hypothesis Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       

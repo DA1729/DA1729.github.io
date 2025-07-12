@@ -111,7 +111,20 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in <strong>Post-Quantum Cryptography</strong>, so it is supposed to remain intact even against a fully functioning Quantum Computer. In this blog, I am emphasizing the fact that whenever one has to encrypt something really important, or let’s say they own a startup and want to encrypt their company’s data, one must always use the standardized crypto libraries and tools like <strong>OpenSSL</strong>, <strong>RustCrypto</strong>, <strong>OQS</strong> (for post-quantum), etc. Cuz, by doing some clever thinking, your own code encoding an “Attack Proof” crypto scheme, can be broken. And, I’ll show that by breaking an LWE encryption which I coded in C++. Infact, I’ll break it in two different ways.</p>
+        <h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><ul>
+<li><a href="#lwe-learning-with-errors">LWE (Learning With Errors)</a></li>
+<li><a href="#lwe-encryption">LWE Encryption</a></li>
+<li><a href="#lwe-decryption">LWE Decryption</a></li>
+<li><a href="#code-which-we-are-going-to-break">Code which we are going to BREAK</a></li>
+<li><a href="#cryptanalysis-of-lazily-coded-lwe">Cryptanalysis of Lazily Coded LWE</a></li>
+<li><a href="#machine-learning-attack">Machine Learning Attack</a><ul>
+<li><a href="#data-generation">Data generation</a></li>
+<li><a href="#model-for-single-bit-prediction">Model for Single Bit Prediction</a></li>
+</ul>
+</li>
+<li><a href="#updates">Updates</a></li>
+</ul>
+<p>Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in <strong>Post-Quantum Cryptography</strong>, so it is supposed to remain intact even against a fully functioning Quantum Computer. In this blog, I am emphasizing the fact that whenever one has to encrypt something really important, or let’s say they own a startup and want to encrypt their company’s data, one must always use the standardized crypto libraries and tools like <strong>OpenSSL</strong>, <strong>RustCrypto</strong>, <strong>OQS</strong> (for post-quantum), etc. Cuz, by doing some clever thinking, your own code encoding an “Attack Proof” crypto scheme, can be broken. And, I’ll show that by breaking an LWE encryption which I coded in C++. Infact, I’ll break it in two different ways.</p>
 <p>But before that, what is LWE?</p>
         
           <p class="article-more-link">
@@ -121,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/" data-id="cmd01rmw70001rdbn5h8q259y" data-title="Breaking LWE Encryption Part 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/" data-id="cmd032brj00023ybn55ghgccb" data-title="Breaking LWE Encryption Part 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -167,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/" data-id="cmd01rmwe0005rdbn6jmlcbmg" data-title="Lottery Ticket Hypothesis Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/" data-id="cmd032bro00063ybn6gyl804m" data-title="Lottery Ticket Hypothesis Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -212,7 +225,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/04/13/Lottery-Ticket-Hypothesis-for-Beginners/" data-id="cmd01rmwg0006rdbn9hwd204u" data-title="Lottery Ticket Hypothesis Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/04/13/Lottery-Ticket-Hypothesis-for-Beginners/" data-id="cmd032bro00073ybn59i208en" data-title="Lottery Ticket Hypothesis Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -257,7 +270,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/03/18/In-Memory-Computation-using-Analog-Part-2/" data-id="cmd01rmwd0004rdbn29kgg9b5" data-title="In Memory Computation using Analog Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/03/18/In-Memory-Computation-using-Analog-Part-2/" data-id="cmd032brn00053ybnb86c1kab" data-title="In Memory Computation using Analog Part 2" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -303,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/03/15/In-Memory-Computation-using-Analog-Part-1/" data-id="cmd01rmwa0002rdbnall11e4e" data-title="In-Memory Computation using Analog Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/03/15/In-Memory-Computation-using-Analog-Part-1/" data-id="cmd032brk00033ybned16bi1n" data-title="In-Memory Computation using Analog Part-1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
