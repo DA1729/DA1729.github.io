@@ -6,15 +6,15 @@
   
   <title>Breaking LWE Encryption Part 1 | da1729&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Table of Contents LWE (Learning With Errors) LWE Encryption LWE Decryption Code which we are going to BREAK Cryptanalysis of Lazily Coded LWE Machine Learning Attack Data generation Model for Single B">
+  <meta name="description" content="Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in Post-Quantum Cryptography, so it is supposed to remain intact even against a fully fun">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Breaking LWE Encryption Part 1">
 <meta property="og:url" content="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/index.html">
 <meta property="og:site_name" content="da1729&#39;s Blog">
-<meta property="og:description" content="Table of Contents LWE (Learning With Errors) LWE Encryption LWE Decryption Code which we are going to BREAK Cryptanalysis of Lazily Coded LWE Machine Learning Attack Data generation Model for Single B">
+<meta property="og:description" content="Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in Post-Quantum Cryptography, so it is supposed to remain intact even against a fully fun">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-03T04:11:40.000Z">
-<meta property="article:modified_time" content="2025-07-12T10:08:39.490Z">
+<meta property="article:modified_time" content="2025-07-12T10:10:36.042Z">
 <meta property="article:author" content="Daksh Pandey">
 <meta property="article:tag" content="Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption">
 <meta name="twitter:card" content="summary">
@@ -114,7 +114,11 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2><span id="table-of-contents">Table of Contents</span></h2><ul>
+        <p>Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in <strong>Post-Quantum Cryptography</strong>, so it is supposed to remain intact even against a fully functioning Quantum Computer. In this blog, I am emphasizing the fact that whenever one has to encrypt something really important, or let’s say they own a startup and want to encrypt their company’s data, one must always use the standardized crypto libraries and tools like <strong>OpenSSL</strong>, <strong>RustCrypto</strong>, <strong>OQS</strong> (for post-quantum), etc. Cuz, by doing some clever thinking, your own code encoding an “Attack Proof” crypto scheme, can be broken. And, I’ll show that by breaking an LWE encryption which I coded in C++. Infact, I’ll break it in two different ways.</p>
+<p>But before that, what is LWE?</p>
+<span id="more"></span>
+
+<h2><span id="table-of-contents">Table of Contents</span></h2><ul>
 <li><a href="#lwe-learning-with-errors">LWE (Learning With Errors)</a></li>
 <li><a href="#lwe-encryption">LWE Encryption</a></li>
 <li><a href="#lwe-decryption">LWE Decryption</a></li>
@@ -127,10 +131,6 @@
 </li>
 <li><a href="#updates">Updates</a></li>
 </ul>
-<p>Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in <strong>Post-Quantum Cryptography</strong>, so it is supposed to remain intact even against a fully functioning Quantum Computer. In this blog, I am emphasizing the fact that whenever one has to encrypt something really important, or let’s say they own a startup and want to encrypt their company’s data, one must always use the standardized crypto libraries and tools like <strong>OpenSSL</strong>, <strong>RustCrypto</strong>, <strong>OQS</strong> (for post-quantum), etc. Cuz, by doing some clever thinking, your own code encoding an “Attack Proof” crypto scheme, can be broken. And, I’ll show that by breaking an LWE encryption which I coded in C++. Infact, I’ll break it in two different ways.</p>
-<p>But before that, what is LWE?</p>
-<span id="more"></span>
-
 <h2><span id="lwe-learning-with-errors">LWE (Learning With Errors)</span></h2><p>LWE or Learngin With Errors, is a <strong>hard</strong> mathematical problem. The mathematical definition from Wikipedia is as follows:</p>
 <div style="border-left: 4px solid #007acc; padding: 10px; background-color: #f9f9f9; text-align: justify;">
 
@@ -279,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/" data-id="cmd032brj00023ybn55ghgccb" data-title="Breaking LWE Encryption Part 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/" data-id="cmd034v3c0002ovbndp3nfqjw" data-title="Breaking LWE Encryption Part 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
