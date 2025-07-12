@@ -14,7 +14,7 @@
 <meta property="og:description" content="Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in Post-Quantum Cryptography, so it is supposed to remain intact even against a fully fun">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-03T04:11:40.000Z">
-<meta property="article:modified_time" content="2025-07-05T07:58:25.064Z">
+<meta property="article:modified_time" content="2025-07-12T09:32:08.171Z">
 <meta property="article:author" content="Daksh Pandey">
 <meta property="article:tag" content="Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
 <h2 id="Code-which-we-are-going-to-BREAK"><a href="#Code-which-we-are-going-to-BREAK" class="headerlink" title="Code which we are going to BREAK"></a>Code which we are going to BREAK</h2><p>Now, let’s see the code which I will attempt to break. It encodes LWE encryption and decryption in a very naive manner or how I would imagine a person without a serious security team to code an LWE scheme. We’ll go block by block and you can find all the codes related to the blog in this <a target="_blank" rel="noopener" href="https://github.com/DA1729/breaking-lwe">repo</a>.</p>
 <h3 id="Defining-the-parameters"><a href="#Defining-the-parameters" class="headerlink" title="Defining the parameters"></a>Defining the parameters</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> n = <span class="number">512</span>;           <span class="comment">// security parameter</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> q = <span class="number">12289</span>;         <span class="comment">// large prime modulus</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> p = <span class="number">4</span>;             <span class="comment">// message space &#123;0,1,2,3&#125;</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> delta = q / p;     <span class="comment">// scaling factor for encoding</span></span><br></pre></td></tr></table></figure>
 
-<p>This is pretty self explanatory, just refer to the above definitions of the labeled terms, things will make sense. One thing to note, is that our message space is only <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{0, 1, 2, 3\} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">}</span></span></span></span>, which might seem very impractical and something worth not break into. But trust me, give me a larger message space, I can either just scale my attack for these parameters, or not care as large message spaces don’t interact well with the added Gaussian noise. In other words, encryption is practically pure noise.</p>
+<p>This is pretty self explanatory, just refer to the above definitions of the labeled terms, things will make sense. One thing to note, is that our message space is only <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{0, 1, 2, 3\} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span><span class="mclose">}</span></span></span></span>, which might seem very impractical and something worth not break into. Give me a larger message space? Cool, I’ll just scale the attack — or ignore it if the noise already eats the message anyway. In other words, encryption is practically pure noise.</p>
 <h3 id="Noise-sampling"><a href="#Noise-sampling" class="headerlink" title="Noise sampling"></a>Noise sampling</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// noise sampling</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sample_discrete_gaussian</span><span class="params">(std::mt19937&amp; gen, <span class="type">double</span> sigma = <span class="number">3.2</span>)</span> </span>&#123;</span><br><span class="line">    std::normal_distribution&lt;&gt; <span class="built_in">dist</span>(<span class="number">0.0</span>, sigma);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(std::<span class="built_in">round</span>(<span class="built_in">dist</span>(gen))) % q;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Here, a confusion might arise at the return statement. So the sample from a Gaussian distribution comes out as a double value in C++, but I want it to be an integer instead, NOO floating point headache. And, we really do want an “integer” sample from the distribution, and aditionally, it has to be in the ring <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="double-struck">Z</mi><mi>q</mi></msub></mrow><annotation encoding="application/x-tex">\mathbb{Z}_q </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.975em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathbb">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>, so I casted the double as an integer by first rounding it of course. Then I reduced it modulo <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>.</p>
 <h3 id="Secret-key-generation"><a href="#Secret-key-generation" class="headerlink" title="Secret key generation"></a>Secret key generation</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// secret key</span></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">key_gen</span><span class="params">(std::mt19937&amp; gen)</span> </span>&#123;</span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">int</span>&gt; <span class="title">s</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="function">std::bernoulli_distribution <span class="title">bern</span><span class="params">(<span class="number">0.5</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span>&amp; si : s) si = <span class="built_in">bern</span>(gen);</span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -261,11 +261,12 @@
 
 <p>The blog seems to be getting very big now. And I still have to train the model, which god knows if I’ll be able to do on my laptop or not. So let’s end this part here. See you very soon with part 2.</p>
 <p>peace. da1729</p>
+<h2 id="Updates"><a href="#Updates" class="headerlink" title="Updates"></a>Updates</h2><p>I have trained the model and performed the attack. You can checkout this repo: <a target="_blank" rel="noopener" href="https://github.com/DA1729/lwe_ml_attack.git">LWE ML Cryptanalysis</a>. The full blog is coming out soon, I am a little busy with other stuff to write a big detailed blog for now, so I thought it’ll be good if I just made the repo public.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/" data-id="cmcv5shxg0003lcbngl7n4ev8" data-title="Breaking LWE Encryption Part 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://da1729.github.io/2025/07/03/Breaking-LWE-Encryption/" data-id="cmd01rmw70001rdbn5h8q259y" data-title="Breaking LWE Encryption Part 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -276,15 +277,6 @@
   
     
 <nav id="article-nav">
-  
-    <a href="/2025/07/05/Breaking-LWE-Encryption-Part-2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Breaking LWE Encryption Part 2
-        
-      </div>
-    </a>
   
   
     <a href="/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/" id="article-nav-older" class="article-nav-link-wrap">
@@ -319,7 +311,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AI-Acceleration/" style="font-size: 10px;">AI - Acceleration</a> <a href="/tags/AI-Acceleration/" style="font-size: 10px;">AI Acceleration</a> <a href="/tags/Analog/" style="font-size: 20px;">Analog</a> <a href="/tags/Cryptography-Cryptanalysis-Post-Quantum-Cryptography-Fully-Homomorphic-Encryption/" style="font-size: 20px;">Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption</a> <a href="/tags/Hardware-Acceleration/" style="font-size: 20px;">Hardware Acceleration</a> <a href="/tags/VLSI/" style="font-size: 20px;">VLSI</a>
+      <a href="/tags/AI-Acceleration/" style="font-size: 10px;">AI - Acceleration</a> <a href="/tags/AI-Acceleration/" style="font-size: 10px;">AI Acceleration</a> <a href="/tags/Analog/" style="font-size: 20px;">Analog</a> <a href="/tags/Cryptography-Cryptanalysis-Post-Quantum-Cryptography-Fully-Homomorphic-Encryption/" style="font-size: 10px;">Cryptography, Cryptanalysis, Post Quantum Cryptography, Fully Homomorphic Encryption</a> <a href="/tags/Hardware-Acceleration/" style="font-size: 20px;">Hardware Acceleration</a> <a href="/tags/VLSI/" style="font-size: 20px;">VLSI</a>
     </div>
   </div>
 
@@ -341,10 +333,6 @@
       <ul>
         
           <li>
-            <a href="/2025/07/05/Breaking-LWE-Encryption-Part-2/">Breaking LWE Encryption Part 2</a>
-          </li>
-        
-          <li>
             <a href="/2025/07/03/Breaking-LWE-Encryption/">Breaking LWE Encryption Part 1</a>
           </li>
         
@@ -358,6 +346,10 @@
         
           <li>
             <a href="/2025/03/18/In-Memory-Computation-using-Analog-Part-2/">In Memory Computation using Analog Part 2</a>
+          </li>
+        
+          <li>
+            <a href="/2025/03/15/In-Memory-Computation-using-Analog-Part-1/">In-Memory Computation using Analog Part-1</a>
           </li>
         
       </ul>
