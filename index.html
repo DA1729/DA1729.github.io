@@ -165,15 +165,15 @@
         </div>
         
         <h2 class="article-title">
-          <a href="/2025/07/03/Breaking-LWE-Encryption/">Breaking LWE Encryption Part 1</a>
+          <a href="/2025/07/03/Breaking-LWE-Encryption/">An Empirical Analysis of LWE Robustness Against Machine Learning Distinguishers</a>
         </h2>
       </header>
       
       <div class="article-content">
         
           <div class="article-excerpt">
-            <p>Ok, the title is an absolute clickbait. We are not “breaking” breaking the LWE Encryption, cuz it’s used a lot in <strong>Post-Quantum Cryptography</strong>, so it is supposed to remain intact even against a fully functioning Quantum Computer. In this blog, I am emphasizing the fact that whenever one has to encrypt something really important, or let’s say they own a startup and want to encrypt their company’s data, one must always use the standardized crypto libraries and tools like <strong>OpenSSL</strong>, <strong>RustCrypto</strong>, <strong>OQS</strong> (for post-quantum), etc. Cuz, by doing some clever thinking, your own code encoding an “Attack Proof” crypto scheme, can be broken. And, I’ll show that by breaking an LWE encryption which I coded in C++. Infact, I’ll break it in two different ways.</p>
-<p>But before that, what is LWE?</p>
+            <p>The Learning With Errors (LWE) problem forms the foundation of many post-quantum cryptographic systems. These systems depend on a critical assumption: that no one can distinguish between LWE-generated samples and truly random data. I wanted to test this assumption by building sophisticated machine learning models to see if they could break this fundamental security property.</p>
+<p>My goal wasn’t to completely “break” LWE—that would be a monumental achievement. Instead, I aimed to map out where LWE’s security boundaries actually lie in practice. Could a neural network, with its pattern-recognition capabilities, successfully identify LWE samples and violate the core security assumption? Through multiple iterations of model improvements and data refinement, I discovered just how resilient LWE really is. The results highlight why cryptographers rely on standardized libraries with carefully chosen parameters backed by years of analysis.</p>
           </div>
         
         
@@ -378,7 +378,7 @@
         </li>
       
         <li>
-          <a href="/2025/07/03/Breaking-LWE-Encryption/">Breaking LWE Encryption Part 1</a>
+          <a href="/2025/07/03/Breaking-LWE-Encryption/">An Empirical Analysis of LWE Robustness Against Machine Learning Distinguishers</a>
           <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
             Jul 3, 2025
           </div>
