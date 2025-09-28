@@ -27,11 +27,7 @@
   
   <!-- Favicon -->
   
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"></head>
 
 <body>
   <div class="page-wrapper">
@@ -82,7 +78,7 @@
       </time>
       
       
-        <span> • Updated: September 26, 2025</span>
+        <span> • Updated: September 27, 2025</span>
       
     </div>
     
@@ -122,30 +118,30 @@
 <li><a href="#results-and-discussion-the-intractability-of-the-lwe-signal">Results and Discussion: The Intractability of the LWE Signal</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ol>
-<h2><span id="the-learning-with-errors-lwe-problem">The Learning With Errors (LWE) Problem</span></h2><p>The LWE problem rests on the difficulty of recovering a secret vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">s</mi><mo>∈</mo><msubsup><mi mathvariant="double-struck">Z</mi><mi>q</mi><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\mathbf{s} \in \mathbb{Z}_q^n </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathbf">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.072em;vertical-align:-0.3831em;"></span><span class="mord"><span class="mord mathbb">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-2.453em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3831em;"><span></span></span></span></span></span></span></span></span></span> from noisy linear equations. Each LWE sample consists of a pair <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="bold">a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo><mo>∈</mo><msubsup><mi mathvariant="double-struck">Z</mi><mi>q</mi><mi>n</mi></msubsup><mo>×</mo><msub><mi mathvariant="double-struck">Z</mi><mi>q</mi></msub></mrow><annotation encoding="application/x-tex">(\mathbf{a}, b) \in \mathbb{Z}_q^n \times \mathbb{Z}_q </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathbf">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.072em;vertical-align:-0.3831em;"></span><span class="mord"><span class="mord mathbb">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-2.453em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3831em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.975em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathbb">Z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">q</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>, where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> gets calculated as:</p>
+<h2><span id="the-learning-with-errors-lwe-problem">The Learning With Errors (LWE) Problem</span></h2><p>The LWE problem rests on the difficulty of recovering a secret vector $\mathbf{s} \in \mathbb{Z}_q^n$ from noisy linear equations. Each LWE sample consists of a pair $(\mathbf{a}, b) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$, where $b$ gets calculated as:</p>
 <p style="text-align:center;">
-<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mo stretchy="false">⟨</mo><mi mathvariant="bold">a</mi><mo separator="true">,</mo><mi mathvariant="bold">s</mi><mo stretchy="false">⟩</mo><mo>+</mo><mi>e</mi><mspace></mspace><mspace width="0.6667em"><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mtext> </mtext><mtext> </mtext><mi>q</mi></mspace></mrow><annotation encoding="application/x-tex">b = \langle \mathbf{a}, \mathbf{s} \rangle + e \mod q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">⟨</span><span class="mord mathbf">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathbf">s</span><span class="mclose">⟩</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.6667em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">mod</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span></span>
+$b = \langle \mathbf{a}, \mathbf{s} \rangle + e \mod q$
 </p>
 
-<p>Here, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">a</mi></mrow><annotation encoding="application/x-tex">\mathbf{a} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4444em;"></span><span class="mord mathbf">a</span></span></span></span> represents a publicly known random vector, while <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>e</mi></mrow><annotation encoding="application/x-tex">e </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">e</span></span></span></span> is a small error term drawn from a discrete Gaussian distribution. LWE-based systems rely on two key assumptions:</p>
+<p>Here, $\mathbf{a}$ represents a publicly known random vector, while $e$ is a small error term drawn from a discrete Gaussian distribution. LWE-based systems rely on two key assumptions:</p>
 <ol>
-<li><strong>Search-LWE</strong>: Finding <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">s</mi></mrow><annotation encoding="application/x-tex">\mathbf{s} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4444em;"></span><span class="mord mathbf">s</span></span></span></span> is computationally infeasible</li>
+<li><strong>Search-LWE</strong>: Finding $\mathbf{s}$ is computationally infeasible</li>
 <li><strong>Decision-LWE</strong>: Distinguishing LWE samples from uniformly random pairs is impossible</li>
 </ol>
 <p>My analysis focuses on this second assumption.</p>
 <h2><span id="methodology-a-machine-learning-based-auditor">Methodology: A Machine Learning-Based Auditor</span></h2><p>I built a machine learning distinguisher as my primary analytical tool—essentially a neural network trained as a binary classifier to tackle the Decision-LWE problem. The model receives two types of data:</p>
 <ul>
-<li><strong>Positive Class (Label 1)</strong>: Authentic LWE samples <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="bold">a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\mathbf{a}, b) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathbf">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></li>
-<li><strong>Negative Class (Label 0)</strong>: Uniformly random pairs <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="bold">a</mi><mo separator="true">,</mo><mi>u</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\mathbf{a}, u) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathbf">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">u</span><span class="mclose">)</span></span></span></span></li>
+<li><strong>Positive Class (Label 1)</strong>: Authentic LWE samples $(\mathbf{a}, b)$</li>
+<li><strong>Negative Class (Label 0)</strong>: Uniformly random pairs $(\mathbf{a}, u)$</li>
 </ul>
 <p>The model’s accuracy on unseen test data directly measures how distinguishable LWE samples are for specific parameter sets. Any accuracy substantially above 50% would signal a practical weakness, suggesting the model found a generalizable statistical pattern. I designed the experiment to map this accuracy across different LWE parameters, varying both the dimension (n) and noise magnitude (sigma).</p>
 <h2><span id="a-multi-stage-analytical-process">A Multi-Stage Analytical Process</span></h2><p>This investigation didn’t follow a straight path—early failures actually proved crucial in refining my approach and revealing deeper insights about the problem’s complexity.</p>
-<h3><span id="stage-i-the-baseline-model-and-overfitting">Stage I: The Baseline Model and Overfitting</span></h3><p>My first attempt used a standard Multi-Layer Perceptron (MLP) trained on complete <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="bold">a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\mathbf{a}, b) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathbf">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span> pairs. The model consistently failed to generalize, with test accuracy stuck at 50%. The training logs showed classic severe overfitting: while training accuracy climbed, validation performance stayed at random chance levels. This meant the model was just memorizing training artifacts rather than learning the actual mathematical structure.</p>
-<h3><span id="stage-ii-feature-engineering-for-modular-arithmetic">Stage II: Feature Engineering for Modular Arithmetic</span></h3><p>I suspected the model’s failure stemmed from a fundamental data representation mismatch. Neural networks treat numbers linearly, but LWE operates in a modular ring where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">q-1 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> sits right next to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>. To fix this, I implemented circular embeddings, transforming each integer x into a 2D vector (cos(2πx&#x2F;q), sin(2πx&#x2F;q)). This feature engineering explicitly gave the model an understanding of modular proximity.</p>
+<h3><span id="stage-i-the-baseline-model-and-overfitting">Stage I: The Baseline Model and Overfitting</span></h3><p>My first attempt used a standard Multi-Layer Perceptron (MLP) trained on complete $(\mathbf{a}, b)$ pairs. The model consistently failed to generalize, with test accuracy stuck at 50%. The training logs showed classic severe overfitting: while training accuracy climbed, validation performance stayed at random chance levels. This meant the model was just memorizing training artifacts rather than learning the actual mathematical structure.</p>
+<h3><span id="stage-ii-feature-engineering-for-modular-arithmetic">Stage II: Feature Engineering for Modular Arithmetic</span></h3><p>I suspected the model’s failure stemmed from a fundamental data representation mismatch. Neural networks treat numbers linearly, but LWE operates in a modular ring where $q-1$ sits right next to $0$. To fix this, I implemented circular embeddings, transforming each integer x into a 2D vector (cos(2πx&#x2F;q), sin(2πx&#x2F;q)). This feature engineering explicitly gave the model an understanding of modular proximity.</p>
 <p>Despite this major improvement in data representation, the model still couldn’t generalize—<strong>severe overfitting</strong> persisted. This suggested the problem wasn’t just about data format but something more fundamental.</p>
-<h3><span id="stage-iii-architectural-refinement-with-a-1d-cnn">Stage III: Architectural Refinement with a 1D CNN</span></h3><p>The LWE problem has an inherently sequential structure—<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> equals the sum of component-wise products. Standard MLPs aren’t architecturally suited for capturing these relationships. I switched to a <strong>1D Convolutional Neural Network (CNN)</strong>, specifically designed to identify local patterns in sequential data. I also added <strong>L2 Regularization</strong> to penalize model complexity and reduce overfitting.</p>
+<h3><span id="stage-iii-architectural-refinement-with-a-1d-cnn">Stage III: Architectural Refinement with a 1D CNN</span></h3><p>The LWE problem has an inherently sequential structure—$b$ equals the sum of component-wise products. Standard MLPs aren’t architecturally suited for capturing these relationships. I switched to a <strong>1D Convolutional Neural Network (CNN)</strong>, specifically designed to identify local patterns in sequential data. I also added <strong>L2 Regularization</strong> to penalize model complexity and reduce overfitting.</p>
 <p>The results were striking: training accuracy shot up dramatically, proving the CNN was far more capable. However, validation accuracy stayed flat at 50%. This was a <strong>critical discovery</strong>: even with proper data representation and a powerful, regularized architecture, the LWE secret’s signal was too diluted across the high-dimensional input space for the model to learn any generalizable pattern. This provided experimental evidence of the “curse of dimensionality” serving as LWE’s core security feature.</p>
-<h3><span id="stage-iv-a-focused-analysis-of-the-output-distribution">Stage IV: A Focused Analysis of the Output Distribution</span></h3><p>After consistently failing to distinguish complete <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi mathvariant="bold">a</mi><mo separator="true">,</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(\mathbf{a}, b) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathbf">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span> pairs, I formed a final, more focused hypothesis. If the full problem proves intractable, maybe the LWE process leaves a detectable statistical bias in the distribution of b values alone.</p>
+<h3><span id="stage-iv-a-focused-analysis-of-the-output-distribution">Stage IV: A Focused Analysis of the Output Distribution</span></h3><p>After consistently failing to distinguish complete $(\mathbf{a}, b)$ pairs, I formed a final, more focused hypothesis. If the full problem proves intractable, maybe the LWE process leaves a detectable statistical bias in the distribution of b values alone.</p>
 <p>I redesigned the experiment to train my most sophisticated model—the regularized 1D CNN with circular embeddings—on a simpler task: distinguishing collections of LWE-generated b values from collections of uniformly random integers.</p>
 <h2><span id="results-and-discussion-the-intractability-of-the-lwe-signal">Results and Discussion: The Intractability of the LWE Signal</span></h2><p>The final experiment confirmed what cryptographers have long theorized. Across all tested parameters, including deliberately weakened ones, the model failed to distinguish the distribution of LWE b values from the uniform distribution. Test accuracy remained locked at 50%.</p>
 <p>LWE’s resistance to machine learning attacks is well-established in theory, and this empirical evidence reinforces that understanding. Even with sophisticated neural architectures and optimized data representations, the statistical signature of the secret remains undetectable. The high-dimensional dot product combined with additive noise creates such effective diffusion that no learnable patterns emerge, even under conditions favorable to the attacker.</p>
@@ -195,6 +191,13 @@
     <ul>
       
         <li>
+          <a href="/2025/09/27/Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems/">Need for Gadget Decomposition in LWE Based Cryptosystems</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Sep 27, 2025
+          </div>
+        </li>
+      
+        <li>
           <a href="/2025/09/14/AGI-running-on-Quantum-Chip/">AGI running on Quantum Chip?</a>
           <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
             Sep 14, 2025
@@ -219,13 +222,6 @@
           <a href="/2025/04/16/Lottery-Ticket-Hypothesis-for-Beginners-Part-2/">Lottery Ticket Hypothesis Part 2</a>
           <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
             Apr 16, 2025
-          </div>
-        </li>
-      
-        <li>
-          <a href="/2025/04/13/Lottery-Ticket-Hypothesis-for-Beginners/">Lottery Ticket Hypothesis Part-1</a>
-          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
-            Apr 13, 2025
           </div>
         </li>
       
@@ -282,6 +278,10 @@
           #Post Quantum Cryptography
         </a>
       
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post-Quantum Cryptography
+        </a>
+      
         <a href="/tags/Ring-Theory/" class="tag">
           #Ring Theory
         </a>
@@ -304,7 +304,7 @@
         
           <li>
             <a href="/archives/2025/">
-              September 2025 (1)
+              September 2025 (2)
             </a>
           </li>
         
@@ -392,6 +392,23 @@
 
   
   <!-- Math Support -->
+  
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   
 </body>
 </html>
