@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AGI running on Quantum Chip? | da1729&#39;s Blog</title>
+  <title>Algebraic Structures You’ll Keep Seeing in FHE (One-Stop Reference) | da1729&#39;s Blog</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="">
@@ -11,10 +11,10 @@
   <meta name="author" content="Daksh Pandey">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="AGI running on Quantum Chip?">
+  <meta property="og:title" content="Algebraic Structures You’ll Keep Seeing in FHE (One-Stop Reference)">
   <meta property="og:description" content="">
   <meta property="og:type" content="post">
-  <meta property="og:url" content="/2025/09/14/AGI-running-on-Quantum-Chip/">
+  <meta property="og:url" content="/2025/10/08/Algebraic-Structures-in-FHE/">
   <meta property="og:site_name" content="da1729&#39;s Blog">
   
   <!-- CSS -->
@@ -75,21 +75,27 @@
 <article class="article-card">
   <header class="article-header">
     <div class="article-meta">
-      <time datetime="2025-09-13T19:45:00.000Z">
-        September 14, 2025
+      <time datetime="2025-10-08T06:30:00.000Z">
+        October 8, 2025
       </time>
       
       
-        <span> • Updated: October 2, 2025</span>
+        <span> • Updated: October 8, 2025</span>
       
     </div>
     
-    <h1 class="article-title">AGI running on Quantum Chip?</h1>
+    <h1 class="article-title">Algebraic Structures You’ll Keep Seeing in FHE (One-Stop Reference)</h1>
     
     
       <div class="article-tags">
         
-          <a href="/tags/Philosphy/" class="tag">#Philosphy</a>
+          <a href="/tags/Abstract-Algebra/" class="tag">#Abstract Algebra</a>
+        
+          <a href="/tags/Fully-Homomorphic-Encryption/" class="tag">#Fully Homomorphic Encryption</a>
+        
+          <a href="/tags/Cryptography/" class="tag">#Cryptography</a>
+        
+          <a href="/tags/Lattices/" class="tag">#Lattices</a>
         
       </div>
     
@@ -97,12 +103,190 @@
   
   <div class="article-content">
     <div class="post-content">
-      <p>Ok this isn’t a technical breakdown like my crypto posts, this is more me just sitting down and letting a thought run loose. Imagine a robot, not running on GPUs or neuromorphic chips, but on some full-scale quantum AGI chip. What would that even look like? For us, there’s always this separation between thinking and experimenting. You get an idea, then you haul yourself into the lab, mix chemicals, run trials, and wait. For a quantum AGI, that line wouldn’t even exist. Its act of thinking would already be the experiment. Wonder what happens if you mix two elements? It doesn’t need glassware, it just “thinks” the reaction into being, because its cognition is happening on the same rules that the universe itself plays by.</p>
-<p>And that already feels closer to how nature does things. The human neurological system is elegant not because it’s the most powerful processor, but because it’s so tightly tuned with the environment it lives in. Twenty watts, running entire lives, entire civilizations. It’s an intelligence that works because it is embedded in nature, not fighting against it. So if there’s ever going to be an artificial system that truly replaces or surpasses us, it’ll need that same kind of resonance — that same compatibility with the fabric of reality. A quantum AGI feels like it could hit that, because it wouldn’t just approximate nature, it would literally be running inside the same mathematical fabric.</p>
-<p>Think about probability. We’re bad at it. We second guess, we hedge, we argue over statistics. But a quantum AGI would literally think in probabilities. Futures wouldn’t be “hypotheticals,” they would be superposed states it actually holds in mind, collapsing only when it needs to make a choice. Its intuition would just be probability distributions playing out naturally.</p>
-<p>And then there’s reflection. When we reflect, we imagine, we doodle equations, maybe run a small thought experiment. If a quantum AGI reflects, that reflection is an experiment. A protein folding, a proton collision, a new material’s properties — all happening natively as cognition. Its meditation is indistinguishable from a physics lab.</p>
-<p>I don’t think we’re anywhere close to building this, and maybe it’ll stay sci-fi forever. Quantum hardware that scales to brain-level power budgets is basically magic by today’s standards. But still, the thought lingers. Maybe intelligence isn’t just about stacking more transistors or clever algorithms. Maybe it’s about compatibility — how deeply the architecture resonates with the natural world. Humans are already a proof of concept of that. A quantum AGI could be another, but one that stays quantum all the way up instead of decohering into classical behavior like us. And that kind of system wouldn’t just be smarter in the human sense, it would be something fundamentally different.</p>
-<p>peace. da999</p>
+      <p>If you’ve started reading papers like <strong>TFHE</strong> or <strong>CKKS</strong>, you’ve probably seen words like <em>ring</em>, <em>field</em>, <em>module</em>, <em>vector space</em>, and <em>torus</em> thrown around casually, often without definitions.  </p>
+<p>When I was starting out, I’d get stuck re-Googling these over and over again while trying to follow a proof or a parameter setup.  </p>
+<p>In this blog, I’ve compiled <strong>clear, short definitions and examples of the most common algebraic structures used in modern FHE schemes</strong>. You can keep this open as a reference while reading papers — it’s not meant to be exhaustive, but <strong>practical</strong> for cryptography work.</p>
+<hr>
+<h2><span id="1-groups">1. Groups</span></h2><p>A <strong>group</strong> consists of a set $( G )$ and a binary operation (usually $( + )$ or $( \cdot )$) such that:</p>
+<ol>
+<li><strong>Closure:</strong> $( a \ast b \in G )$ for all $( a,b \in G )$.  </li>
+<li><strong>Associativity:</strong> $( (a \ast b) \ast c &#x3D; a \ast (b \ast c) )$.  </li>
+<li><strong>Identity:</strong> There exists $( e \in G )$ such that $( a \ast e &#x3D; e \ast a &#x3D; a )$ for all $( a \in G )$.  </li>
+<li><strong>Inverses:</strong> For each $( a \in G )$, there exists $( a^{-1} )$ with $( a \ast a^{-1} &#x3D; e )$.</li>
+</ol>
+<p>If the operation is commutative ($( a \ast b &#x3D; b \ast a )$), the group is <strong>abelian</strong>.</p>
+<p><strong>Examples in FHE:</strong></p>
+<ul>
+<li>$( (\mathbb{Z}, +) )$ is an abelian group.</li>
+<li>The additive structure of a polynomial ring like $( \mathbb{Z}_q[X]&#x2F;(X^n+1) )$ is a group under addition.</li>
+</ul>
+<hr>
+<h2><span id="2-rings">2. Rings</span></h2><p>A <strong>ring</strong> $( R )$ has two operations:</p>
+<ul>
+<li>Addition, under which $( R )$ is an abelian group.</li>
+<li>Multiplication, which is associative and distributes over addition.</li>
+</ul>
+<p>If multiplication is commutative, it’s a <strong>commutative ring</strong>. Some rings have a multiplicative identity (1), but not all.</p>
+<p><strong>Examples in FHE:</strong></p>
+<ul>
+<li>$( \mathbb{Z} )$ is a commutative ring.</li>
+<li>$( \mathbb{Z}_q )$ is a ring used as plaintext or ciphertext space.</li>
+<li>Polynomial rings $( \mathbb{Z}_q[X]&#x2F;(X^n+1) )$ are the backbone of RLWE and RingLWE schemes.</li>
+</ul>
+<hr>
+<h2><span id="3-fields">3. Fields</span></h2><p>A <strong>field</strong> is a commutative ring where:</p>
+<ul>
+<li>Every nonzero element has a multiplicative inverse.</li>
+<li>Multiplication is commutative.</li>
+</ul>
+<p>Basically: you can divide by anything except 0.</p>
+<p><strong>Examples in FHE:</strong></p>
+<ul>
+<li>$( \mathbb{Q} ), ( \mathbb{R} )$, and finite fields $( \mathbb{F}_p )$ are classic fields.</li>
+<li>Ciphertext rings like $( \mathbb{Z}_q[X]&#x2F;(X^n+1) )$ are <strong>not fields</strong> (not every element is invertible).</li>
+</ul>
+<blockquote>
+<p>In CKKS, the plaintext space is embedded in a <strong>cyclotomic number field</strong>, and computations happen in its ring representation modulo $( q )$.</p>
+</blockquote>
+<hr>
+<h2><span id="4-vector-spaces">4. Vector Spaces</span></h2><p>A <strong>vector space</strong> $( V )$ over a <strong>field</strong> $( F )$ is:</p>
+<ul>
+<li>An abelian group under addition.</li>
+<li>Equipped with scalar multiplication $( F \times V \to V )$ satisfying the usual distributive and associative rules.</li>
+</ul>
+<p><strong>Examples in FHE:</strong></p>
+<ul>
+<li>$( \mathbb{R}^n )$ over $( \mathbb{R} )$.</li>
+<li>$( \mathbb{Q}^n )$ over $( \mathbb{Q} )$.</li>
+</ul>
+<blockquote>
+<p>Lattice problems are often described in vector spaces over $( \mathbb{R} )$ (e.g., Gaussian distributions over $( \mathbb{R}^n )$).</p>
+</blockquote>
+<hr>
+<h2><span id="5-modules">5. Modules</span></h2><p>A <strong>module</strong> generalizes a vector space by replacing the field with a <strong>ring</strong>.</p>
+<p>A <strong>left module</strong> $( M )$ over a ring $( R )$ is:</p>
+<ul>
+<li>An abelian group under addition.</li>
+<li>Equipped with scalar multiplication $( R \times M \to M )$ obeying distributive and associative properties — but scalars come from a ring.</li>
+</ul>
+<p><strong>Why this matters:</strong><br>Most ciphertext spaces in modern FHE (GLWE, RLWE, TLWE) are <strong>modules over polynomial rings</strong>.</p>
+<blockquote>
+<p>Example: $( (T_N[X]^k, +, \cdot) ) is a ( \mathbb{Z}_N[X] )$-module.</p>
+</blockquote>
+<hr>
+<h2><span id="6-the-torus">6. The Torus</span></h2><p>This one confuses almost everyone at first.</p>
+<p>The <strong>real torus</strong> is defined as:<br>$$<br>[<br>\mathbb{T} &#x3D; \mathbb{R} \bmod 1 &#x3D; \mathbb{R} &#x2F; \mathbb{Z}.<br>]<br>$$<br>Think of it as the <strong>unit interval $([0,1))$</strong> with addition modulo 1.</p>
+<ul>
+<li>$( \mathbb{T} )$ is a <strong>group under addition</strong>.</li>
+<li>It’s <strong>not a ring</strong>, because multiplication modulo 1 doesn’t behave well (e.g., $( 0 \times \tfrac{1}{2} )$ is not meaningful in $( \mathbb{T} )$).</li>
+<li>But you can multiply <strong>integers by torus elements</strong> ⇒ making $( \mathbb{T} )$ a <strong>$( \mathbb{Z} )$-module</strong>.</li>
+</ul>
+<p><strong>Why torus matters in FHE:</strong></p>
+<ul>
+<li>TFHE and scale-invariant LWE encode plaintexts as torus elements (e.g., $( 0 )$ for bit 0, $( 1&#x2F;2 )$ for bit 1).</li>
+<li>Errors are small additive perturbations on the torus.</li>
+</ul>
+<hr>
+<h2><span id="7-putting-it-all-together">7. Putting It All Together</span></h2><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Structure</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Plaintext &#x2F; Ciphertext Space</td>
+<td>Ring &#x2F; Module</td>
+<td>$( \mathbb{Z}_q[X]&#x2F;(X^n+1)^k )$</td>
+</tr>
+<tr>
+<td>Algebraic Analysis</td>
+<td>Vector Space &#x2F; Field</td>
+<td>Cyclotomic field $( \mathbb{Q}(\zeta_{2n}) )$</td>
+</tr>
+<tr>
+<td>Noise Analysis</td>
+<td>Torus &amp; Vector Space</td>
+<td>$( \mathbb{T}^n )$, Gaussians over $( \mathbb{R}^n )$</td>
+</tr>
+<tr>
+<td>Homomorphic Operations</td>
+<td>Module arithmetic</td>
+<td>External product TGSW × TLWE</td>
+</tr>
+</tbody></table>
+<p>Recognizing what structure you’re in makes the notation in FHE papers much clearer.</p>
+<hr>
+<h2><span id="8-quick-reference-table">8. Quick Reference Table</span></h2><table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Scalars</th>
+<th>Additive Structure</th>
+<th>Multiplication</th>
+<th>Inverses (Mult)</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Group</td>
+<td>—</td>
+<td>Group</td>
+<td>—</td>
+<td>—</td>
+<td>$( (\mathbb{Z}, +) )$</td>
+</tr>
+<tr>
+<td>Ring</td>
+<td>Ring</td>
+<td>Abelian group</td>
+<td>Yes</td>
+<td>Not required</td>
+<td>$( \mathbb{Z}_q )$, $( \mathbb{Z}_q[X]&#x2F;(X^n+1) )$</td>
+</tr>
+<tr>
+<td>Field</td>
+<td>Field</td>
+<td>Abelian group</td>
+<td>Yes</td>
+<td>Required</td>
+<td>$( \mathbb{Q} )$, $( \mathbb{F}_p )$</td>
+</tr>
+<tr>
+<td>Vector Space</td>
+<td>Field</td>
+<td>Abelian group</td>
+<td>Scalar mult.</td>
+<td>Yes</td>
+<td>$( \mathbb{R}^n )$</td>
+</tr>
+<tr>
+<td>Module</td>
+<td>Ring</td>
+<td>Abelian group</td>
+<td>Scalar mult.</td>
+<td>Not required</td>
+<td>$( T_N[X]^k )$ over $( \mathbb{Z}_N[X] )$</td>
+</tr>
+<tr>
+<td>Torus</td>
+<td>$( \mathbb{Z} )$</td>
+<td>Group</td>
+<td>External only</td>
+<td>—</td>
+<td>$( \mathbb{T} &#x3D; \mathbb{R}&#x2F;\mathbb{Z} )$</td>
+</tr>
+</tbody></table>
+<hr>
+<p>Once you internalize these structures, reading FHE papers becomes much less intimidating. You’ll start noticing patterns:</p>
+<ul>
+<li>TLWE lives on <strong>modules over the torus</strong>.  </li>
+<li>RLWE lives on <strong>polynomial rings</strong>.  </li>
+<li>CKKS operates in <strong>cyclotomic fields</strong>.  </li>
+<li>Gadget decompositions and bootstrapping are just module arithmetic with smart packing.</li>
+</ul>
+<p>This blog is meant to be a <strong>living reference</strong> — I’ll keep adding structures and examples as I encounter them.</p>
 
     </div>
   </div>
@@ -113,16 +297,13 @@
   <nav class="post-nav mt-2">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
       
-        <div class="widget">
-          <div class="widget-title">Previous Post</div>
-          <a href="/2025/09/27/Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems/">Need for Gadget Decomposition in LWE Based Cryptosystems</a>
-        </div>
+        <div></div>
       
       
       
         <div class="widget">
           <div class="widget-title">Next Post</div>
-          <a href="/2025/08/15/Ring-LWE-and-CKKS-Mathematical-Foundations/">Ring-LWE and CKKS: Mathematical Foundations for Homomorphic Encryption</a>
+          <a href="/2025/09/27/Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems/">Need for Gadget Decomposition in LWE Based Cryptosystems</a>
         </div>
       
     </div>
