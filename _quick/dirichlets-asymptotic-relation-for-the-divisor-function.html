@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tail Bound Derivation for Decryption Error Probability in LWE-based Schemes | da1729&#39;s Blog</title>
+  <title>Dirichlet&#39;s Relation for Asymptotic Behavior of the Divisor Function | da1729&#39;s Blog</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="">
@@ -11,10 +11,10 @@
   <meta name="author" content="Daksh Pandey">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="Tail Bound Derivation for Decryption Error Probability in LWE-based Schemes">
+  <meta property="og:title" content="Dirichlet&#39;s Relation for Asymptotic Behavior of the Divisor Function">
   <meta property="og:description" content="">
   <meta property="og:type" content="page">
-  <meta property="og:url" content="/_quick/tail-bound-derivation-for-decryption-error-probability-in-lwe-based-schemes.html">
+  <meta property="og:url" content="/_quick/dirichlets-asymptotic-relation-for-the-divisor-function.html">
   <meta property="og:site_name" content="da1729&#39;s Blog">
   
   <!-- CSS -->
@@ -74,12 +74,12 @@
           <!-- Static Page Template -->
 <article class="article-card">
   <header class="article-header">
-    <h1 class="article-title">Tail Bound Derivation for Decryption Error Probability in LWE-based Schemes</h1>
+    <h1 class="article-title">Dirichlet&#39;s Relation for Asymptotic Behavior of the Divisor Function</h1>
     
     
       <div class="article-meta">
-        <time datetime="2025-10-08T12:28:00.000Z">
-          October 8, 2025
+        <time datetime="2025-11-18T14:30:00.000Z">
+          November 18, 2025
         </time>
         
           <span> • Updated: November 18, 2025</span>
@@ -90,54 +90,42 @@
   
   <div class="article-content">
     <div class="post-content">
-      <p>In this quick post, we will derive the <strong>decryption error probability bound</strong> that frequently appears in LWE and RLWE-based encryption schemes, using a simple <strong>Gaussian tail bound</strong> argument.</p>
-<p>This derivation explains why, under standard parameter choices, the decryption error is <strong>negligibly small</strong>, typically on the order of $2^{-p}$ for some security parameter $p$.</p>
+      <p>I was studying for my end-term examinations, and encountered this beautiful relation describing how the function which counts the number of divisors of the input behaves over at a large scale.</p>
 <hr>
-<h3><span id="1-decryption-correctness-condition">1. Decryption Correctness Condition</span></h3><p>In LWE&#x2F;RLWE-based encryption, after decryption we recover a <strong>phase</strong> of the form:</p>
-<p>$$<br>\text{phase} &#x3D; \mu + e<br>$$</p>
-<p>where $\mu$ is the encoded message and $e$ is the error term sampled from a Gaussian distribution $\mathcal{N}(0, \alpha^2)$.</p>
-<p>Let $\mathcal{M}$ be the message space, and let <strong>$R$ be the packing radius</strong>, i.e., half the minimum distance between any two messages in $\mathcal{M}$.</p>
-<ul>
-<li>Decryption is <strong>correct</strong> if the noise doesn’t push the phase closer to a different message:<br>$$<br>|e| &lt; R<br>$$</li>
-<li>Decryption <strong>fails</strong> if:<br>$$<br>|e| \ge R<br>$$</li>
-</ul>
-<p>Therefore, the <strong>decryption failure probability</strong> is exactly the <strong>tail probability</strong> of the noise exceeding $R$.</p>
+<h3><span id="1-the-setup-lattice-points">1. The Setup: Lattice Points</span></h3><p>We want to estimate the average order of $d(n)$ by summing it up to $x$:</p>
+<p>$$<br>\sum_{n \le x} d(n) &#x3D; \sum_{n \le x} \sum_{d|n} 1<br>$$</p>
+<p>By swapping the order of summation, we can view this as a sum over pairs $(q, d)$ such that $qd \le x$. Geometrically, this corresponds to counting the number of <strong>lattice points</strong> (points with integer coordinates) in the first quadrant lying under the hyperbola $qd &#x3D; x$.</p>
+<p>$$<br>\sum_{n \le x} d(n) &#x3D; \sum_{d \le x} \sum_{q \le x&#x2F;d} 1<br>$$</p>
 <hr>
-<h3><span id="2-gaussian-tail-bound">2. Gaussian Tail Bound</span></h3><p>For a Gaussian (or more generally, $\sigma$-subgaussian) random variable $X$ with standard deviation $\sigma$, the following standard tail bound holds [cite: 86]:</p>
-<p>$$<br>P(|X| \ge x) \le 2 \exp\left(-\frac{x^2}{2\sigma^2}\right)<br>$$</p>
-<p>Here:</p>
-<ul>
-<li>$X &#x3D; e$</li>
-<li>$\sigma &#x3D; \alpha$</li>
-<li>$x &#x3D; R$</li>
-</ul>
-<p>Substituting, the probability that the noise exceeds $R$ is:</p>
-<p>$$<br>P(\text{failure}) &#x3D; P(|e| \ge R) \le 2 \exp\left(-\frac{R^2}{2\alpha^2}\right)<br>$$</p>
-<p>This already shows that the failure probability decreases <strong>exponentially in $R^2 &#x2F; \alpha^2$</strong>.</p>
+<h3><span id="2-the-naive-approach">2. The Naive Approach</span></h3><p>A straightforward summation yields a “weak” bound. If we simply sum the number of points on vertical lines $d&#x3D;1, d&#x3D;2, \dots$:</p>
+<p>$$<br>\sum_{d \le x} \left\lfloor \frac{x}{d} \right\rfloor &#x3D; x \sum_{d \le x} \frac{1}{d} + O(x)<br>$$</p>
+<p>Using the harmonic series approximation $\sum \frac{1}{d} \approx \log x$, we get:</p>
+<p>$$<br>\sum_{n \le x} d(n) &#x3D; x \log x + O(x)<br>$$</p>
+<p>While this shows the average order is $\log n$, the error term $O(x)$ is quite large. We can do better by exploiting the symmetry of the hyperbola.</p>
 <hr>
-<h3><span id="3-substituting-the-noise-parameter">3. Substituting the Noise Parameter</span></h3><p>The paper specifies that the noise parameter $\alpha$ is chosen on the order of:</p>
-<p>$$<br>\alpha &#x3D; O\left(\frac{R}{\sqrt{p}}\right)<br>$$</p>
-<p>where $p$ is the security parameter controlling the correctness error. We can write this more explicitly as:</p>
-<p>$$<br>\alpha &#x3D; \frac{R}{c\sqrt{p}}<br>$$</p>
-<p>for some constant $c$ hidden by the Big-O notation.</p>
-<p>Substitute this into the tail bound:</p>
-<p>$$<br>P(\text{failure}) \le 2 \exp\left(-\frac{R^2}{2\left(\frac{R}{c\sqrt{p}}\right)^2}\right)<br>&#x3D; 2 \exp\left(-\frac{R^2 \cdot c^2 p}{2 R^2}\right)<br>&#x3D; 2 \exp\left(-\frac{c^2 p}{2}\right)<br>$$</p>
+<h3><span id="3-dirichlet-s-hyperbola-method">3. Dirichlet’s Hyperbola Method</span></h3><p>The region under $qd &#x3D; x$ is symmetric about the line $q &#x3D; d$. The line intersects the hyperbola at $(\sqrt{x}, \sqrt{x})$.</p>
+<p>Instead of summing all the way to $x$, we can:</p>
+<ol>
+<li>Count points where $d \le \sqrt{x}$ (the region to the left of the intersection).</li>
+<li>Count points where $q \le \sqrt{x}$ (the region below the intersection).</li>
+<li>Subtract the square region $d, q \le \sqrt{x}$ (the overlap) to avoid double counting.</li>
+</ol>
+<p>This gives us the identity:</p>
+<p>$$<br>\sum_{n \le x} d(n) &#x3D; 2 \sum_{d \le \sqrt{x}} \left\lfloor \frac{x}{d} \right\rfloor - \lfloor \sqrt{x} \rfloor^2<br>$$</p>
 <hr>
-<h3><span id="4-exponentially-small-failure-probability">4. Exponentially Small Failure Probability</span></h3><p>The final expression</p>
-<p>$$<br>P(\text{failure}) \le 2 \exp\left(-\frac{c^2 p}{2}\right)<br>$$</p>
-<p>shows that by increasing $p$ (and shrinking $\alpha$ accordingly), the decryption error probability decays <strong>exponentially in $p$</strong>.</p>
-<p>This is often expressed in cryptography as being <em>negligible in $p$</em>, e.g.</p>
-<p>$$<br>P(\text{failure}) \le 2^{-p}<br>$$</p>
-<p>after appropriate choice of constants.</p>
+<h3><span id="4-deriving-the-asymptotic-formula">4. Deriving the Asymptotic Formula</span></h3><p>Now we apply standard estimates. Let $C$ be Euler’s constant. We use the approximation $\lfloor y \rfloor &#x3D; y + O(1)$ and $\sum_{d \le y} \frac{1}{d} &#x3D; \log y + C + O(1&#x2F;y)$.</p>
+<p>$$<br>\sum_{n \le x} d(n) &#x3D; 2 \sum_{d \le \sqrt{x}} \left( \frac{x}{d} + O(1) \right) - (\sqrt{x} + O(1))^2<br>$$<br>$$<br>&#x3D; 2x \sum_{d \le \sqrt{x}} \frac{1}{d} + O(\sqrt{x}) - (x + O(\sqrt{x}))<br>$$<br>$$<br>&#x3D; 2x \left( \log \sqrt{x} + C + O\left(\frac{1}{\sqrt{x}}\right) \right) - x + O(\sqrt{x})<br>$$</p>
+<p>Simplifying the $\log \sqrt{x}$ term to $\frac{1}{2} \log x$:</p>
+<p>$$<br>&#x3D; 2x \left( \frac{1}{2} \log x + C \right) - x + O(\sqrt{x})<br>$$<br>$$<br>&#x3D; x \log x + 2Cx - x + O(\sqrt{x})<br>$$</p>
 <hr>
-<h3><span id="5-intuition-recap">5. Intuition Recap</span></h3><ul>
-<li>Decryption correctness is equivalent to the noise staying within the packing radius.</li>
-<li>Gaussian noise is sharply concentrated around 0.</li>
-<li>By setting $\alpha$ small relative to $R$, the chance of noise “escaping” becomes negligible.</li>
-<li>The tail bound provides a clean way to <strong>quantify</strong> this probability.</li>
-</ul>
-<p>This derivation underpins the <strong>reliability</strong> of LWE&#x2F;RLWE-based cryptosystems: with appropriate parameter choices, the probability of incorrect decryption can be made exponentially small in the security parameter.</p>
+<h3><span id="5-conclusion">5. Conclusion</span></h3><p>Grouping the linear terms, we arrive at <strong>Dirichlet’s Divisor Problem</strong> formula:</p>
+<p>$$<br>\sum_{n \le x} d(n) &#x3D; x \log x + (2C - 1)x + O(\sqrt{x})<br>$$</p>
+<p>This proves that the average number of divisors of $n$ is $\log n$.</p>
+<p><em>Note: The error term $O(\sqrt{x})$ has been improved significantly over the last century (Voronoi, van der Corput, Kolesnik), but determining the optimal exponent $\theta$ such that the error is $O(x^\theta)$ remains an open problem in number theory.</em></p>
 <p>peace. da1729</p>
+<h3><span id="reference">Reference</span></h3><ul>
+<li>Introduction to Analytic Number Theory by Tom M. Apostol</li>
+</ul>
 
     </div>
   </div>
