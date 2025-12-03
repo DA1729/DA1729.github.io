@@ -4,27 +4,6 @@
   
     
     <entry>
-      <title>Multi-Party Computation part 2</title>
-      <link href="/2025/12/03/Mult-Party-Computation-part-2/"/>
-      <url>/2025/12/03/Mult-Party-Computation-part-2/</url>
-      
-        <content type="html"><![CDATA[<p>Ok, let’s continue…</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> Cryptography </tag>
-            
-            <tag> Secure Computing </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Multi-Party Computation part 1</title>
       <link href="/2025/12/01/Multi-Party-Computation/"/>
       <url>/2025/12/01/Multi-Party-Computation/</url>
@@ -100,9 +79,9 @@
             
             <tag> Cryptography </tag>
             
-            <tag> Post Quantum Cryptography </tag>
-            
             <tag> Fully Homomorphic Encryption </tag>
+            
+            <tag> Post Quantum Cryptography </tag>
             
             <tag> Abstract Algebra </tag>
             
@@ -127,11 +106,11 @@
             
             <tag> Cryptography </tag>
             
+            <tag> Fully Homomorphic Encryption </tag>
+            
             <tag> Cryptanalysis </tag>
             
             <tag> Post Quantum Cryptography </tag>
-            
-            <tag> Fully Homomorphic Encryption </tag>
             
         </tags>
       
