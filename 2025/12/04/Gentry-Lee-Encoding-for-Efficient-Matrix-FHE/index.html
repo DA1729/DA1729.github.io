@@ -132,7 +132,9 @@
 <p>$$ m(\zeta_0, \zeta_1) &#x3D; 2 $$</p>
 <p>$$ m(\zeta_1, \zeta_0) &#x3D; 3 $$</p>
 <p>$$ m(\zeta_1, \zeta_1) &#x3D; 4 $$</p>
-<p>Using the inverse FFT (DFT), or simply by solving the system of linear equations, we solve for the coefficients $c_{xy}$ in $m(X, Y) &#x3D; \Sigma c_{xy}X^xY^y$</p>
+<p>Using the inverse FFT (DFT), or simply by solving the system of linear equations, we solve for the coefficients $c_{xy}$ in $m(X, Y) &#x3D; \Sigma c_{xy}X^xY^y$.</p>
+<p>For the roots, $\zeta_0 &#x3D; \sqrt{i} &#x3D; w$ and $\zeta_1 &#x3D; -\sqrt{i} &#x3D; -w$, we end up with the following polynomial which you can verify yourself: </p>
+<p>$$ m(X, Y) &#x3D; \frac{5}{2} - \frac{3}{2w} X - \frac{1}{2w} Y $$</p>
 <p>Conceptually speaking, our matrix is now “smeared” across the coefficients of the polynomial. This allows us to perform operations like rotation by simply multiplying the variable $X$ or $Y$, rather than permuting a vector.</p>
 <p>Let’s end this part right here, in the next part, I will be covering the encryption process, which is mostly similar to all the other schemes following the RLWE problem, but here we shall see one key innovation, where the sampled secret key does not depend on the $Y$ axis allowing cheap column operations and efficient key-switching.</p>
 <p>peace. da1729</p>
