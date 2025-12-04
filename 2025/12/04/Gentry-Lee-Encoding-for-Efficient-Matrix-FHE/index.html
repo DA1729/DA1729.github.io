@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gentry-Lee Encoding for Efficient Matrix FHE | da1729&#39;s Blog</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Daksh Pandey">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gentry-Lee Encoding for Efficient Matrix FHE">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="post">
+  <meta property="og:url" content="/2025/12/04/Gentry-Lee-Encoding-for-Efficient-Matrix-FHE/">
+  <meta property="og:site_name" content="da1729&#39;s Blog">
+  
+  <!-- CSS -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <!-- RSS Feed -->
+  
+  
+  <!-- Favicon -->
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <h1>
+        <a href="/" class="site-title">da1729&#39;s Blog</a>
+      </h1>
+      
+        <p class="site-subtitle">cryptography, digital design, embedded, rf, ...</p>
+      
+      
+      <!-- Navigation -->
+      <nav class="nav">
+        
+          <a href="/" class="nav-link">Home</a>
+        
+          <a href="/quick" class="nav-link">Quick Posts</a>
+        
+          <a href="/archives" class="nav-link">Archives</a>
+        
+          <a href="/about" class="nav-link">About</a>
+        
+        
+        <!-- Social Links -->
+        
+          
+            <a href="https://github.com/DA1729" class="nav-link" target="_blank" rel="noopener">github</a>
+          
+            <a href="https://x.com/sp0oky_daksh" class="nav-link" target="_blank" rel="noopener">twitter</a>
+          
+            <a href="mailto:dakshpandey177@gmail.com" class="nav-link" target="_blank" rel="noopener">email</a>
+          
+            <a href="https://sp0oky-portfolio.vercel.app/" class="nav-link" target="_blank" rel="noopener">portfolio</a>
+          
+        
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="content">
+        <main class="main-content">
+          <!-- Individual Post Page -->
+<article class="article-card">
+  <header class="article-header">
+    <div class="article-meta">
+      <time datetime="2025-12-04T04:45:37.000Z">
+        December 4, 2025
+      </time>
+      
+      
+        <span> • Updated: December 4, 2025</span>
+      
+    </div>
+    
+    <h1 class="article-title">Gentry-Lee Encoding for Efficient Matrix FHE</h1>
+    
+    
+      <div class="article-tags">
+        
+          <a href="/tags/Cryptography/" class="tag">#Cryptography</a>
+        
+          <a href="/tags/Fully-Homomorphic-Encryption/" class="tag">#Fully Homomorphic Encryption</a>
+        
+      </div>
+    
+  </header>
+  
+  <div class="article-content">
+    <div class="post-content">
+      <p>Craig Gentry (yeah the man himself) and Yongwoo Lee, proposed a new FHE scheme quite recently (October 2025). The special thing about this new scheme is it’s algorithmic efficiency towards <strong>Homomorphic Matrix Arithmetic</strong>, which can be groundbreaking in Privacy-Preserving Machine Learning. So let’s dive right into it. I am assuming that the reader is already familiar with the LWE problem and it’s ring variant (RLWE) and how do we proceed to build Fully Homomorphic Cryptosystems around it.</p>
+<p>In CKKS, we usually pack a long vector of numbers into a polynomial. If we want to multiply two matrices, we have to perform and deal with awkward rotations (automorphisms) and corresponding key-switches. I went through the trouble before October for our team (Aurva) project, you can find <a target="_blank" rel="noopener" href="https://github.com/MrRoy09/AOHW_327_Aurva_Student">here</a>, which was selected as one of the winners at AMD Open Hardware Competition 2025. In this project, we accelerated the convolution operation over the CKKS Encryption.</p>
+<p>The key innovation proposed by the Gentry and Lee, is that they change this “container” from a 1D line (polynomial in $X$) to a <strong>multidimensional cube</strong> (polynomial in $X, Y, W$). Here, </p>
+<ul>
+<li>$X$ axis: represents the <strong>rows</strong> of the matrix. </li>
+<li>$Y$ axis: represents the <strong>columns</strong> of the matrix. </li>
+<li>$W$ axis: represents the <strong>batch</strong> (process multiple matrices at once).</li>
+</ul>
+<p>By encoding the matrix into $X$ and $Y$ coordinates, matrix multiplication becomes a natural byproduct of polynomial algebra.</p>
+<h2><span id="encoding-matrices">Encoding Matrices</span></h2><p>The goal is to turn a matrix $M$ (a grid of numbers) into a polynomial $m(X, Y, W)$. The authors use the <strong>Evaluation Representation</strong> (similar to DFT&#x2F;FFT). Imagine the polynomial as a wave. You can define this wave by it’s <strong>coefficients</strong> (numbers in front of $X, Y$) or, by <strong>it’s values at specific points (roots of unity)</strong>.</p>
+<p>The paper defines the polynomial such that when evaluated at specific “coordinates” (roots of unity), spits out the entry $M_{j, k}$ of the matrix $M$.</p>
+<p>For this, we use a <strong>special ring</strong> $R^{‘}_q$: $$R^{‘}_q &#x3D; \mathbb{Z}_q[i][X, Y, W]\langle X^n - i, Y^n - i, \Phi_p(W) \rangle$$.</p>
+<p>Further, we use: </p>
+<ul>
+<li>$\zeta$: roots of unity. The specific roots used are primitive 4n-th roots such that $\zeta ^ n &#x3D; i$.</li>
+</ul>
+<p>Now, the polynomial $m$ encodes a matrix $M^{(l)}$ if: $$m(\zeta_j, \zeta_k, \eta_l) &#x3D; M^{l}_{jk}$$, where: </p>
+<ul>
+<li>$\zeta_j$ is the coordinate for row $j$.</li>
+<li>$\zeta_k$ is the coordinate for row $k$.</li>
+<li>$\eta_l$ is the coordinate for $l$-th matrix in the batch.</li>
+</ul>
+<p>This endoding process should look something like this in the implementation: </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">poly_XY <span class="title">encode</span><span class="params">(<span class="type">const</span> std::vector&lt;std::vector&lt;<span class="type">int64_t</span>&gt;&gt;&amp; M, guassian_int zeta)</span> </span>&#123;</span><br><span class="line">    poly_XY m;</span><br><span class="line">    <span class="type">int64_t</span> n_inv_int = <span class="built_in">mod_inverse</span>(N * N);</span><br><span class="line">    <span class="function">guassian_int <span class="title">scale</span><span class="params">(n_inv_int, <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> u = <span class="number">0</span>; u &lt; N; ++u) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> v = <span class="number">0</span>; v &lt; N; ++v) &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="function">gaussian_int <span class="title">sum</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; N; ++j) &#123;   </span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; N; ++k) &#123;</span><br><span class="line">                    </span><br><span class="line">                    <span class="function">gaussian_int <span class="title">val</span><span class="params">(M[j][k], <span class="number">0</span>)</span></span>;</span><br><span class="line">                    </span><br><span class="line">                    gaussian_int z_j = zeta;</span><br><span class="line">                    </span><br><span class="line">                    <span class="type">int</span> pwrX = (j * u); </span><br><span class="line">                    <span class="type">int</span> pwrY = (k * v);</span><br><span class="line">                    <span class="type">int</span> cycle = <span class="number">4</span> * N;</span><br><span class="line">                    <span class="type">int</span> inv_pwrX = (cycle - (pwrX % cycle)) % cycle;</span><br><span class="line">                    <span class="type">int</span> inv_pwrY = (cycle - (pwrY % cycle)) % cycle;</span><br><span class="line"></span><br><span class="line">                    <span class="function">gaussian_int <span class="title">zx</span><span class="params">(<span class="number">1</span>,<span class="number">0</span>)</span>, <span class="title">zy</span><span class="params">(<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="type">int</span> iter=<span class="number">0</span>; iter&lt;inv_pwrX; ++iter) zx = zx * zeta;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="type">int</span> iter=<span class="number">0</span>; iter&lt;inv_pwrY; ++iter) zy = zy * zeta;</span><br><span class="line">                    </span><br><span class="line">                    sum = sum + (val * zx * zy);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            m.coeffs[u][v] = sum * scale;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> m;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Let’s consider a toy example now for better understanding. For simplicity, I am assuming singular batch dimension. Let’s say that we want to encode the matrix:</p>
+<p>$$<br>M &#x3D; \begin{pmatrix}<br>    1 &amp; 2 \\<br>    3 &amp; 4<br>\end{pmatrix}<br>$$</p>
+<p>Here, $M_{0, 0} &#x3D; 1$, $M_{0, 1} &#x3D; 2$, $M_{1, 0} &#x3D; 3$, $M_{1, 1} &#x3D; 4$. Now, in this case, we have $n &#x3D; 2$, so we need to find $\zeta$s such that $\zeta^2 &#x3D; i$. Let’s call the two values that we get $\zeta_0$ and $\zeta_1$ respectively. $\zeta_0$ represents column and row 0 and likewise for column and row 1.</p>
+<p>With this, we need a polynomial $m(X, Y)$ such that:</p>
+<p>$$ m(\zeta_0, \zeta_0) &#x3D; 1 $$</p>
+<p>$$ m(\zeta_0, \zeta_1) &#x3D; 2 $$</p>
+<p>$$ m(\zeta_1, \zeta_0) &#x3D; 3 $$</p>
+<p>$$ m(\zeta_1, \zeta_1) &#x3D; 4 $$</p>
+<p>Using the inverse FFT (DFT), or simply by solving the system of linear equations, we solve for the coefficients $c_{xy}$ in $m(X, Y) &#x3D; \Sigma c_{xy}X^xY^y$</p>
+<p>Conceptually speaking, our matrix is now “smeared” across the coefficients of the polynomial. This allows us to perorm operations like rotation by simply multiplying the variable $X$ or $Y$, rather than permuting a vector.</p>
+<p>Let’s end this part right here, in the next part, I will be covering the encryption process, which is mostly similar to all the other schemes following the RLWE problem, but here we shall see one key innovation, where the sampled secret key does not depend on the $Y$ axis allowing cheap column operations and efficient key-switching.</p>
+<p>peace. da1729</p>
+<h2><span id="references">References</span></h2><p>@misc{cryptoeprint:2025&#x2F;1935,<br>      author &#x3D; {Craig Gentry and Yongwoo Lee},<br>      title &#x3D; {Fully Homomorphic Encryption for Matrix Arithmetic},<br>      howpublished &#x3D; {Cryptology {ePrint} Archive, Paper 2025&#x2F;1935},<br>      year &#x3D; {2025},<br>      url &#x3D; {<a target="_blank" rel="noopener" href="https://eprint.iacr.org/2025/1935%7D">https://eprint.iacr.org/2025/1935}</a><br>}</p>
+
+    </div>
+  </div>
+</article>
+
+<!-- Post Navigation -->
+
+  <nav class="post-nav mt-2">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      
+        <div></div>
+      
+      
+      
+        <div class="widget">
+          <div class="widget-title">Next Post</div>
+          <a href="/2025/12/04/Multi-Party-Computation-part-2/">Yao&#39;s Garbled Circuits</a>
+        </div>
+      
+    </div>
+  </nav>
+
+
+<!-- Related Posts -->
+
+        </main>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <!-- Sidebar Widgets -->
+
+<!-- Recent Posts Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul>
+      
+        <li>
+          <a href="/2025/12/04/Gentry-Lee-Encoding-for-Efficient-Matrix-FHE/">Gentry-Lee Encoding for Efficient Matrix FHE</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 4, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/04/Multi-Party-Computation-part-2/">Yao&#39;s Garbled Circuits</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 4, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/01/Multi-Party-Computation/">Multi-Party Computation part 1</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 1, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/09/27/Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems/">Need for Gadget Decomposition in LWE Based Cryptosystems</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Sep 27, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/09/14/AGI-running-on-Quantum-Chip/">AGI running on Quantum Chip?</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Sep 14, 2025
+          </div>
+        </li>
+      
+    </ul>
+  </div>
+
+
+<!-- Categories Widget -->
+
+
+<!-- Tags Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      
+        <a href="/tags/AI-Acceleration/" class="tag">
+          #AI - Acceleration
+        </a>
+      
+        <a href="/tags/AI-Acceleration/" class="tag">
+          #AI Acceleration
+        </a>
+      
+        <a href="/tags/Abstract-Algebra/" class="tag">
+          #Abstract Algebra
+        </a>
+      
+        <a href="/tags/Analog/" class="tag">
+          #Analog
+        </a>
+      
+        <a href="/tags/Cryptanalysis/" class="tag">
+          #Cryptanalysis
+        </a>
+      
+        <a href="/tags/Cryptography/" class="tag">
+          #Cryptography
+        </a>
+      
+        <a href="/tags/Fully-Homomorphic-Encryption/" class="tag">
+          #Fully Homomorphic Encryption
+        </a>
+      
+        <a href="/tags/Hardware-Acceleration/" class="tag">
+          #Hardware Acceleration
+        </a>
+      
+        <a href="/tags/Philosphy/" class="tag">
+          #Philosphy
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post-Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Ring-Theory/" class="tag">
+          #Ring Theory
+        </a>
+      
+        <a href="/tags/Secure-Computing/" class="tag">
+          #Secure Computing
+        </a>
+      
+        <a href="/tags/VLSI/" class="tag">
+          #VLSI
+        </a>
+      
+    </div>
+  </div>
+
+
+<!-- Archive Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <ul>
+      
+      
+        
+          <li>
+            <a href="/archives/2025/">
+              December 2025 (3)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              September 2025 (2)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              August 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              July 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              April 2025 (2)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              March 2025 (2)
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+
+<!-- About Widget -->
+<div class="widget">
+  <h3 class="widget-title">About</h3>
+  <p style="font-size: 0.9em; line-height: 1.6;">
+    Welcome to my blog! Here I write about various topics including technology, programming, and more.
+  </p>
+  
+  
+    <div style="margin-top: 15px;">
+      <strong style="font-size: 0.9em;">Find me on:</strong>
+      <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px;">
+        
+          <a href="https://github.com/DA1729" class="tag" target="_blank" rel="noopener">
+            github
+          </a>
+        
+          <a href="https://x.com/sp0oky_daksh" class="tag" target="_blank" rel="noopener">
+            twitter
+          </a>
+        
+          <a href="mailto:dakshpandey177@gmail.com" class="tag" target="_blank" rel="noopener">
+            email
+          </a>
+        
+          <a href="https://sp0oky-portfolio.vercel.app/" class="tag" target="_blank" rel="noopener">
+            portfolio
+          </a>
+        
+      </div>
+    </div>
+  
+  
+  <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+    <p style="font-size: 0.8em; color: var(--text-secondary); opacity: 0.8;">
+      Theme designed with 
+      <a href="https://claude.ai/code" target="_blank" rel="noopener" style="color: var(--link-color); text-decoration: none;">Claude Code</a>
+    </p>
+  </div>
+</div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Daksh Pandey. Portfolio-inspired theme crafted with Claude Code.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  
+<script src="/js/main.js"></script>
+
+  
+  <!-- Math Support -->
+  
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+</body>
+</html>
