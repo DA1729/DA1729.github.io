@@ -136,6 +136,9 @@
 <p>For the roots, $\zeta_0 &#x3D; \sqrt{i} &#x3D; w$ and $\zeta_1 &#x3D; -\sqrt{i} &#x3D; -w$, we end up with the following polynomial which you can verify yourself: </p>
 <p>$$ m(X, Y) &#x3D; \frac{5}{2} - \frac{3}{2w} X - \frac{1}{2w} Y $$</p>
 <p>Conceptually speaking, our matrix is now “smeared” across the coefficients of the polynomial. This allows us to perform operations like rotation by simply multiplying the variable $X$ or $Y$, rather than permuting a vector.</p>
+<hr>
+<p><strong>NOTE:</strong> I have not at all cared about the implementation and computational efficiency in the toy example and pseudo-code. I just naively followed the mathematics behind the encoding process. One can definitely look into optimizations like precomputed twiddle factors, FFT, etc.</p>
+<hr>
 <p>Let’s end this part right here, in the next part, I will be covering the encryption process, which is mostly similar to all the other schemes following the RLWE problem, but here we shall see one key innovation, where the sampled secret key does not depend on the $Y$ axis allowing cheap column operations and efficient key-switching.</p>
 <p>peace. da1729</p>
 <p>PS: I am still an undergraduate student trying to make sense of all the mathematics and implementations of these post-quantum and FHE algorithms, if you find any sorts of errors, please point it out over at <a target="_blank" rel="noopener" href="https://x.com/sp0oky_daksh">twitter</a> or <a href="daksh_p@ph.iitr.ac.in">mail</a>.</p>
