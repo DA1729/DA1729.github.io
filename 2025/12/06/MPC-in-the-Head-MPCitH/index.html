@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPC in the Head (MPCitH) | da1729&#39;s Blog</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Daksh Pandey">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="MPC in the Head (MPCitH)">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="post">
+  <meta property="og:url" content="/2025/12/06/MPC-in-the-Head-MPCitH/">
+  <meta property="og:site_name" content="da1729&#39;s Blog">
+  
+  <!-- CSS -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <!-- RSS Feed -->
+  
+  
+  <!-- Favicon -->
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <h1>
+        <a href="/" class="site-title">da1729&#39;s Blog</a>
+      </h1>
+      
+        <p class="site-subtitle">cryptography, digital design, embedded, rf, ...</p>
+      
+      
+      <!-- Navigation -->
+      <nav class="nav">
+        
+          <a href="/" class="nav-link">Home</a>
+        
+          <a href="/quick" class="nav-link">Quick Posts</a>
+        
+          <a href="/archives" class="nav-link">Archives</a>
+        
+          <a href="/about" class="nav-link">About</a>
+        
+        
+        <!-- Social Links -->
+        
+          
+            <a href="https://github.com/DA1729" class="nav-link" target="_blank" rel="noopener">github</a>
+          
+            <a href="https://x.com/sp0oky_daksh" class="nav-link" target="_blank" rel="noopener">twitter</a>
+          
+            <a href="mailto:dakshpandey177@gmail.com" class="nav-link" target="_blank" rel="noopener">email</a>
+          
+            <a href="https://sp0oky-portfolio.vercel.app/" class="nav-link" target="_blank" rel="noopener">portfolio</a>
+          
+        
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="content">
+        <main class="main-content">
+          <!-- Individual Post Page -->
+<article class="article-card">
+  <header class="article-header">
+    <div class="article-meta">
+      <time datetime="2025-12-06T12:34:01.000Z">
+        December 6, 2025
+      </time>
+      
+      
+        <span> • Updated: December 7, 2025</span>
+      
+    </div>
+    
+    <h1 class="article-title">MPC in the Head (MPCitH)</h1>
+    
+    
+      <div class="article-tags">
+        
+          <a href="/tags/Cryptography/" class="tag">#Cryptography</a>
+        
+          <a href="/tags/Secure-Computing/" class="tag">#Secure Computing</a>
+        
+          <a href="/tags/Zero-Knowledge/" class="tag">#Zero-Knowledge</a>
+        
+      </div>
+    
+  </header>
+  
+  <div class="article-content">
+    <div class="post-content">
+      <p>In continuation to my MPC blogs and my study of <a target="_blank" rel="noopener" href="https://faest.info/">FAEST</a>, here is a blog explaining a method of constructing advanced <strong>Zero Knowledge (ZK)</strong> proofs by using simpler tools from <strong>Multi-Party Computation (MPC)</strong>.</p>
+<h2><span id="zero-knowledge-proof">Zero-Knowledge Proof</span></h2><p>Let’s say that you are competing with a friend over a “Where’s Waldo” puzzle and the one who finds Waldo in lesser time wins. Now, if you went first, after finding Waldo, you obviously cannot just prove to your friend that you have solved it by pointing it out in plain sight… it would ruin their turn. And if you don’t prove it, your friend could easily argue that you’re bluffing.<br>You must find a way to convince your friend that you know where Waldo is without showing them <em>where</em> Waldo is. Again, sounds like a Martin Gardner puzzle… and again I’m pretty sure there must be some similar problem in his collection.</p>
+<p>Let’s break it down somewhat formally:</p>
+<ul>
+<li><strong>Goal</strong>: Prove you know a secret (location of Waldo) without revealing the location.</li>
+<li><strong>Roles</strong>: You are the <strong>Prover</strong> and your friend is the <strong>Verifier</strong>.</li>
+</ul>
+<p>Now how to prove it? Imagine you take a giant sheet of cardboard, much larger than the puzzle book, and cut a tiny hole in the center, just big enough to see Waldo.</p>
+<ul>
+<li><strong>Setup</strong>: You tell your friend to turn around, then you place the cardboard over the puzzle book so that <strong>only</strong> Waldo is visible through the hole.</li>
+<li><strong>Proof</strong>: You invite your friend to look. They look through the hole and see Waldo.</li>
+<li><strong>Trick</strong>: Because the cardboard is huge and blocks out all the landmarks, your friend has no context. They just know that you know where Waldo is, but have no idea where on the page he is.</li>
+</ul>
+<p>Now, why do cryptographers obsess so much over such proofs? First, let’s see what core points are satisfied with a ZKP:</p>
+<ul>
+<li><strong>Completeness (works for truth-tellers)</strong>: If you actually know where Waldo is, you can always perform this trick successfully.</li>
+<li><strong>Soundness (fails for liars)</strong>: If you were bluffing, you cannot position the cardboard to show the real Waldo. You can’t cheat the verifier.</li>
+<li><strong>Zero-Knowledge (it leaks nothing)</strong>: After the game, your friend learns nothing new. If they tried to find Waldo themselves afterwards, they would have no advantage compared to before you showed them the proof. The “view” they saw (Waldo through the hole) is something they could have easily imagined themselves without your help.</li>
+</ul>
+<h2><span id="formalization">Formalization</span></h2><p>Ok, now let’s formalize things a little. In cryptography, we don’t just “prove” things, we prove membership in a language defined by a relation $\mathcal{R}$.</p>
+<p>Let $x$ be the public statement (the “instance”) and $w$ be the secret witness. We define the relation as a set of pairs:<br>$$\mathcal{R} &#x3D; \{(x, w): \text{statement } x \text{ is true with witness } w \}$$</p>
+<p>In our Waldo example:</p>
+<ul>
+<li>$x$: The specific page of the puzzle book</li>
+<li>$w$: The $(x, y)$ coordinates of Waldo</li>
+<li>$(x, w) \in \mathcal{R}$ if and only if Waldo is actually at those coordinates on that page.</li>
+</ul>
+<p>A ZKP is an interactive protocol between two probabilistic polynomial-time (PPT) algorithms: the <strong>Prover</strong> ($\mathcal{P}$) and the <strong>Verifier</strong> ($\mathcal{V}$).</p>
+<p>Many of you might already know what probabilistic polynomial-time (PPT) algorithms are. At the time of writing the blog, I did not, so here is a quick explanation for readers like me:</p>
+<ul>
+<li>Its running time is bounded by a polynomial in the size of the input $n$, for all possible random choices it makes. So, if $T(n)$ is the worst-case number of steps, then $T(n) &#x3D; \text{poly}(n)$.</li>
+<li><strong>Has access to randomness</strong>, or has an extra stream of input: a stream of random bits. So the algorithm is a function: $A(x, r)$ where $x$ is the actual input and $r$ is the random string the algorithm uses.</li>
+<li><strong>It is allowed to have a probability of error</strong>. Depending on the problem, the algorithm may give a correct answer with high probability, which can be amplified by repetition.</li>
+</ul>
+<h3><span id="three-properties">Three Properties</span></h3><h4><span id="completeness">Completeness</span></h4><p>If the statement is true and the prover is honest, the verifier accepts.<br>$$\forall (x, w) \in \mathcal{R} : \text{Pr}[\langle \mathcal{P}(w), \mathcal{V} \rangle (x) &#x3D; 1] &#x3D; 1$$</p>
+<h4><span id="soundness-knowledge-error">Soundness (Knowledge Error)</span></h4><p>If the statement is false (or the Prover doesn’t know $w$), a malicious prover $\mathcal{P}^*$ cannot convince the verifier, except with some negligible probability $\epsilon$ (soundness error).<br>$$\forall x \notin L, \forall \mathcal{P}^* : \text{Pr}[\langle \mathcal{P}^*, \mathcal{V} \rangle (x) &#x3D; 1 ] \leq \epsilon$$</p>
+<h4><span id="zero-knowledge-simulation-paradigm">Zero-Knowledge (Simulation Paradigm)</span></h4><p>This is the most critical and often the most misunderstood definition. How do we prove mathematically that “no information was leaked”?</p>
+<p>We use the <strong>simulation paradigm</strong>. The idea is: if a Verifier could have generated the exact same proof transcript by themselves (without talking to the Prover), then the interaction with the Prover gave them zero new information.</p>
+<p>We define the <strong>View</strong> of the verifier during the execution as the tuple of their random coins and the messages they received:<br>$$\text{View}_\mathcal{V}[\mathcal{P}(x, w) \leftrightarrow \mathcal{V}(x)]$$</p>
+<p>The protocol is Zero-Knowledge if there exists an efficient algorithm called a <strong>Simulator</strong> ($\mathcal{S}$). The simulator takes <strong>only</strong> the public input $x$ (it does not know $w$) and outputs a transcript that is indistinguishable from a real interaction.</p>
+<p>$$\{\mathcal{S}(x)\} \approx \{\text{View}_\mathcal{V}[\mathcal{P}(x, w) \leftrightarrow \mathcal{V}(x)]\}$$</p>
+<p>If this equation holds, the proof reveals nothing about $w$, because anything the Verifier “learned” from the Prover, they could have just computed themselves using $\mathcal{S}$.</p>
+<h2><span id="mpc-in-the-head-intuition">MPC-in-the-Head (Intuition)</span></h2><p>Since I have already covered MPC in my previous blogs, I am skipping MPC basics. We know that MPC allows a group of mutually distrusting parties to compute a function $f(x_1 \dots, x_n) &#x3D; y$ without revealing their individual inputs.</p>
+<p>Now, how do we turn a multi-player protocol into a single-player proof?</p>
+<p>This was pioneered by Ishai, Kushilevitz, Ostrovsky, and Sahai in the famous [IKOS07] paper, and the motivation for coming up with this technique comes from a desire to stop reinventing the wheel.</p>
+<ul>
+<li><strong>The problem</strong>: Designing custom Zero-Knowledge protocols for complex circuits (like proving you know the preimage of a SHA-256 hash or an AES key) is historically very difficult. You often have to translate your problem into complex number-theoretic assumptions.</li>
+<li><strong>The observation</strong>: We already have excellent, generic ways to compute <em>any</em> circuit securely: <strong>MPC</strong>. MPC protocols can handle boolean circuits, arithmetic circuits, essentially any logic you throw at them.</li>
+<li><strong>The idea</strong>: What if we don’t actually need other people? What if the Prover just <strong>simulates</strong> an entire MPC universe inside their own brain? If the simulation is “consistent”, the computation must be correct.</li>
+</ul>
+<p>This turns the problem of “Designing a ZKP” into “Designing an MPC Protocol”. Since we have very fast MPC protocols for things like AES (using boolean circuits), we automatically get fast ZKPs for AES.</p>
+<p>To understand MPCitH, imagine the Prover is not a participant, but a <strong>Puppet Master</strong> controlling a simulation.</p>
+<ul>
+<li><p><strong>The Goal</strong>: Prove I know a secret witness $w$ (perhaps a password) that satisfies the circuit $C(w) &#x3D; 1$.</p>
+</li>
+<li><p><strong>Step 1: The Split Personality (Secret Sharing)</strong>: In my head, I imagine 3 distinct parties: Alice, Bob, and Finn (hahaha… u thought it would be Eve lol). I take my secret $w$ and split it into three shares ($w_1, w_2, w_3$) using standard Secret Sharing (like XOR Sharing). I give one share to each imaginary party. Note that any <strong>two</strong> shares look like random garbage; you need all three to recover $w$.</p>
+</li>
+<li><p><strong>Step 2: The Simulation (Execution)</strong>: Now, I simulate the MPC protocol in my head.</p>
+<ul>
+<li>Alice sends a message to Bob. I write it down.</li>
+<li>Bob does a calculation and sends a message to Finn. I write it down.</li>
+<li>Finn computes the final output.</li>
+<li>Since I am honest and know the real $w$, the final output of this imaginary MPC is “TRUE”.</li>
+</ul>
+</li>
+<li><p><strong>Step 3: The Commitment (Locking the Views)</strong>: I record the entire “View” of each party. A View contains:</p>
+<ul>
+<li>Their input share</li>
+<li>Their random coin flips</li>
+<li>Every message they <strong>received</strong> from the others</li>
+</ul>
+</li>
+</ul>
+<p>I put Alice’s view in Box A, Bob’s view in Box B, and Finn’s view in Box C. I seal them and put them on the table.</p>
+<ul>
+<li><p><strong>Step 4: The Challenge (The “Head” Check)</strong>: You (the Verifier) walk in. You point to two random boxes, say <strong>Box A</strong> and <strong>Box B</strong>. I must open them.</p>
+</li>
+<li><p><strong>Step 5: The Verification</strong>: You check the two boxes for <strong>Consistency</strong>:</p>
+<ul>
+<li><strong>Incoming&#x2F;Outgoing Match</strong>: If Alice’s log says, “I sent value 5 to Bob,” you check Bob’s log. Does it say, “I received value 5 from Alice”?</li>
+<li><strong>Local Validity</strong>: Did Alice follow the math correctly based on the messages she saw?</li>
+<li><strong>Output</strong>: Did the protocol output 1?</li>
+</ul>
+</li>
+</ul>
+<h4><span id="why-is-this-secure">Why is this Secure?</span></h4><ul>
+<li><p><strong>Why is it ZK?</strong> You only opened 2 out of 3 boxes. Because of the properties of Secret Sharing (specifically $t$-privacy), seeing 2 shares reveals <strong>nothing</strong> about the underlying secret $w$. You saw a valid execution, but you didn’t see enough to reconstruct the secret.</p>
+</li>
+<li><p><strong>Why is it Sound (Why can’t I cheat)?</strong> If I didn’t actually know the password $w$, the only way to make the MPC output “TRUE” is to cheat during the execution. I would have to make Alice send a “fake” message to Bob that makes the math work out.</p>
+<ul>
+<li>If I fake a message, Alice’s log will say “I sent X”, but Bob’s log (derived from honest calculation) would expect “Y”.</li>
+<li>There is a mismatch (inconsistency).</li>
+<li>If you open the two boxes where the mismatch happened, you catch me.</li>
+<li>Since I don’t know which boxes you will ask for, I run a huge risk of getting caught. (We repeat this process many times to make the risk of cheating essentially 0%).</li>
+</ul>
+</li>
+</ul>
+<h2><span id="formalizing-mpcith">Formalizing MPCitH</span></h2><p>Now, let’s put some mathematical structure on our “puppet master.”</p>
+<p>We start with an $N$-party MPC Protocol $\Pi$ that computes a function $f(w)$. The Prover $\mathcal{P}$ wants to prove $f(w) &#x3D; 1$.</p>
+<h3><span id="the-view">The View</span></h3><p>Just like we defined the “View” for the Verifier in ZK, we need to define the View for each imaginary MPC party $P_i$. The view of party $i$ consists of everything they “know” during the execution:<br>$$\text{View}_i &#x3D; (w_i, r_i, m_{in}^1, m_{in}^2, \dots)$$</p>
+<p>Where:</p>
+<ul>
+<li>$w_i$: The $i$-th share of the witness (secret input).</li>
+<li>$r_i$: The internal randomness (coin flips) used by party $i$.</li>
+<li>$m_{in}^k$: The messages received by party $i$ during the rounds of communication.</li>
+</ul>
+<p><strong>Crucially</strong>: If you have the party’s view, you can deterministically replay their entire computation to check if they were honest.</p>
+<h3><span id="the-commit-phase">The Commit Phase</span></h3><p>The Prover runs the MPC protocol “in their head” for parties $P_1 \dots P_N$. They generate a commitment for each view. Usually, we use a hash function $H$ for efficiency:<br>$$c_i &#x3D; H(\text{View}_i) \quad \text{for } i \in \{1, \dots, N\}$$</p>
+<p>The Prover sends all commitments $(c_1, \dots, c_N)$ to the Verifier.</p>
+<h3><span id="the-challenge-phase">The Challenge Phase</span></h3><p>The Verifier picks a random set of parties to “corrupt” (inspect). Let’s say we want to open all parties except one (to preserve ZK). The Verifier chooses an index $i^* \in \{1, \dots, N\}$ to keep closed, and asks to open all others.<br>$$\text{Challenge } I &#x3D; \{1, \dots, N\} \setminus \{i^*\}$$</p>
+<h3><span id="the-response-phase">The Response Phase</span></h3><p>The Prover must reveal the views for all requested parties:<br>$$\text{Response} &#x3D; \{ \text{View}_j \}_{j \in I}$$</p>
+<h3><span id="the-verification-phase">The Verification Phase</span></h3><p>The Verifier checks two things:</p>
+<ul>
+<li><strong>Correctness</strong>: They re-run the code for every opened party $P_j$ using the data in $\text{View}_j$. They check if the output matches the commitment $c_j$.</li>
+<li><strong>Consistency</strong>: They check the messages between opened parties.<ul>
+<li>If Party 1 says “I sent 5 to Party 2”, the Verifier checks Party 2’s view.</li>
+<li>Does Party 2’s view confirm “I received 5 from Party 1”?</li>
+</ul>
+</li>
+</ul>
+<p>If all consistency checks pass and the output is 1, the Verifier accepts.</p>
+<p>This seemingly simple “consistency check” is powerful enough to catch any cheating attempt where the Prover tries to force a “True” output without a valid input.</p>
+<p>Now, let’s end the blog here, got tired of typing.</p>
+<p>peace. da1729</p>
+
+    </div>
+  </div>
+</article>
+
+<!-- Post Navigation -->
+
+  <nav class="post-nav mt-2">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      
+        <div></div>
+      
+      
+      
+        <div class="widget">
+          <div class="widget-title">Next Post</div>
+          <a href="/2025/12/04/Gentry-Lee-Encoding-for-Efficient-Matrix-FHE/">Gentry-Lee Encoding for Efficient Matrix FHE</a>
+        </div>
+      
+    </div>
+  </nav>
+
+
+<!-- Related Posts -->
+
+        </main>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <!-- Sidebar Widgets -->
+
+<!-- Recent Posts Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul>
+      
+        <li>
+          <a href="/2025/12/06/MPC-in-the-Head-MPCitH/">MPC in the Head (MPCitH)</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 6, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/04/Gentry-Lee-Encoding-for-Efficient-Matrix-FHE/">Gentry-Lee Encoding for Efficient Matrix FHE</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 4, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/04/Multi-Party-Computation-part-2/">Yao&#39;s Garbled Circuits</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 4, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/01/Multi-Party-Computation/">Multi-Party Computation part 1</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 1, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/09/27/Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems/">Need for Gadget Decomposition in LWE Based Cryptosystems</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Sep 27, 2025
+          </div>
+        </li>
+      
+    </ul>
+  </div>
+
+
+<!-- Categories Widget -->
+
+
+<!-- Tags Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      
+        <a href="/tags/AI-Acceleration/" class="tag">
+          #AI - Acceleration
+        </a>
+      
+        <a href="/tags/AI-Acceleration/" class="tag">
+          #AI Acceleration
+        </a>
+      
+        <a href="/tags/Abstract-Algebra/" class="tag">
+          #Abstract Algebra
+        </a>
+      
+        <a href="/tags/Analog/" class="tag">
+          #Analog
+        </a>
+      
+        <a href="/tags/Cryptanalysis/" class="tag">
+          #Cryptanalysis
+        </a>
+      
+        <a href="/tags/Cryptography/" class="tag">
+          #Cryptography
+        </a>
+      
+        <a href="/tags/Fully-Homomorphic-Encryption/" class="tag">
+          #Fully Homomorphic Encryption
+        </a>
+      
+        <a href="/tags/Hardware-Acceleration/" class="tag">
+          #Hardware Acceleration
+        </a>
+      
+        <a href="/tags/Philosphy/" class="tag">
+          #Philosphy
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post-Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Ring-Theory/" class="tag">
+          #Ring Theory
+        </a>
+      
+        <a href="/tags/Secure-Computing/" class="tag">
+          #Secure Computing
+        </a>
+      
+        <a href="/tags/VLSI/" class="tag">
+          #VLSI
+        </a>
+      
+        <a href="/tags/Zero-Knowledge/" class="tag">
+          #Zero-Knowledge
+        </a>
+      
+    </div>
+  </div>
+
+
+<!-- Archive Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <ul>
+      
+      
+        
+          <li>
+            <a href="/archives/2025/">
+              December 2025 (4)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              September 2025 (2)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              August 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              July 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              April 2025 (2)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              March 2025 (2)
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+
+<!-- About Widget -->
+<div class="widget">
+  <h3 class="widget-title">About</h3>
+  <p style="font-size: 0.9em; line-height: 1.6;">
+    Welcome to my blog! Here I write about various topics including technology, programming, and more.
+  </p>
+  
+  
+    <div style="margin-top: 15px;">
+      <strong style="font-size: 0.9em;">Find me on:</strong>
+      <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px;">
+        
+          <a href="https://github.com/DA1729" class="tag" target="_blank" rel="noopener">
+            github
+          </a>
+        
+          <a href="https://x.com/sp0oky_daksh" class="tag" target="_blank" rel="noopener">
+            twitter
+          </a>
+        
+          <a href="mailto:dakshpandey177@gmail.com" class="tag" target="_blank" rel="noopener">
+            email
+          </a>
+        
+          <a href="https://sp0oky-portfolio.vercel.app/" class="tag" target="_blank" rel="noopener">
+            portfolio
+          </a>
+        
+      </div>
+    </div>
+  
+  
+  <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+    <p style="font-size: 0.8em; color: var(--text-secondary); opacity: 0.8;">
+      Theme designed with 
+      <a href="https://claude.ai/code" target="_blank" rel="noopener" style="color: var(--link-color); text-decoration: none;">Claude Code</a>
+    </p>
+  </div>
+</div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Daksh Pandey. Portfolio-inspired theme crafted with Claude Code.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  
+<script src="/js/main.js"></script>
+
+  
+  <!-- Math Support -->
+  
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+</body>
+</html>
