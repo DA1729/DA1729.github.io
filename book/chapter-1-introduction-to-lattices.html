@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 1: Introduction to Lattices | da1729&#39;s Blog</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Daksh Pandey">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Chapter 1: Introduction to Lattices">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="page">
+  <meta property="og:url" content="/_book/chapter-1-introduction-to-lattices.html">
+  <meta property="og:site_name" content="da1729&#39;s Blog">
+  
+  <!-- CSS -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <!-- RSS Feed -->
+  
+  
+  <!-- Favicon -->
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <h1>
+        <a href="/" class="site-title">da1729&#39;s Blog</a>
+      </h1>
+      
+        <p class="site-subtitle">cryptography, digital design, embedded, rf, ...</p>
+      
+      
+      <!-- Navigation -->
+      <nav class="nav">
+        
+          <a href="/" class="nav-link">Home</a>
+        
+          <a href="/book" class="nav-link">Book</a>
+        
+          <a href="/quick" class="nav-link">Quick Posts</a>
+        
+          <a href="/archives" class="nav-link">Archives</a>
+        
+          <a href="/about" class="nav-link">About</a>
+        
+        
+        <!-- Social Links -->
+        
+          
+            <a href="https://github.com/DA1729" class="nav-link" target="_blank" rel="noopener">github</a>
+          
+            <a href="https://x.com/sp0oky_daksh" class="nav-link" target="_blank" rel="noopener">twitter</a>
+          
+            <a href="mailto:dakshpandey177@gmail.com" class="nav-link" target="_blank" rel="noopener">email</a>
+          
+            <a href="https://sp0oky-portfolio.vercel.app/" class="nav-link" target="_blank" rel="noopener">portfolio</a>
+          
+        
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="content">
+        <main class="main-content">
+          <!-- Individual Book Chapter Page -->
+<article class="article-card book-chapter-single">
+  <header class="article-header">
+    <div class="article-meta">
+      <a href="/book" style="color: var(--accent-warm);">← Back to Book</a>
+      <span> • </span>
+      <span style="font-weight: 600;">Chapter 1</span>
+      <span> • </span>
+      <time datetime="2025-12-29T12:56:44.464Z">
+        December 29, 2025
+      </time>
+      
+        <span> • Updated: December 30, 2025</span>
+      
+    </div>
+
+    <h1 class="article-title">Chapter 1: Introduction to Lattices</h1>
+
+    
+      <div class="article-tags">
+        
+          
+            <span class="tag">#Cryptanalysis</span>
+          
+            <span class="tag">#Lattice-Based-Cryptography</span>
+          
+        
+      </div>
+    
+  </header>
+
+  <div class="article-content">
+    <div class="post-content">
+      <p>For getting deep into cryptanalysis, we must have a solid understanding of the system we are analyzing. The new, modern, “quantum-safe” cryptography that is the lattice based cyrptography is based on these mathematical structures called lattices, hence the name. In the study of lattices, one might realize, that they do not hold much significance from the view of pure and abstract mathematics. Infact, from my perspective, all of the lattice theory is just a Martin Gardner puzzle which managed to get all the fame and attention, for valid reasons tho.</p>
+<h2><span id="lattices-and-bases">Lattices and Bases</span></h2><p>Lattice, is defined as: </p>
+<blockquote>
+<p><strong>Definition (Lattice)</strong><br>A lattice $\mathcal{L}$ is a <strong>discrete</strong> subgroup of $\mathbb{R}^m$.</p>
+</blockquote>
+<p>We now define a lattice constructively using a <strong>basis</strong>. This definition is very important for our purposes: </p>
+<blockquote>
+<p><strong>Definition (Constructive Definition)</strong><br>Let $\mathbf{b}_1, \cdots \mathbf{b}_n$ be $n$ linearly independent vectors in $\mathbb{R}^m$. A lattice is a structure defined by the set of all their <strong>integer</strong> linear combinations:<br>$$<br>\mathcal{L}(\mathbf{B}) &#x3D;<br>\{<br>\sum_{i&#x3D;1}^{n} x_i \mathbf{b}_i : x_i \in \mathbb{Z}<br>\}<br>$$</p>
+</blockquote>
+<p>How is a lattice difference from a vector field? Well, for a vector field, we would not have constrained ourselves to <strong>integer</strong> linear combinations, but rather any <strong>real</strong> combination. In other words, our lattice is discrete but a vector field is continous. Into the study of lattice cryptography, you will see how this “discreteness” allow us to formulate hard problems to build cryptosystems upon. To be more technical, this discreteness allows us to make the ways of linear algebra (especially Gaussian Elimination) break down.</p>
+<h3><span id="the-basis-matrix">The Basis Matrix</span></h3><p>Matrix whose each column is a basis vector, is called the basis matrix. Represented as $$\mathbf{B} &#x3D; [\mathbf{b}_1, \cdots, \mathbf{b}_n] \in \mathbb{R}^{m \times n}$$</p>
+<p>It is important to have the dimensions clear. $m$ is the dimension of the ambient space we are in, and $n$ is the number of linearly independent vectors we have in our basis. Note that the given basis matrix has <strong>rank</strong> equal to $n$.</p>
+<blockquote>
+<p><strong>Definition (Full-Rank Lattice)</strong><br>A given lattice $\mathcal{L}$ is called full-rank if $n &#x3D; m$.</p>
+</blockquote>
+<p>Now with these new notations, we can define our lattice mathematically as: $$\mathcal{L}(\mathbf{B}) &#x3D; \{\mathbf{B}\mathbf{z}: \mathbf{z} \in \mathbb{Z}^n\}$$</p>
+<p>It is very important to note an inference: </p>
+<blockquote>
+<p>A given basis $\mathbf{B}$ does generate a unique lattice $\mathcal{L}$, but the converse is not true. A lattice does not point to a unique basis.</p>
+</blockquote>
+<p>This fact is of a great importance in lattice cryptography. A given lattice $\mathcal{L}$ infact, has infinitely many bases, and we classify them as such: </p>
+<ul>
+<li><strong>Good Basis:</strong> The vectors are short and nearly orthogonal. </li>
+<li><strong>Bad Basis:</strong> The vectors are long and highly skewed (nearly parallel).</li>
+</ul>
+<p>Now a question arises, are these infinitely many bases, somehow internally related to each other? The answer is yes. We can transform between basis using <strong>Unimodular Matrices</strong>. These matrices have <strong>integer entries</strong> and have <strong>determinant &#x3D; $\pm 1$</strong></p>
+<blockquote>
+<p><strong>Theorem</strong><br>Two bases $\mathbf{B}$ and $\mathbf{B’}$ generate the same lattice $\mathcal{L}$ if and only if there exists a unimodular matrix $\mathbf{U}$ such that: $$\mathbf{B’} &#x3D; \mathbf{BU}$$</p>
+</blockquote>
+<p>Why does this theorem hold? Because $\text{det}(\mathbf{U}) &#x3D; \pm 1$, the inverse $\mathbf{U}^{-1}$ is also an integer matrix, in fact, unimodular. This means, any integer combination of $\mathbf{B}$ can be written as an integer combination of $\mathbf{B’}$, and vice versa. They cover the exact same points.</p>
+<p>To give some cryptological insights, and a higher level idea of how almost all public-key lattice cryptosystems work: </p>
+<ul>
+<li><strong>Alice (Keys):</strong> Generates a good basis $\mathbf{G}$ (secret key). She multiplies it by a random unimodular matrix $\mathbf{U}$ to get $\mathbf{B}_{pub} &#x3D; \mathbf{GU}$ (public key).</li>
+<li><strong>Eve (Attacker):</strong> Only sees $\mathbf{B}_{pub}$. Her goal is to find $\mathbf{U}^{-1}$ or otherwise transform $\mathbf{B}_{pub}$ back into a “good” basis to break the encryption.</li>
+<li><strong>Algorithms</strong>: LLL and BKZ algorithms (to be covered in later chapters) are cryptanalytic algorithms that aim to search for a transformation $\mathbf{U}$ to make the basis “better”.</li>
+</ul>
+<h3><span id="the-fundamental-parallelpiped">The Fundamental Parallelpiped</span></h3><p>To measure the “density” of lattice points, we look at the shape formed by the basis vectors. This shape is called the Fundamental Parallelpiped, denoted by $\mathcal{P}(\mathbf{B})$ and defined by: $$\mathcal{P}(\mathbf{B}) &#x3D; \{\mathbf{Bx}: 0 \leq x_i &lt; 1\}$$</p>
+<p>It is the “tile” that, if repeated, would tile the entire span of the lattice. </p>
+<blockquote>
+<p><strong>Definition (Determinant of the Lattice)</strong><br>The volume of the fundamental parallelpiped,<br>$$ \operatorname{vol}(\mathcal{P}(\mathbf{B})) &#x3D; \sqrt{\det(\mathbf{B}^T \mathbf{B})}, $$<br>is called the determinant of the lattice:<br>$$ \det(\mathcal{L}) &#x3D; \operatorname{vol}(\mathcal{P}(\mathbf{B})) &#x3D; \sqrt{\det(\mathbf{B}^T \mathbf{B})}. $$<br>If the lattice is full-rank ($n &#x3D; m$) and square, this simplifies to:<br>$$\det(\mathcal{L}) &#x3D; |\det({\mathbf{B}})|$$</p>
+</blockquote>
+<p>It has to be noted, we can take <strong>any basis</strong> for finding the determinant of the lattice, it stays the same.</p>
+<blockquote>
+<p><strong>Why doesn’t the volume change if we change the basis?</strong><br>Using the unimodular property:<br>$$\det(\mathbf{B’}) &#x3D; \det(\mathbf{BU}) &#x3D; \det(\mathbf{B})\det(\mathbf{U}) &#x3D; \det(\mathbf{B})\cdot (\pm 1)$$<br>Since the volume is absolute, $|\det(\mathbf{B’})| &#x3D; |\det(\mathbf{B})|$</p>
+</blockquote>
+<h2><span id="fundamental-invariants-and-measuring-badness">Fundamental Invariants and Measuring “Badness”</span></h2><p>In the previous section, I classified the infintely many bases of a lattice very ambigously. I mentioned good ones are short and quite orthogonal, and bad ones are long and skewed. But how do we know if vectors in the given basis are short and orthogonal enough? Moreover, one can, maybe, be able to classify them visually for lattices upto 3 dimensions, but would definitely struggle any higher, and we work with very high dimensions like 500, 1000, etc.</p>
+<h3><span id="hadamard-s-inequality-and-the-orthogonality-defect">Hadamard’s Inequality and The Orthogonality Defect</span></h3><p>Imagine that you have a rectangle. It can be completely described by a set of two vectors in 2D and the area of the rectangle will just be the product of the lengths of these vectors. Now, if you were to skew this rectangle, keeping the side lengths the same, we observe that the area decreases and is given by the determinant of the basis matrix formed by these two vectors. This geometric fact is formalized as <strong>Hadamard’s Inequality</strong>: </p>
+<blockquote>
+<p><strong>Definition (Hadamard’s Inequality)</strong><br>$$\det(\mathcal{L}) \leq  \prod_{i&#x3D;1}^{n} ||\mathbf{b}_i|| $$<br>The equality holds if and only if the basis vectors are mutually orthogonal.</p>
+</blockquote>
+<p>Now that we know that the determinant is the “minimum possible product” (achieved only by a perfect basis), we can compare our current basis against this ideal.</p>
+<p>We this, we define <strong>Orthogonality Defect</strong> (often denoted as $\gamma$ or just “Hadamard Ratio”) as: </p>
+<blockquote>
+<p><strong>Definition (Orthogonality Defect&#x2F; Hadamard Ratio)</strong><br>$$\gamma(\mathbf{B}) &#x3D; \frac{\prod_{i&#x3D;1}^{n} ||\mathbf{b}_i||}{\det(\mathcal{L})}$$</p>
+</blockquote>
+<p>Now, how do we interpret this ratio?</p>
+<blockquote>
+<p><strong>Interpretting Hadamard Ratio</strong></p>
+<ul>
+<li>$\gamma &#x3D; 1$: the basis is perfectly orthogonal. The vectors are as short as they can possibly be. </li>
+<li>$\gamma &gt; 1$: the basis is skewed. The vectors are longer than necessary.</li>
+<li>$\gamma \gg 1: the basis is terrible. The vectors are incredibly long and nearly parallel. This is what a lattice public key looks like.</li>
+</ul>
+</blockquote>
+<p>In later chapters, when we deal with the analysis part, the algorithms, LLL, BKZ, aim to lower this ratio only. We essentially try to force the product of lengths to get closer to the fixed volume.</p>
+<p>As mentioned earlier, we work with very high dimensions in practical lattice cryptosystems (I am talking 500, 1000), this hadamard ratio becomes astronomically large and it gets harder to compare a defect of $10^{500}$ vs $10^{400}$. </p>
+<p>To make the number manageable, cryptanalysts often take the $n$-th root. This is related to the <strong>Hermite Factor</strong>. </p>
+<blockquote>
+<p><strong>Definition (Hermite Factor)</strong><br>$$\delta \approx \gamma ^ \frac{1}{n}$$</p>
+</blockquote>
+<p>This factor gives you a normalized “score” independent of the dimension.</p>
+
+    </div>
+  </div>
+</article>
+
+<!-- Chapter Navigation -->
+
+
+
+  <nav class="post-nav mt-2">
+    <div class="widget">
+      <div class="widget-title">Book Chapters</div>
+      <a href="/book">← View all chapters</a>
+    </div>
+  </nav>
+
+
+        </main>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <!-- Sidebar Widgets -->
+
+<!-- Recent Posts Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul>
+      
+        <li>
+          <a href="/2025/12/27/Block-Korkine-Zolotarev-BKZ-Algorithm/">Algebraic Cryptanalysis of Lattice Cryptography</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 27, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/06/MPC-in-the-Head-MPCitH/">MPC in the Head (MPCitH)</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 6, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/04/Gentry-Lee-Encoding-for-Efficient-Matrix-FHE/">Gentry-Lee Encoding for Efficient Matrix FHE</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 4, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/04/Multi-Party-Computation-part-2/">Yao&#39;s Garbled Circuits</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 4, 2025
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/01/Multi-Party-Computation/">Multi-Party Computation part 1</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 1, 2025
+          </div>
+        </li>
+      
+    </ul>
+  </div>
+
+
+<!-- Categories Widget -->
+
+
+<!-- Tags Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      
+        <a href="/tags/Abstract-Algebra/" class="tag">
+          #Abstract Algebra
+        </a>
+      
+        <a href="/tags/Analog/" class="tag">
+          #Analog
+        </a>
+      
+        <a href="/tags/Cryptanalysis/" class="tag">
+          #Cryptanalysis
+        </a>
+      
+        <a href="/tags/Cryptography/" class="tag">
+          #Cryptography
+        </a>
+      
+        <a href="/tags/Fully-Homomorphic-Encryption/" class="tag">
+          #Fully Homomorphic Encryption
+        </a>
+      
+        <a href="/tags/Hardware-Acceleration/" class="tag">
+          #Hardware Acceleration
+        </a>
+      
+        <a href="/tags/Philosphy/" class="tag">
+          #Philosphy
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post-Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Ring-Theory/" class="tag">
+          #Ring Theory
+        </a>
+      
+        <a href="/tags/Secure-Computing/" class="tag">
+          #Secure Computing
+        </a>
+      
+        <a href="/tags/VLSI/" class="tag">
+          #VLSI
+        </a>
+      
+        <a href="/tags/Zero-Knowledge/" class="tag">
+          #Zero-Knowledge
+        </a>
+      
+    </div>
+  </div>
+
+
+<!-- Archive Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <ul>
+      
+      
+        
+          <li>
+            <a href="/archives/2025/">
+              December 2025 (5)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              September 2025 (2)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              August 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              July 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              March 2025 (2)
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+
+<!-- About Widget -->
+<div class="widget">
+  <h3 class="widget-title">About</h3>
+  <p style="font-size: 0.9em; line-height: 1.6;">
+    i write about things i study and work upon... you will see a lot of cryptology (yes, even analysis), math and computer engineering... and bits of philosophy
+  </p>
+  
+  
+    <div style="margin-top: 15px;">
+      <strong style="font-size: 0.9em;">Find me on:</strong>
+      <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px;">
+        
+          <a href="https://github.com/DA1729" class="tag" target="_blank" rel="noopener">
+            github
+          </a>
+        
+          <a href="https://x.com/sp0oky_daksh" class="tag" target="_blank" rel="noopener">
+            twitter
+          </a>
+        
+          <a href="mailto:dakshpandey177@gmail.com" class="tag" target="_blank" rel="noopener">
+            email
+          </a>
+        
+          <a href="https://sp0oky-portfolio.vercel.app/" class="tag" target="_blank" rel="noopener">
+            portfolio
+          </a>
+        
+      </div>
+    </div>
+  
+  
+  <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+    <p style="font-size: 0.8em; color: var(--text-secondary); opacity: 0.8;">
+      Theme designed with 
+      <a href="https://claude.ai/code" target="_blank" rel="noopener" style="color: var(--link-color); text-decoration: none;">Claude Code</a>
+    </p>
+  </div>
+</div>
+
+        </aside>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Daksh Pandey. Portfolio-inspired theme crafted with Claude Code.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  
+<script src="/js/main.js"></script>
+
+  
+  <!-- Math Support -->
+  
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+</body>
+</html>
