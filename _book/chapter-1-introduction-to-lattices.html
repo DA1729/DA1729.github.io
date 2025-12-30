@@ -92,8 +92,8 @@
   
   <div class="article-content">
     <div class="post-content">
-      <p>For getting deep into cryptanalysis, we must have a solid understanding of the system we are analyzing. The new, modern, “quantum-safe” cryptography that is the lattice based cyrptography is based on these mathematical structures called lattices, hence the name. In the study of lattices, one might realize, that they do not hold much significance from the view of pure and abstract mathematics. Infact, from my perspective, all of the lattice theory is just a Martin Gardner puzzle which managed to get all the fame and attention, for valid reasons tho.</p>
-<h2><span id="lattices-and-bases">Lattices and Bases</span></h2><p>Lattice, is defined as: </p>
+      <p>For getting deep into cryptanalysis, we must have a solid understanding of the system we are analyzing. The new, modern, “quantum-safe” cryptography that is the lattice based cryptography is based on these mathematical structures called lattices, hence the name. In the study of lattices, one might realize, that they do not hold much significance from the view of pure and abstract mathematics. In fact, from my perspective, all of the lattice theory is just a Martin Gardner puzzle which managed to get all the fame and attention, for valid reasons though.</p>
+<h2><span id="lattices-and-bases">Lattices and Bases</span></h2><p>Lattice is defined as: </p>
 <blockquote>
 <p><strong>Definition (Lattice)</strong><br>A lattice $\mathcal{L}$ is a <strong>discrete</strong> subgroup of $\mathbb{R}^m$.</p>
 </blockquote>
@@ -101,7 +101,7 @@
 <blockquote>
 <p><strong>Definition (Constructive Definition)</strong><br>Let $\mathbf{b}_1, \cdots \mathbf{b}_n$ be $n$ linearly independent vectors in $\mathbb{R}^m$. A lattice is a structure defined by the set of all their <strong>integer</strong> linear combinations:<br>$$<br>\mathcal{L}(\mathbf{B}) &#x3D;<br>\{<br>\sum_{i&#x3D;1}^{n} x_i \mathbf{b}_i : x_i \in \mathbb{Z}<br>\}<br>$$</p>
 </blockquote>
-<p>How is a lattice difference from a vector field? Well, for a vector field, we would not have constrained ourselves to <strong>integer</strong> linear combinations, but rather any <strong>real</strong> combination. In other words, our lattice is discrete but a vector field is continous. Into the study of lattice cryptography, you will see how this “discreteness” allow us to formulate hard problems to build cryptosystems upon. To be more technical, this discreteness allows us to make the ways of linear algebra (especially Gaussian Elimination) break down.</p>
+<p>How is a lattice different from a vector field? Well, for a vector field, we would not have constrained ourselves to <strong>integer</strong> linear combinations, but rather any <strong>real</strong> combination. In other words, our lattice is discrete but a vector field is continuous. Into the study of lattice cryptography, you will see how this “discreteness” allow us to formulate hard problems to build cryptosystems upon. To be more technical, this discreteness allows us to make the ways of linear algebra (especially Gaussian Elimination) break down.</p>
 <h3><span id="the-basis-matrix">The Basis Matrix</span></h3><p>Matrix whose each column is a basis vector, is called the basis matrix. Represented as $$\mathbf{B} &#x3D; [\mathbf{b}_1, \cdots, \mathbf{b}_n] \in \mathbb{R}^{m \times n}$$</p>
 <p>It is important to have the dimensions clear. $m$ is the dimension of the ambient space we are in, and $n$ is the number of linearly independent vectors we have in our basis. Note that the given basis matrix has <strong>rank</strong> equal to $n$.</p>
 <blockquote>
@@ -137,23 +137,23 @@
 <blockquote>
 <p><strong>Why doesn’t the volume change if we change the basis?</strong><br>Using the unimodular property:<br>$$\det(\mathbf{B’}) &#x3D; \det(\mathbf{BU}) &#x3D; \det(\mathbf{B})\det(\mathbf{U}) &#x3D; \det(\mathbf{B})\cdot (\pm 1)$$<br>Since the volume is absolute, $|\det(\mathbf{B’})| &#x3D; |\det(\mathbf{B})|$</p>
 </blockquote>
-<h2><span id="fundamental-invariants-and-measuring-badness">Fundamental Invariants and Measuring “Badness”</span></h2><p>In the previous section, I classified the infintely many bases of a lattice very ambigously. I mentioned good ones are short and quite orthogonal, and bad ones are long and skewed. But how do we know if vectors in the given basis are short and orthogonal enough? Moreover, one can, maybe, be able to classify them visually for lattices upto 3 dimensions, but would definitely struggle any higher, and we work with very high dimensions like 500, 1000, etc.</p>
+<h2><span id="fundamental-invariants-and-measuring-badness">Fundamental Invariants and Measuring “Badness”</span></h2><p>In the previous section, I classified the infinitely many bases of a lattice very ambiguously. I mentioned good ones are short and quite orthogonal, and bad ones are long and skewed. But how do we know if vectors in the given basis are short and orthogonal enough? Moreover, one can, maybe, be able to classify them visually for lattices upto 3 dimensions, but would definitely struggle any higher, and we work with very high dimensions like 500, 1000, etc.</p>
 <h3><span id="hadamard-s-inequality-and-the-orthogonality-defect">Hadamard’s Inequality and The Orthogonality Defect</span></h3><p>Imagine that you have a rectangle. It can be completely described by a set of two vectors in 2D and the area of the rectangle will just be the product of the lengths of these vectors. Now, if you were to skew this rectangle, keeping the side lengths the same, we observe that the area decreases and is given by the determinant of the basis matrix formed by these two vectors. This geometric fact is formalized as <strong>Hadamard’s Inequality</strong>: </p>
 <blockquote>
 <p><strong>Definition (Hadamard’s Inequality)</strong><br>$$\det(\mathcal{L}) \leq  \prod_{i&#x3D;1}^{n} ||\mathbf{b}_i|| $$<br>The equality holds if and only if the basis vectors are mutually orthogonal.</p>
 </blockquote>
 <p>Now that we know that the determinant is the “minimum possible product” (achieved only by a perfect basis), we can compare our current basis against this ideal.</p>
-<p>We this, we define <strong>Orthogonality Defect</strong> (often denoted as $\gamma$ or just “Hadamard Ratio”) as: </p>
+<p>With this, we define <strong>Orthogonality Defect</strong> (often denoted as $\gamma$ or just “Hadamard Ratio”) as: </p>
 <blockquote>
 <p><strong>Definition (Orthogonality Defect&#x2F; Hadamard Ratio)</strong><br>$$\gamma(\mathbf{B}) &#x3D; \frac{\prod_{i&#x3D;1}^{n} ||\mathbf{b}_i||}{\det(\mathcal{L})}$$</p>
 </blockquote>
 <p>Now, how do we interpret this ratio?</p>
 <blockquote>
-<p><strong>Interpretting Hadamard Ratio</strong></p>
+<p><strong>Interpreting Hadamard Ratio</strong></p>
 <ul>
 <li>$\gamma &#x3D; 1$: the basis is perfectly orthogonal. The vectors are as short as they can possibly be. </li>
 <li>$\gamma &gt; 1$: the basis is skewed. The vectors are longer than necessary.</li>
-<li>$\gamma \gg 1: the basis is terrible. The vectors are incredibly long and nearly parallel. This is what a lattice public key looks like.</li>
+<li>$\gamma \gg 1$: the basis is terrible. The vectors are incredibly long and nearly parallel. This is what a lattice public key looks like.</li>
 </ul>
 </blockquote>
 <p>In later chapters, when we deal with the analysis part, the algorithms, LLL, BKZ, aim to lower this ratio only. We essentially try to force the product of lengths to get closer to the fixed volume.</p>
