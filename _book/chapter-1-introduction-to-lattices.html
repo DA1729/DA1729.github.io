@@ -92,7 +92,7 @@
   
   <div class="article-content">
     <div class="post-content">
-      <p>For getting deep into cryptanalysis, we must have a solid understanding of the system we are analyzing. The new, modern, “quantum-safe” cryptography that is the lattice based cryptography is based on these mathematical structures called lattices, hence the name. In the study of lattices, one might realize, that they do not hold much significance from the view of pure and abstract mathematics. In fact, from my perspective, all of the lattice theory is just a Martin Gardner puzzle which managed to get all the fame and attention, for valid reasons though.</p>
+      <p>For getting deep into cryptanalysis, we must have a solid understanding of the system we are analyzing. The new, modern, “quantum-safe” cryptography that is the lattice-based cryptography is based on these mathematical structures called lattices, hence the name. In the study of lattices, one might realize that they do not hold much significance from the view of pure and abstract mathematics. In fact, from my perspective, all of the lattice theory is just a Martin Gardner puzzle which managed to get all the fame and attention, for valid reasons though.</p>
 <h2><span id="lattices-and-bases">Lattices and Bases</span></h2><p>Lattice is defined as: </p>
 <blockquote>
 <p><strong>Definition (Lattice)</strong><br>A lattice $\mathcal{L}$ is a <strong>discrete</strong> subgroup of $\mathbb{R}^m$.</p>
@@ -101,7 +101,7 @@
 <blockquote>
 <p><strong>Definition (Constructive Definition)</strong><br>Let $\mathbf{b}_1, \cdots \mathbf{b}_n$ be $n$ linearly independent vectors in $\mathbb{R}^m$. A lattice is a structure defined by the set of all their <strong>integer</strong> linear combinations:<br>$$<br>\mathcal{L}(\mathbf{B}) &#x3D;<br>\{<br>\sum_{i&#x3D;1}^{n} x_i \mathbf{b}_i : x_i \in \mathbb{Z}<br>\}<br>$$</p>
 </blockquote>
-<p>How is a lattice different from a vector field? Well, for a vector field, we would not have constrained ourselves to <strong>integer</strong> linear combinations, but rather any <strong>real</strong> combination. In other words, our lattice is discrete but a vector field is continuous. Into the study of lattice cryptography, you will see how this “discreteness” allow us to formulate hard problems to build cryptosystems upon. To be more technical, this discreteness allows us to make the ways of linear algebra (especially Gaussian Elimination) break down.</p>
+<p>How is a lattice different from a vector field? Well, for a vector field, we would not have constrained ourselves to <strong>integer</strong> linear combinations, but rather any <strong>real</strong> combination. In other words, our lattice is discrete but a vector field is continuous. In the study of lattice cryptography, you will see how this “discreteness” allows us to formulate hard problems to build cryptosystems upon. To be more technical, this discreteness allows us to make the ways of linear algebra (especially Gaussian Elimination) break down.</p>
 <h3><span id="the-basis-matrix">The Basis Matrix</span></h3><p>Matrix whose each column is a basis vector, is called the basis matrix. Represented as $$\mathbf{B} &#x3D; [\mathbf{b}_1, \cdots, \mathbf{b}_n] \in \mathbb{R}^{m \times n}$$</p>
 <p>It is important to have the dimensions clear. $m$ is the dimension of the ambient space we are in, and $n$ is the number of linearly independent vectors we have in our basis. Note that the given basis matrix has <strong>rank</strong> equal to $n$.</p>
 <blockquote>
@@ -164,13 +164,13 @@
 </blockquote>
 <p>This factor gives you a normalized “score” independent of the dimension.</p>
 <h2><span id="gram-schmidt-orthogonalization">Gram-Schmidt Orthogonalization</span></h2><p>Up to this point, we have repeatedly used vague language such as “skewed”, “nearly parallel”, and “orthogonal enough”. While these notions are geometrically intuitive in low dimensions, they become meaningless in the high-dimensional lattices used in cryptography. We therefore need a precise mathematical tool that allows us to measure how a basis behaves internally.</p>
-<p>For this, we use one of the most famous tools of lienar algebra, that is the <strong>Gram-Schmidt Orthogonalization</strong>. </p>
+<p>For this, we use one of the most famous tools of linear algebra, that is the <strong>Gram-Schmidt Orthogonalization</strong>. </p>
 <p>Let me propose a question first before diving deep into the topic: </p>
 <blockquote>
 <p><strong>Given several vectors, how do we measure the volume of the shape they span?</strong></p>
 </blockquote>
-<p>Let’s start from the basics, 1D. Well, in 1D the volume is just the length of the vector describing the basis, so: $$V_1 &#x3D; ||\mathbf{v}_1|||$$</p>
-<p>Let’s add the second dimension now. Take two vectors $\mathbf{v}_1, \mathbf{v}_2 \in \mathbb{R}^2$. They span a parallelogram. The naive guess would be just the product of their norms, but that is obviously not always true. I think all of us know that we have to take product of the norm of the first vector and the norm of component of the second vector perpendicular to the first vector, so $$V_2 &#x3D; ||\mathbf{v}_1||\cdot ||\mathbf{v}_2^*||$$, where $\mathbf{v}_2^*$ is the component of the second vector perpendiular to the first one.</p>
+<p>Let’s start from the basics, 1D. Well, in 1D the volume is just the length of the vector describing the basis, so: $$V_1 &#x3D; ||\mathbf{v}_1||$$</p>
+<p>Let’s add the second dimension now. Take two vectors $\mathbf{v}_1, \mathbf{v}_2 \in \mathbb{R}^2$. They span a parallelogram. The naive guess would be just the product of their norms, but that is obviously not always true. I think all of us know that we have to take product of the norm of the first vector and the norm of component of the second vector perpendicular to the first vector, so $$V_2 &#x3D; ||\mathbf{v}_1||\cdot ||\mathbf{v}_2^*||$$, where $\mathbf{v}_2^*$ is the component of the second vector perpendicular to the first one.</p>
 <p>Why am I overexplaining stuff at this point? To point out a perspective, that is in this case, only the perpendicular component of $\mathbf{v}_2$ contributed to the area.</p>
 <p>Euclidean geometry admits exactly one way to decompose a vector into parallel and orthogonal components. The projection of $\mathbf{v}_2$ onto $\mathbf{v}_1$ is: $$\text{proj}_{\mathbf{v}_1}(\mathbf{v}_2) &#x3D; \frac{\langle \mathbf{v}_2, \mathbf{v}_1 \rangle}{||\mathbf{v}_1||^2}\mathbf{v}_1$$</p>
 <p>Now, to get the orthogonal projection, we just need to subtract the vector above from the original vector $\mathbf{v}_2$</p>
@@ -178,11 +178,11 @@
 <p>This requires removing from $\mathbf{v}_3$ all components lying in previously used directions. Hence, $$\mathbf{v}_3^* &#x3D; \mathbf{v}_3 - \text{proj}_{\mathbf{v}_1^*}(\mathbf{v}_3) - \text{proj}_{\mathbf{v}_2^*}(\mathbf{v}_3)$$</p>
 <p>With this, one should be able to see a pattern arising. And the pattern’s generalization is nothing but the <strong>Gram-Schmidt Orthogonalization</strong>.</p>
 <blockquote>
-<p><strong>Gram-Schmidt Orthogonalization</strong><br>Given a basis $\{\mathbf{v}_1, \cdots, \mathbf{v}_n\}$, corresponding basis $\{\mathbf{v}_1^*, \cdots, \mathbf{v}_n^*\}$ generated by the following algorithm:<br>$$\mathbf{v}_1^* &#x3D; \mathbf{v}_1,$$<br>For $k \geq 2$<br>$$\mathbf{v}_k^* &#x3D; \mathbf{v}_k - \sum_{j&#x3D;1}^{k-1} \frac{\langle \mathbf{v}_k, \mathbf{v}_j^* \rangle}{||\mathbf{v}_j^*||^2}\mathbf{v}_j^*$$<br>is mutually orthogonal and span the same linear subspace as the original vectors.<br>Once the vectors are orthogonal, volume factorizes naturally: $$V_n &#x3D; \prod_{i&#x3D;1}^{n} \mathbf{v}_i^*$$</p>
+<p><strong>Gram-Schmidt Orthogonalization</strong><br>Given a basis $\{\mathbf{v}_1, \cdots, \mathbf{v}_n\}$, corresponding basis $\{\mathbf{v}_1^*, \cdots, \mathbf{v}_n^*\}$ generated by the following algorithm:<br>$$\mathbf{v}_1^* &#x3D; \mathbf{v}_1,$$<br>For $k \geq 2$<br>$$\mathbf{v}_k^* &#x3D; \mathbf{v}_k - \sum_{j&#x3D;1}^{k-1} \frac{\langle \mathbf{v}_k, \mathbf{v}_j^* \rangle}{||\mathbf{v}_j^*||^2}\mathbf{v}_j^*$$<br>is mutually orthogonal and span the same linear subspace as the original vectors.<br>Once the vectors are orthogonal, volume factorizes naturally: $$V_n &#x3D; \prod_{i&#x3D;1}^{n} ||\mathbf{v}_i^*||$$</p>
 </blockquote>
 <p>Thus, GSO is the unique procedure that allows us to decompose volume into independent, one-dimensional contributions.</p>
-<p>Now let’s see the use of GSO in our lattice theory. Let’s say that a given lattice $\mathcal{L}$ has a basis $\mathbf{B} &#x3D; \{\mathbf{b}_1, \cdots, \mathbf{b}_n\}$. Applying GSO to this basis, let’s say we get $$\{\mathbf{b}_1^*, \cdots, \mathbf{b}_n^*\}$$ One has to note that this generated basis, may not be consist of lattice vectors, and majority of times, they are not. Instead, they reveal the true orthogonal structure hidden inside the basis.</p>
-<p>From the volume decomposition above, the determinant of a lattice satisfies: $$\det(\mathcal{L}) &#x3D; \prod_{i&#x3D;1}^{n} \mathbf{b}_i^*$$</p>
+<p>Now let’s see the use of GSO in our lattice theory. Let’s say that a given lattice $\mathcal{L}$ has a basis $\mathbf{B} &#x3D; \{\mathbf{b}_1, \cdots, \mathbf{b}_n\}$. Applying GSO to this basis, let’s say we get $$\{\mathbf{b}_1^*, \cdots, \mathbf{b}_n^*\}$$ One has to note that this generated basis may not consist of lattice vectors, and the majority of the time, they are not. Instead, they reveal the true orthogonal structure hidden inside the basis.</p>
+<p>From the volume decomposition above, the determinant of a lattice satisfies: $$\det(\mathcal{L}) &#x3D; \prod_{i&#x3D;1}^{n} ||\mathbf{b}_i^*||$$</p>
 <h2><span id="successive-minima-and-minkowski-s-theorems">Successive Minima and Minkowski’s Theorems</span></h2><p>In the previous section, we used GSO to measure the quality of a specific basis. However, as cryptanalysts, we often need to measure the properties of the lattice itself, independent of which basis is currently representing it.</p>
 <p>We know that a lattice is a discrete grid. This discreteness implies that there is a limit to how close two distinct lattice points can be. This brings us to the concept of Successive Minima, which generalizes the idea of the “shortest vector.”</p>
 <h3><span id="successive-minima">Successive Minima</span></h3><p>The most famous invariant of a lattice is the length of its shortest non-zero vector. We denote this length as $\lambda_1$.</p>
@@ -190,6 +190,85 @@
 <p><strong>Definition (First Successive Minimum&#x2F; Shortest Vector)</strong><br>The first successive minimum $\lambda_1(\mathcal{L})$ is the length of the shortest non-zero vector in the lattice: $$\lambda_1(\mathcal{L}) &#x3D; \min_{\mathbf{v} \in \mathcal{L}\setminus \{0\}} ||\mathbf{v}||$$</p>
 </blockquote>
 <p>Finding a vector of length $\lambda_1$ is exactly the <strong>Shortest Vector Problem (SVP)</strong>, which is the computational foundation of modern lattice cryptography.</p>
+<p>To get more formal intuition for this shortest vector, imagine a lattice (2D or 3D). Now from origin you start inflating a circle&#x2F;sphere, initially, it will be just a point at the origin. As we expand it, at this <strong>critical radius</strong>, the sphere just touches the first non-zero lattice point. So, the shortest vector is the first lattice point the expanding sphere collides with. Additionally, this ball of critical radius $\lambda_1$ has a special property: $$B(\lambda_1)\cap \mathcal{L} &#x3D; \{0, \mathbf{v_1}\}$$</p>
+<blockquote>
+<p><strong>Definition (Successive Minima)</strong><br>for $k \in \{1, \cdots, n\}$, the $k$th successive minimum $\lambda_k(\mathcal{L})$ is the smallest radius $r$ such that the closed ball of radius $r$ centered at origin contains at least $k$ linearly independent lattice vectors. $$0 &lt; \lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_n &lt; \infty $$</p>
+</blockquote>
+<p>This sequence gives us a “geometric profile” of the lattice.</p>
+<ul>
+<li>If $\lambda_1 \approx \lambda_n$, the lattice is “well-rounded” (like a grid of squares).</li>
+<li>If $\lambda_1 &lt;&lt; \lambda_n$, the lattice is “long and thin” (collapsed in some directions).</li>
+</ul>
+<h3><span id="minkowski-s-theorems">Minkowski’s Theorems</span></h3><p>This is the fundamental theory of the Geometry of Numbers. It guarantees that if a lattice has a certain density (determinant), then short vectors <strong>must</strong> exist.<br>For a cryptanalyst, this is a double-edged sword:</p>
+<ul>
+<li><strong>The Good:</strong> it proves that a short key (or a weakness) exists.</li>
+<li><strong>The Bad:</strong> It does not tell us how to find it.</li>
+</ul>
+<p>To state the theorem formally, we first need a lemma regarding volume packing, often called the “Pigeonhole Principle for Geometry.”</p>
+<h4><span id="blichfeldt-s-theorem">Blichfeldt’s Theorem</span></h4><blockquote>
+<p><strong>Theorem (Blichfeldt’s Theorem)</strong><br>Let $S \subset \mathbb{R}^n$ be a measurable set with volume $\operatorname{vol}(S) &gt; \det(\mathcal{L})$. Then, there exist two distinct points $\mathbf{z}_1, \mathbf{z}_2 \in S$ such that their difference is a lattice vector:<br>$$\mathbf{z}_1 - \mathbf{z}_2 \in \mathcal{L}$$</p>
+</blockquote>
+<p><strong>Proof:</strong><br>Let $\mathcal{P}(\mathbf{B})$ be the fundamental parallelpiped. We can tile the entire space $\mathbb{R}^n$ using shifts of this parallelpiped by lattice vectors. Any point $\mathbf{x} \in \mathbb{R}^n$ can be uniquely written as $\mathbf{x} &#x3D; \mathbf{b} + \mathbf{p}$, where $\mathbf{b} \in \mathcal{L}$ and $\mathbf{p} \in \mathcal{P}(\mathbf{B})$.</p>
+<p>Imagine “folding” the set $S$ into a single fundamental parallelpiped by mapping every point $\mathbf{x} \in S$ to its relative position $\mathbf{p}$. Since $\operatorname{vol}(S) &gt; \operatorname{vol}(\mathcal{P}(\mathbf{B})) &#x3D; \det(\mathcal{L})$, by the Pigeonhole Principle, at least two points $\mathbf{z}_1, \mathbf{z}_2$ must land on the same spot $\mathbf{p}$ after folding.</p>
+<p>This implies $\mathbf{z}_1 &#x3D; \mathbf{b}_1 + \mathbf{p}$ and $\mathbf{z}_2 &#x3D; \mathbf{b}_2 + \mathbf{p}$.<br>Subtracting them gives $\mathbf{z}_1 - \mathbf{z}_2 &#x3D; \mathbf{b}_1 - \mathbf{b}_2$. Since lattices are closed under subtraction, this difference is a lattice vector. $\blacksquare$</p>
+<h4><span id="minkowski-s-first-theorem-convex-body-theorem">Minkowski’s First Theorem (Convex Body Theorem)</span></h4><p>Using Blichfeldt’s result, we can now prove the core theorem. We consider a set $S$ that is <strong>convex</strong> and <strong>centrally symmetric</strong> (e.g., a sphere or a cube centered at the origin).</p>
+<blockquote>
+<p><strong>Theorem (Minkowski’s First Theorem)</strong><br>Let $\mathcal{L}$ be a full-rank lattice in $\mathbb{R}^n$. If $S \subset \mathbb{R}^n$ is a convex, centrally symmetric set with volume:<br>$$\operatorname{vol}(S) &gt; 2^n \det(\mathcal{L})$$<br>Then $S$ contains at least one non-zero lattice vector.</p>
+</blockquote>
+<p><strong>Proof:</strong><br>Define a shrunk version of the set, $S’ &#x3D; \frac{1}{2}S &#x3D; \{ \frac{1}{2}\mathbf{x} : \mathbf{x} \in S \}$.<br>The volume scales by $(1&#x2F;2)^n$, so:<br>$$\operatorname{vol}(S’) &#x3D; \frac{1}{2^n} \operatorname{vol}(S) &gt; \det(\mathcal{L})$$</p>
+<p>By <strong>Blichfeldt’s Theorem</strong>, there exist distinct $\mathbf{x}_1, \mathbf{x}_2 \in S’$ such that $\mathbf{x}_1 - \mathbf{x}_2 \in \mathcal{L}$.</p>
+<p>We must now show this difference vector lies inside $S$.<br>Since $\mathbf{x}_1, \mathbf{x}_2 \in S’$, we know that $2\mathbf{x}_1 \in S$ and $2\mathbf{x}_2 \in S$.<br>Because $S$ is symmetric about the origin, if $2\mathbf{x}_2 \in S$, then $-2\mathbf{x}_2 \in S$.<br>Because $S$ is convex, the midpoint of any segment connecting two points in $S$ is also in $S$. We take the midpoint of $2\mathbf{x}_1$ and $-2\mathbf{x}_2$:<br>$$\frac{(2\mathbf{x}_1) + (-2\mathbf{x}_2)}{2} &#x3D; \mathbf{x}_1 - \mathbf{x}_2$$</p>
+<p>Thus, the difference vector lies in $S$. Since it is a lattice vector and non-zero (as $\mathbf{x}_1 \neq \mathbf{x}_2$), the theorem holds. $\blacksquare$</p>
+<h4><span id="minkowski-s-second-theorem">Minkowski’s Second Theorem</span></h4><p>While the First Theorem gives us a bound on the shortest vector $\lambda_1$, it tells us nothing about the rest of the lattice structure. The <strong>Second Theorem</strong> generalizes this bound to the entire set of successive minima.</p>
+<blockquote>
+<p><strong>Theorem (Minkowski’s Second Theorem)</strong><br>For any rank-$n$ lattice $\mathcal{L}$, the product of the successive minima is bounded by the determinant:<br>$$\prod_{i&#x3D;1}^n \lambda_i(\mathcal{L}) \leq \gamma_n^n \cdot \det(\mathcal{L})$$<br>Where $\gamma_n$ is a constant depending on the dimension (specifically related to the volume of the unit ball). A looser but easier-to-remember bound is:<br>$$\left(\prod_{i&#x3D;1}^n \lambda_i(\mathcal{L})\right)^{1&#x2F;n} \leq \sqrt{n} \cdot \det(\mathcal{L})^{1&#x2F;n}$$</p>
+</blockquote>
+<p><strong>Why is this powerful?</strong><br>It links the “geometric lengths” ($\lambda_i$) directly to the “algebraic volume” ($\det(\mathcal{L})$).</p>
+<ul>
+<li><strong>Ideally:</strong> If the lattice has an orthogonal basis of short vectors, then $\prod \lambda_i \approx \det(\mathcal{L})$.</li>
+<li><strong>In Practice:</strong> If the lattice is highly skewed (like a Public Key), the product $\prod \lambda_i$ might be much smaller than the product of the basis vector lengths $\prod ||\mathbf{b}_i||$.</li>
+</ul>
+<p>This theorem proves that “short bases” mathematically exist. The goal of cryptanalysis is to find a basis where $||\mathbf{b}_i|| \approx \lambda_i$. In dimensions $n &gt; 500$, the gap between Minkowski’s existence bound and what algorithms like LLL can actually find is where the security of schemes like Kyber and Dilithium lives.</p>
+<h2><span id="the-dual-lattice">The Dual Lattice</span></h2><p>We have one final structure to define before we close our introduction to the geometry of numbers. In many areas of mathematics (like Fourier analysis or optimization), every object has a “dual” counterpart. Lattices are no exception.</p>
+<p>The <strong>Dual Lattice</strong> is essentially the set of all vectors that have an integer inner product with every vector in your original lattice.</p>
+<blockquote>
+<p><strong>Definition (Dual Lattice)</strong><br>Let $\mathcal{L}$ be a lattice in $\mathbb{R}^n$. The dual lattice, denoted $\mathcal{L}^*$, is defined as:<br>$$<br>\mathcal{L}^* &#x3D; { \mathbf{x} \in \text{span}(\mathcal{L}) : \langle \mathbf{x}, \mathbf{y} \rangle \in \mathbb{Z}, \forall \mathbf{y} \in \mathcal{L} }<br>$$</p>
+</blockquote>
+<p>If $\mathcal{L}$ is full-rank (which it almost always is in cryptography), the condition simplifies to $\mathbf{x} \in \mathbb{R}^n$ such that the inner products are integers.</p>
+<h3><span id="the-dual-basis">The Dual Basis</span></h3><p>If we have a basis matrix $\mathbf{B}$ for the primal lattice $\mathcal{L}$, how do we find a basis $\mathbf{D}$ for $\mathcal{L}^*$?<br>We need the inner product of any column in $\mathbf{B}$ and any column in $\mathbf{D}$ to be an integer (specifically, we want them to be orthonormal roughly speaking, satisfying the condition $\mathbf{D}^T \mathbf{B} &#x3D; \mathbf{I}$).</p>
+<blockquote>
+<p><strong>Theorem (Dual Basis)</strong><br>If $\mathbf{B}$ is a basis for $\mathcal{L}$, then the “inverse transpose” matrix:<br>$$\mathbf{D} &#x3D; (\mathbf{B}^{-1})^T$$<br>is a basis for $\mathcal{L}^*$.</p>
+</blockquote>
+<p><strong>Proof:</strong><br>Let’s check the inner product condition. We compute the matrix product $\mathbf{D}^T \mathbf{B}$:<br>$$\mathbf{D}^T \mathbf{B} &#x3D; ((\mathbf{B}^{-1})^T)^T \mathbf{B} &#x3D; \mathbf{B}^{-1} \mathbf{B} &#x3D; \mathbf{I}$$<br>Since the result is the Identity matrix (which consists entirely of integers $0$ and $1$), the condition holds. $\blacksquare$</p>
+<h3><span id="properties-of-the-dual">Properties of the Dual</span></h3><p>The dual lattice has a beautiful “inverse” relationship with the primal lattice.</p>
+<ol>
+<li><p><strong>Reflexivity:</strong> The dual of the dual is the original lattice.<br>$$(\mathcal{L}^*)^* &#x3D; \mathcal{L}$$</p>
+</li>
+<li><p><strong>Volume:</strong> The determinant of the dual is the inverse of the primal determinant.<br>$$\det(\mathcal{L}^*) &#x3D; \frac{1}{\det(\mathcal{L})}$$</p>
+<p><em>Proof:</em> $\det(\mathbf{D}) &#x3D; \det((\mathbf{B}^{-1})^T) &#x3D; \det(\mathbf{B}^{-1}) &#x3D; 1&#x2F;\det(\mathbf{B})$.</p>
+</li>
+</ol>
+<h3><span id="cryptanalytic-significance-the-slicing-intuition">Cryptanalytic Significance: The “Slicing” Intuition</span></h3><p>Why do we care about this?<br>In the primal lattice $\mathcal{L}$, a short vector represents a point close to the origin.<br>In the dual lattice $\mathcal{L}^*$, a short vector $\mathbf{w} \in \mathcal{L}^*$ represents a set of <strong>hyperplanes</strong> that slice the original lattice into widely spaced layers.</p>
+<ul>
+<li>The distance between these layers is exactly $1&#x2F;||\mathbf{w}||$.</li>
+<li>Therefore, finding a <strong>short</strong> vector in the dual lattice corresponds to finding <strong>sparse</strong> layers in the primal lattice.</li>
+</ul>
+<p>This is the heart of the <strong>Dual Attack</strong> on LWE. If we can find a short vector in the dual, we can distinguish the lattice from random noise because the lattice points will cluster on these specific hyperplanes, whereas random noise will be uniform.</p>
+<h2><span id="computational-perspective">Computational Perspective</span></h2><p>Before moving to Chapter 2, a note on implementation.<br>Throughout this chapter, we have assumed we can compute things like $\mathbf{B}^{-1}$ or Gram-Schmidt coefficients exactly.<br>In code (C++ &#x2F; Python), we face two realities:</p>
+<ol>
+<li><strong>Integer Lattices:</strong> We typically work with $\mathcal{L} \subseteq \mathbb{Z}^n$. This means $\det(\mathcal{L})$ is an integer. However, the dual lattice $\mathcal{L}^*$ will usually contain rational numbers (fractions).<br> <em>Implementation Tip:</em> To avoid floating point errors, we often scale the dual lattice by a factor of $k &#x3D; \det(\mathcal{L})$ to map it back to integers.</li>
+<li><strong>Floating Point Precision:</strong> For high dimensions ($n &gt; 100$), standard <code>double</code> precision is insufficient for LLL and BKZ. The rounding errors in Gram-Schmidt will destroy the orthogonality. You will often need to use libraries like <strong>MPFR</strong> (for high-precision floats) or strict integer arithmetic strategies.</li>
+</ol>
+<hr>
+<h3><span id="what-s-next">What’s Next?</span></h3><p>This concludes <strong>Chapter 1</strong>.<br>We have defined our playground:</p>
+<ul>
+<li><strong>The Objects:</strong> Lattices and Bases.</li>
+<li><strong>The Metric:</strong> Orthogonality Defect (how “bad” a basis is).</li>
+<li><strong>The Tool:</strong> Gram-Schmidt Orthogonalization.</li>
+<li><strong>The Guarantee:</strong> Minkowski’s Theorems (short vectors exist).</li>
+<li><strong>The Mirror:</strong> The Dual Lattice.</li>
+</ul>
+<p>In <strong>Chapter 2</strong>, we will tackle the <strong>Hard Problems</strong>. We will formally define SVP, CVP, and LWE, and explain why they are hard. This sets the stage for the algorithms (LLL&#x2F;BKZ) that try to solve them.</p>
 
     </div>
   </div>
