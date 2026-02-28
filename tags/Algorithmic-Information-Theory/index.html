@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Isomorphism to $\mathbb{R^N}$ in CKKS RLWE Cryptosystem | da1729&#39;s Blog</title>
+  <title>da1729&#39;s Blog</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="">
@@ -11,10 +11,10 @@
   <meta name="author" content="Daksh Pandey">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="Isomorphism to $\mathbb{R^N}$ in CKKS RLWE Cryptosystem">
+  <meta property="og:title" content="da1729&#39;s Blog">
   <meta property="og:description" content="">
-  <meta property="og:type" content="page">
-  <meta property="og:url" content="/_quick/isomorphism-from-h-to-r.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/tags/Algorithmic-Information-Theory/index.html">
   <meta property="og:site_name" content="da1729&#39;s Blog">
   
   <!-- CSS -->
@@ -73,67 +73,55 @@
     <div class="container">
       <div class="content">
         <main class="main-content">
-          <!-- Static Page Template -->
-<article class="article-card">
+          <!-- Archive Page -->
+<div class="article-card">
   <header class="article-header">
-    <h1 class="article-title">Isomorphism to $\mathbb{R^N}$ in CKKS RLWE Cryptosystem</h1>
+    <h1 class="article-title">
+      
+        Tag: #Algorithmic Information Theory
+      
+    </h1>
     
-    
-      <div class="article-meta">
-        <time datetime="2025-10-02T02:53:58.886Z">
-          October 2, 2025
-        </time>
-        
-          <span> • Updated: October 8, 2025</span>
-        
-      </div>
-    
+    <div class="article-meta">
+      
+        1 post
+      
+    </div>
   </header>
   
   <div class="article-content">
-    <div class="post-content">
-      <p>In quick post, we will prove how the complex space $$\mathbb{H} &#x3D; \{[\mathbf{z} &#x3D; (z_j)_{j \in \mathbb{Z}_M^*} \in \mathbb{C}^N : z_j &#x3D; \bar{z_{-j}}, \forall j \in \mathbb{Z}_M^*\}$$ is isomorphic to $\mathbb{R}^N$</p>
-<p>This property is fundamental to the CKKS cryptosystem. Let’s prove it in two ways.</p>
-<h3><span id="the-quick-proof-counting-real-numbers">The Quick Proof: Counting Real Numbers</span></h3><p>The isomorphism becomes clear when we simply count the “degrees of freedom” required to define a vector in $\mathbb{H}$.</p>
-<p>The key is the constraint: $z_j &#x3D; \bar{z}_{-j}$.</p>
-<ol>
-<li><p>A general vector in $\mathbb{C}^N$ requires $N$ complex numbers. Since each complex number has a real and an imaginary part, this is a total of $2N$ real numbers.</p>
-</li>
-<li><p>The constraint links the components into $N&#x2F;2$ pairs of the form $(z_j, z_{-j})$.</p>
-</li>
-<li><p>Let’s look at one pair. If we freely choose $z_j &#x3D; a_j + i b_j$, we have picked two real numbers ($a_j$ and $b_j$). The constraint immediately fixes the value of its partner:<br>$$z_{-j} &#x3D; \overline{z_j} &#x3D; a_j - i b_j$$<br>So, two real numbers are sufficient to define two complex numbers in the vector.</p>
-</li>
-<li><p>To define the entire vector $\mathbf{z}$, we must specify the $N&#x2F;2$ independent components. Each requires 2 real numbers.</p>
-</li>
-</ol>
-<p>Total real numbers needed &#x3D; $(\text{Number of independent components}) \times (\text{Real numbers per component})$<br>$$&#x3D; \frac{N}{2} \times 2 &#x3D; N$$</p>
-<p>Since any vector in $\mathbb{H}$ can be uniquely specified by exactly $N$ real numbers, the space $\mathbb{H}$ is isomorphic to $\mathbb{R}^N$.</p>
-<h3><span id="the-formal-proof-the-isomorphism-matrix">The Formal Proof: The Isomorphism Matrix</span></h3><p>This isomorphism can be formally constructed by a unitary matrix $U$. This matrix provides a map $f: \mathbb{R}^N \to \mathbb{H}$ that takes a real vector $\mathbf{x}$ and constructs a valid complex vector $\mathbf{z} \in \mathbb{H}$ via the operation $\mathbf{z} &#x3D; U\mathbf{x}$.</p>
-<p><strong>Definition:</strong> Let $I$ be the $(N&#x2F;2) \times (N&#x2F;2)$ identity matrix and $J$ be the reversal matrix ($J^2&#x3D;I$). The isomorphism matrix $U$ is defined as:<br>$$U &#x3D; \frac{1}{\sqrt{2}}\begin{pmatrix} I &amp; iJ \\ J &amp; -iI \end{pmatrix}$$</p>
-<p><strong>Proof:</strong> We must show that for any real vector $\mathbf{x} \in \mathbb{R}^N$, the output $\mathbf{z} &#x3D; U\mathbf{x}$ satisfies the symmetry condition for being in $\mathbb{H}$.</p>
-<p>Let’s partition the real vector $\mathbf{x}$ into two halves, $\mathbf{x} &#x3D; \begin{pmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{pmatrix}$. The resulting complex vector $\mathbf{z}$ is also partitioned as $\mathbf{z} &#x3D; \begin{pmatrix} \mathbf{z}_1 \\ \mathbf{z}_2 \end{pmatrix}$. The symmetry condition in this block form is $\mathbf{z}_2 &#x3D; J\bar{\mathbf{z}}_1$.</p>
-<ol>
-<li><p><strong>Compute z:</strong><br>$$\mathbf{z} &#x3D; U\mathbf{x} &#x3D; \frac{1}{\sqrt{2}}\begin{pmatrix} I &amp; iJ \\ J &amp; -iI \end{pmatrix} \begin{pmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{pmatrix} &#x3D; \frac{1}{\sqrt{2}}\begin{pmatrix} \mathbf{x}_1 + iJ\mathbf{x}_2 \\ J\mathbf{x}_1 - i\mathbf{x}_2 \end{pmatrix}$$<br>This gives us the two halves of our resulting complex vector:</p>
-<ul>
-<li>$\mathbf{z}_1 &#x3D; \frac{1}{\sqrt{2}}(\mathbf{x}_1 + iJ\mathbf{x}_2)$</li>
-<li>$\mathbf{z}_2 &#x3D; \frac{1}{\sqrt{2}}(J\mathbf{x}_1 - i\mathbf{x}_2)$</li>
-</ul>
-</li>
-<li><p><strong>Verify the Symmetry:</strong> Now, we compute $J\bar{\mathbf{z}}_1$ and check if it equals $\mathbf{z}_2$.</p>
-<ul>
-<li>First, take the complex conjugate of $\mathbf{z}_1$. Since $\mathbf{x}_1$, $\mathbf{x}_2$, and $J$ are all real, we just flip the sign on $i$:<br>  $$\bar{\mathbf{z}}_1 &#x3D; \frac{1}{\sqrt{2}}(\mathbf{x}_1 - iJ\mathbf{x}_2)$$</li>
-<li>Next, multiply by $J$ from the left:<br>  $$J\bar{\mathbf{z}}_1 &#x3D; J \left( \frac{1}{\sqrt{2}}(\mathbf{x}_1 - iJ\mathbf{x}_2) \right) &#x3D; \frac{1}{\sqrt{2}}(J\mathbf{x}_1 - iJ^2\mathbf{x}_2)$$</li>
-<li>Since $J^2 &#x3D; I$, this simplifies to:<br>  $$J\bar{\mathbf{z}}_1 &#x3D; \frac{1}{\sqrt{2}}(J\mathbf{x}_1 - i\mathbf{x}_2)$$</li>
-</ul>
-</li>
-</ol>
-<p>Comparing our results, we see that $\mathbf{z}_2 &#x3D; J\bar{\mathbf{z}}_1$, so the symmetry condition holds. Therefore, the matrix $U$ correctly maps any vector in $\mathbb{R}^N$ to a corresponding vector in $\mathbb{H}$, proving the isomorphism.</p>
-<p>This isomorphism is the crucial first step in CKKS, allowing real-valued vectors (plaintext) to be encoded into the algebraic structure required for homomorphic encryption.</p>
-
-    </div>
+    
+      <ul class="archive-list">
+        
+          <li class="archive-item">
+            <div class="archive-date">
+              March 1, 2026
+            </div>
+            <h3 class="archive-title">
+              <a href="/2026/03/01/Non-Algorithmic-Theory-of-Randomness/">Non-Algorithmic Foundations of Randomness</a>
+            </h3>
+            
+            
+            
+              <div class="article-tags" style="margin-top: 10px;">
+                
+                  <a href="/tags/Randomness/" class="tag">#Randomness</a>
+                
+                  <a href="/tags/Algorithmic-Information-Theory/" class="tag">#Algorithmic Information Theory</a>
+                
+                  <a href="/tags/Statistics/" class="tag">#Statistics</a>
+                
+              </div>
+            
+          </li>
+        
+      </ul>
+      
+      <!-- Pagination -->
+      
+    
   </div>
-</article>
-
+</div>
         </main>
         
         <!-- Sidebar -->

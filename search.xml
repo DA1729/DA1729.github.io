@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Non-Algorithmic Foundations of Randomness</title>
+      <link href="/2026/03/01/Non-Algorithmic-Theory-of-Randomness/"/>
+      <url>/2026/03/01/Non-Algorithmic-Theory-of-Randomness/</url>
+      
+        <content type="html"><![CDATA[<p>The algorithmic theory of randomness has long served as a powerful source of intuition in mathematics and computer science. However, its practical application is often hindered by the presence of unspecified additive or multiplicative constants. This post examines Vladimir Vovk’s framework, which provides a precise language for randomness by replacing these constants with the rigorous definitions of p-variables and e-variables.</p><h2><span id="the-limitation-of-algorithmic-heuristics">The Limitation of Algorithmic Heuristics</span></h2><p>Traditional algorithmic randomness results are frequently stated “up to an additive constant,” a convention that renders them difficult to apply in finite, real-world contexts. Vovk proposes a shift toward a language that does not rely on these hidden factors, making mathematical results in this domain essentially computable and applicable in practice. The primary testing ground for this precision is the definition of Bernoulli sequences<br>a problem central to the work of Andrei Kolmogorov.</p><h2><span id="formalizing-evidence-p-variables-and-e-variables">Formalizing Evidence: p-variables and e-variables</span></h2><p>The framework centers on two measurable functions, $f:\Omega\rightarrow[0,\infty]$, defined with respect to a probability measure $P$:</p><ul><li><strong>p-variable</strong>: A function such that for any $\epsilon&gt;0$, $P{f\le\epsilon}\le\epsilon$.</li><li><strong>e-variable</strong>: A function such that $\int fdP\le1$.</li></ul><p>In this context, e-values (often termed “betting scores”) represent the amount of evidence against a hypothesis $P$. While p-values and e-values operate on different scales, they are fundamentally related. For any $\kappa\in(0,1)$, the following inclusion holds:<br>$$\kappa\mathcal{P}_P^{\kappa-1}\subseteq\mathcal{E}_P\subseteq\mathcal{P}_P^{-1}$$<br>This relationship demonstrates that while p-values and e-values are equivalent on a crude scale (where a p-value of $p$ roughly corresponds to an e-value of $1&#x2F;p$), the e-variable approach often yields cleaner, more precise mathematical identities.</p><h2><span id="composite-hypotheses-and-the-upper-envelope">Composite Hypotheses and the Upper Envelope</span></h2><p>When dealing with a statistical model $P&#x3D;(P_\theta|\theta\in\Theta)$ rather than a simple hypothesis, the definition of evidence must account for the parameter space. An e-variable with respect to a composite model is defined by its upper envelope:<br>$$\forall\theta\in\Theta:\int_{\Omega}f(\omega)P_\theta(d\omega)\le1$$<br>This leads to a significant simplification of Bayesian statistics. Given a prior probability measure $Q$ on $\Theta$ and a joint probability measure $T$, Vovk establishes the <strong>Product of Evidence</strong> theorem:<br>$$\mathcal{E}_T &#x3D; \mathcal{E}_P\mathcal{E}_Q$$<br>Unlike the algorithmic version of this result, this formula is exact. it indicates that evidence against a Bayesian model is simply the product of the evidence against the prior and the evidence against the likelihood.</p><h2><span id="the-bernoulli-problem-iid-vs-exchangeability">The Bernoulli Problem: IID vs. Exchangeability</span></h2><p>Applying this framework to Bernoulli sequences clarifies a long-standing approximation in Kolmogorov’s work. Kolmogorov initially defined Bernoulli sequences as exchangeable sequences<br>those whose probability remains invariant under permutation. Vovk’s framework provides a narrower, more accurate decomposition:<br>$$\mathcal{E}_{Bern} &#x3D; \mathcal{E}_{exch}\mathcal{E}_{bin}$$<br>This identity reveals that a sequence is Bernoulli if and only if it is both exchangeable <strong>and</strong> its distribution of successes is binomial. </p><p>Crucially, the framework allows us to quantify the “importance” of these components. By comparing the supremum ranges of these classes<br>where the supremum of $\mathcal{E}_{exch}$ grows much faster than that of $\mathcal{E}_{bin}$<br>we can mathematically confirm that exchangeability is indeed the dominant characteristic of Bernoulliness, justifying Kolmogorov’s original intuition while providing the precision he lacked.</p><h2><span id="conclusion">Conclusion</span></h2><p>The transition from the “approximate” results of algorithmic information theory to the “exact” identities of p- and e-variables represents a significant step toward a practical theory of randomness. By eliminating unspecified constants, we gain a framework that is not only theoretically elegant but also ready for rigorous statistical application.</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Randomness </tag>
+            
+            <tag> Algorithmic Information Theory </tag>
+            
+            <tag> Statistics </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Algebraic Cryptanalysis of Lattice Cryptography</title>
       <link href="/2025/12/27/Block-Korkine-Zolotarev-BKZ-Algorithm/"/>
       <url>/2025/12/27/Block-Korkine-Zolotarev-BKZ-Algorithm/</url>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Isomorphism to $\mathbb{R^N}$ in CKKS RLWE Cryptosystem | da1729&#39;s Blog</title>
+  <title>Non-Algorithmic Foundations of Randomness | da1729&#39;s Blog</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="">
@@ -11,10 +11,10 @@
   <meta name="author" content="Daksh Pandey">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="Isomorphism to $\mathbb{R^N}$ in CKKS RLWE Cryptosystem">
+  <meta property="og:title" content="Non-Algorithmic Foundations of Randomness">
   <meta property="og:description" content="">
-  <meta property="og:type" content="page">
-  <meta property="og:url" content="/_quick/isomorphism-from-h-to-r.html">
+  <meta property="og:type" content="post">
+  <meta property="og:url" content="/2026/03/01/Non-Algorithmic-Theory-of-Randomness/">
   <meta property="og:site_name" content="da1729&#39;s Blog">
   
   <!-- CSS -->
@@ -73,18 +73,29 @@
     <div class="container">
       <div class="content">
         <main class="main-content">
-          <!-- Static Page Template -->
+          <!-- Individual Post Page -->
 <article class="article-card">
   <header class="article-header">
-    <h1 class="article-title">Isomorphism to $\mathbb{R^N}$ in CKKS RLWE Cryptosystem</h1>
+    <div class="article-meta">
+      <time datetime="2026-02-28T23:05:05.000Z">
+        March 1, 2026
+      </time>
+      
+      
+        <span> • Updated: March 1, 2026</span>
+      
+    </div>
+    
+    <h1 class="article-title">Non-Algorithmic Foundations of Randomness</h1>
     
     
-      <div class="article-meta">
-        <time datetime="2025-10-02T02:53:58.886Z">
-          October 2, 2025
-        </time>
+      <div class="article-tags">
         
-          <span> • Updated: October 8, 2025</span>
+          <a href="/tags/Randomness/" class="tag">#Randomness</a>
+        
+          <a href="/tags/Algorithmic-Information-Theory/" class="tag">#Algorithmic Information Theory</a>
+        
+          <a href="/tags/Statistics/" class="tag">#Statistics</a>
         
       </div>
     
@@ -92,47 +103,42 @@
   
   <div class="article-content">
     <div class="post-content">
-      <p>In quick post, we will prove how the complex space $$\mathbb{H} &#x3D; \{[\mathbf{z} &#x3D; (z_j)_{j \in \mathbb{Z}_M^*} \in \mathbb{C}^N : z_j &#x3D; \bar{z_{-j}}, \forall j \in \mathbb{Z}_M^*\}$$ is isomorphic to $\mathbb{R}^N$</p>
-<p>This property is fundamental to the CKKS cryptosystem. Let’s prove it in two ways.</p>
-<h3><span id="the-quick-proof-counting-real-numbers">The Quick Proof: Counting Real Numbers</span></h3><p>The isomorphism becomes clear when we simply count the “degrees of freedom” required to define a vector in $\mathbb{H}$.</p>
-<p>The key is the constraint: $z_j &#x3D; \bar{z}_{-j}$.</p>
-<ol>
-<li><p>A general vector in $\mathbb{C}^N$ requires $N$ complex numbers. Since each complex number has a real and an imaginary part, this is a total of $2N$ real numbers.</p>
-</li>
-<li><p>The constraint links the components into $N&#x2F;2$ pairs of the form $(z_j, z_{-j})$.</p>
-</li>
-<li><p>Let’s look at one pair. If we freely choose $z_j &#x3D; a_j + i b_j$, we have picked two real numbers ($a_j$ and $b_j$). The constraint immediately fixes the value of its partner:<br>$$z_{-j} &#x3D; \overline{z_j} &#x3D; a_j - i b_j$$<br>So, two real numbers are sufficient to define two complex numbers in the vector.</p>
-</li>
-<li><p>To define the entire vector $\mathbf{z}$, we must specify the $N&#x2F;2$ independent components. Each requires 2 real numbers.</p>
-</li>
-</ol>
-<p>Total real numbers needed &#x3D; $(\text{Number of independent components}) \times (\text{Real numbers per component})$<br>$$&#x3D; \frac{N}{2} \times 2 &#x3D; N$$</p>
-<p>Since any vector in $\mathbb{H}$ can be uniquely specified by exactly $N$ real numbers, the space $\mathbb{H}$ is isomorphic to $\mathbb{R}^N$.</p>
-<h3><span id="the-formal-proof-the-isomorphism-matrix">The Formal Proof: The Isomorphism Matrix</span></h3><p>This isomorphism can be formally constructed by a unitary matrix $U$. This matrix provides a map $f: \mathbb{R}^N \to \mathbb{H}$ that takes a real vector $\mathbf{x}$ and constructs a valid complex vector $\mathbf{z} \in \mathbb{H}$ via the operation $\mathbf{z} &#x3D; U\mathbf{x}$.</p>
-<p><strong>Definition:</strong> Let $I$ be the $(N&#x2F;2) \times (N&#x2F;2)$ identity matrix and $J$ be the reversal matrix ($J^2&#x3D;I$). The isomorphism matrix $U$ is defined as:<br>$$U &#x3D; \frac{1}{\sqrt{2}}\begin{pmatrix} I &amp; iJ \\ J &amp; -iI \end{pmatrix}$$</p>
-<p><strong>Proof:</strong> We must show that for any real vector $\mathbf{x} \in \mathbb{R}^N$, the output $\mathbf{z} &#x3D; U\mathbf{x}$ satisfies the symmetry condition for being in $\mathbb{H}$.</p>
-<p>Let’s partition the real vector $\mathbf{x}$ into two halves, $\mathbf{x} &#x3D; \begin{pmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{pmatrix}$. The resulting complex vector $\mathbf{z}$ is also partitioned as $\mathbf{z} &#x3D; \begin{pmatrix} \mathbf{z}_1 \\ \mathbf{z}_2 \end{pmatrix}$. The symmetry condition in this block form is $\mathbf{z}_2 &#x3D; J\bar{\mathbf{z}}_1$.</p>
-<ol>
-<li><p><strong>Compute z:</strong><br>$$\mathbf{z} &#x3D; U\mathbf{x} &#x3D; \frac{1}{\sqrt{2}}\begin{pmatrix} I &amp; iJ \\ J &amp; -iI \end{pmatrix} \begin{pmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{pmatrix} &#x3D; \frac{1}{\sqrt{2}}\begin{pmatrix} \mathbf{x}_1 + iJ\mathbf{x}_2 \\ J\mathbf{x}_1 - i\mathbf{x}_2 \end{pmatrix}$$<br>This gives us the two halves of our resulting complex vector:</p>
+      <p>The algorithmic theory of randomness has long served as a powerful source of intuition in mathematics and computer science. However, its practical application is often hindered by the presence of unspecified additive or multiplicative constants. This post examines Vladimir Vovk’s framework, which provides a precise language for randomness by replacing these constants with the rigorous definitions of p-variables and e-variables.</p>
+<h2><span id="the-limitation-of-algorithmic-heuristics">The Limitation of Algorithmic Heuristics</span></h2><p>Traditional algorithmic randomness results are frequently stated “up to an additive constant,” a convention that renders them difficult to apply in finite, real-world contexts. Vovk proposes a shift toward a language that does not rely on these hidden factors, making mathematical results in this domain essentially computable and applicable in practice. The primary testing ground for this precision is the definition of Bernoulli sequences<br>a problem central to the work of Andrei Kolmogorov.</p>
+<h2><span id="formalizing-evidence-p-variables-and-e-variables">Formalizing Evidence: p-variables and e-variables</span></h2><p>The framework centers on two measurable functions, $f:\Omega\rightarrow[0,\infty]$, defined with respect to a probability measure $P$:</p>
 <ul>
-<li>$\mathbf{z}_1 &#x3D; \frac{1}{\sqrt{2}}(\mathbf{x}_1 + iJ\mathbf{x}_2)$</li>
-<li>$\mathbf{z}_2 &#x3D; \frac{1}{\sqrt{2}}(J\mathbf{x}_1 - i\mathbf{x}_2)$</li>
+<li><strong>p-variable</strong>: A function such that for any $\epsilon&gt;0$, $P{f\le\epsilon}\le\epsilon$.</li>
+<li><strong>e-variable</strong>: A function such that $\int fdP\le1$.</li>
 </ul>
-</li>
-<li><p><strong>Verify the Symmetry:</strong> Now, we compute $J\bar{\mathbf{z}}_1$ and check if it equals $\mathbf{z}_2$.</p>
-<ul>
-<li>First, take the complex conjugate of $\mathbf{z}_1$. Since $\mathbf{x}_1$, $\mathbf{x}_2$, and $J$ are all real, we just flip the sign on $i$:<br>  $$\bar{\mathbf{z}}_1 &#x3D; \frac{1}{\sqrt{2}}(\mathbf{x}_1 - iJ\mathbf{x}_2)$$</li>
-<li>Next, multiply by $J$ from the left:<br>  $$J\bar{\mathbf{z}}_1 &#x3D; J \left( \frac{1}{\sqrt{2}}(\mathbf{x}_1 - iJ\mathbf{x}_2) \right) &#x3D; \frac{1}{\sqrt{2}}(J\mathbf{x}_1 - iJ^2\mathbf{x}_2)$$</li>
-<li>Since $J^2 &#x3D; I$, this simplifies to:<br>  $$J\bar{\mathbf{z}}_1 &#x3D; \frac{1}{\sqrt{2}}(J\mathbf{x}_1 - i\mathbf{x}_2)$$</li>
-</ul>
-</li>
-</ol>
-<p>Comparing our results, we see that $\mathbf{z}_2 &#x3D; J\bar{\mathbf{z}}_1$, so the symmetry condition holds. Therefore, the matrix $U$ correctly maps any vector in $\mathbb{R}^N$ to a corresponding vector in $\mathbb{H}$, proving the isomorphism.</p>
-<p>This isomorphism is the crucial first step in CKKS, allowing real-valued vectors (plaintext) to be encoded into the algebraic structure required for homomorphic encryption.</p>
+<p>In this context, e-values (often termed “betting scores”) represent the amount of evidence against a hypothesis $P$. While p-values and e-values operate on different scales, they are fundamentally related. For any $\kappa\in(0,1)$, the following inclusion holds:<br>$$\kappa\mathcal{P}_P^{\kappa-1}\subseteq\mathcal{E}_P\subseteq\mathcal{P}_P^{-1}$$<br>This relationship demonstrates that while p-values and e-values are equivalent on a crude scale (where a p-value of $p$ roughly corresponds to an e-value of $1&#x2F;p$), the e-variable approach often yields cleaner, more precise mathematical identities.</p>
+<h2><span id="composite-hypotheses-and-the-upper-envelope">Composite Hypotheses and the Upper Envelope</span></h2><p>When dealing with a statistical model $P&#x3D;(P_\theta|\theta\in\Theta)$ rather than a simple hypothesis, the definition of evidence must account for the parameter space. An e-variable with respect to a composite model is defined by its upper envelope:<br>$$\forall\theta\in\Theta:\int_{\Omega}f(\omega)P_\theta(d\omega)\le1$$<br>This leads to a significant simplification of Bayesian statistics. Given a prior probability measure $Q$ on $\Theta$ and a joint probability measure $T$, Vovk establishes the <strong>Product of Evidence</strong> theorem:<br>$$\mathcal{E}_T &#x3D; \mathcal{E}_P\mathcal{E}_Q$$<br>Unlike the algorithmic version of this result, this formula is exact. it indicates that evidence against a Bayesian model is simply the product of the evidence against the prior and the evidence against the likelihood.</p>
+<h2><span id="the-bernoulli-problem-iid-vs-exchangeability">The Bernoulli Problem: IID vs. Exchangeability</span></h2><p>Applying this framework to Bernoulli sequences clarifies a long-standing approximation in Kolmogorov’s work. Kolmogorov initially defined Bernoulli sequences as exchangeable sequences<br>those whose probability remains invariant under permutation. Vovk’s framework provides a narrower, more accurate decomposition:<br>$$\mathcal{E}_{Bern} &#x3D; \mathcal{E}_{exch}\mathcal{E}_{bin}$$<br>This identity reveals that a sequence is Bernoulli if and only if it is both exchangeable <strong>and</strong> its distribution of successes is binomial. </p>
+<p>Crucially, the framework allows us to quantify the “importance” of these components. By comparing the supremum ranges of these classes<br>where the supremum of $\mathcal{E}_{exch}$ grows much faster than that of $\mathcal{E}_{bin}$<br>we can mathematically confirm that exchangeability is indeed the dominant characteristic of Bernoulliness, justifying Kolmogorov’s original intuition while providing the precision he lacked.</p>
+<h2><span id="conclusion">Conclusion</span></h2><p>The transition from the “approximate” results of algorithmic information theory to the “exact” identities of p- and e-variables represents a significant step toward a practical theory of randomness. By eliminating unspecified constants, we gain a framework that is not only theoretically elegant but also ready for rigorous statistical application.</p>
 
     </div>
   </div>
 </article>
+
+<!-- Post Navigation -->
+
+  <nav class="post-nav mt-2">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      
+        <div></div>
+      
+      
+      
+        <div class="widget">
+          <div class="widget-title">Next Post</div>
+          <a href="/2025/12/27/Block-Korkine-Zolotarev-BKZ-Algorithm/">Algebraic Cryptanalysis of Lattice Cryptography</a>
+        </div>
+      
+    </div>
+  </nav>
+
+
+<!-- Related Posts -->
 
         </main>
         
