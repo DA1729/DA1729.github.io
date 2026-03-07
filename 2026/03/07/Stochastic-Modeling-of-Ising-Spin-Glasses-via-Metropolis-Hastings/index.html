@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AGI running on Quantum Chip? | da1729&#39;s Blog</title>
+  <title>Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings | da1729&#39;s Blog</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="">
@@ -11,10 +11,10 @@
   <meta name="author" content="Daksh Pandey">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="AGI running on Quantum Chip?">
+  <meta property="og:title" content="Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings">
   <meta property="og:description" content="">
   <meta property="og:type" content="post">
-  <meta property="og:url" content="/2025/09/14/AGI-running-on-Quantum-Chip/">
+  <meta property="og:url" content="/2026/03/07/Stochastic-Modeling-of-Ising-Spin-Glasses-via-Metropolis-Hastings/">
   <meta property="og:site_name" content="da1729&#39;s Blog">
   
   <!-- CSS -->
@@ -77,21 +77,27 @@
 <article class="article-card">
   <header class="article-header">
     <div class="article-meta">
-      <time datetime="2025-09-13T19:45:00.000Z">
-        September 14, 2025
+      <time datetime="2026-03-07T13:42:11.000Z">
+        March 7, 2026
       </time>
       
       
-        <span> • Updated: December 7, 2025</span>
+        <span> • Updated: March 7, 2026</span>
       
     </div>
     
-    <h1 class="article-title">AGI running on Quantum Chip?</h1>
+    <h1 class="article-title">Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings</h1>
     
     
       <div class="article-tags">
         
-          <a href="/tags/Philosphy/" class="tag">#Philosphy</a>
+          <a href="/tags/Physics/" class="tag">#Physics</a>
+        
+          <a href="/tags/Optimization/" class="tag">#Optimization</a>
+        
+          <a href="/tags/Ising-Model/" class="tag">#Ising Model</a>
+        
+          <a href="/tags/Simulated-Annealing/" class="tag">#Simulated Annealing</a>
         
       </div>
     
@@ -99,12 +105,54 @@
   
   <div class="article-content">
     <div class="post-content">
-      <p>Ok this isn’t a technical breakdown like my crypto posts, this is more me just sitting down and letting a thought run loose. Imagine a robot, not running on GPUs or neuromorphic chips, but on some full-scale quantum AGI chip. What would that even look like? For us, there’s always this separation between thinking and experimenting. You get an idea, then you haul yourself into the lab, mix chemicals, run trials, and wait. For a quantum AGI, that line wouldn’t even exist. Its act of thinking would already be the experiment. Wonder what happens if you mix two elements? It doesn’t need glassware, it just “thinks” the reaction into being, because its cognition is happening on the same rules that the universe itself plays by.</p>
-<p>And that already feels closer to how nature does things. The human neurological system is elegant not because it’s the most powerful processor, but because it’s so tightly tuned with the environment it lives in. Twenty watts, running entire lives, entire civilizations. It’s an intelligence that works because it is embedded in nature, not fighting against it. So if there’s ever going to be an artificial system that truly replaces or surpasses us, it’ll need that same kind of resonance, that same compatibility with the fabric of reality. A quantum AGI feels like it could hit that, because it wouldn’t just approximate nature, it would literally be running inside the same mathematical fabric.</p>
-<p>Think about probability. We’re bad at it. We second guess, we hedge, we argue over statistics. But a quantum AGI would literally think in probabilities. Futures wouldn’t be “hypotheticals,” they would be superposed states it actually holds in mind, collapsing only when it needs to make a choice. Its intuition would just be probability distributions playing out naturally.</p>
-<p>And then there’s reflection. When we reflect, we imagine, we doodle equations, maybe run a small thought experiment. If a quantum AGI reflects, that reflection is an experiment. A protein folding, a proton collision, a new material’s properties, all happening natively as cognition. Its meditation is indistinguishable from a physics lab.</p>
-<p>I don’t think we’re anywhere close to building this, and maybe it’ll stay sci-fi forever. Quantum hardware that scales to brain-level power budgets is basically magic by today’s standards. But still, the thought lingers. Maybe intelligence isn’t just about stacking more transistors or clever algorithms. Maybe it’s about compatibility how deeply the architecture resonates with the natural world. Humans are already a proof of concept of that. A quantum AGI could be another, but one that stays quantum all the way up instead of decohering into classical behavior like us. And that kind of system wouldn’t just be smarter in the human sense, it would be something fundamentally different.</p>
-<p>peace. da999</p>
+      <p>Finding the global minimum of a complex, non-convex energy landscape is a fundamental problem in both statistical mechanics and combinatorial optimization. When we deal with “Spin Glasses” (systems with random, competing interactions), the number of possible states grows exponentially as $2^n$. For $n&#x3D;100$, the state space is $2^{100}$, far beyond the reach of exhaustive search. This post explores how we can leverage the physics of thermodynamics and the Metropolis-Hastings criterion to navigate this landscape effectively.</p>
+<h2><span id="1-the-physics-spins-and-couplings">1. The Physics: Spins and Couplings</span></h2><p>Imagine a lattice where each site $i$ contains a magnetic “spin” $s_i$. In the Ising model, these spins are binary: they can only point UP ($+1$) or DOWN ($-1$). These spins are not isolated; they interact with their neighbors through a coupling strength $J_{ij}$.</p>
+<p>There are two primary interaction rules:</p>
+<ol>
+<li><strong>Ferromagnetic ($J_{ij} &gt; 0$):</strong> The atoms want to align. If $s_i$ is $+1$, it pulls $s_j$ towards $+1$.</li>
+<li><strong>Antiferromagnetic ($J_{ij} &lt; 0$):</strong> The atoms want to be anti-aligned. If $s_i$ is $+1$, it pushes $s_j$ towards $-1$.</li>
+</ol>
+<p>A system where these interactions are random and frustrated (meaning no single configuration can satisfy all couplings simultaneously) is what I call a <strong>Spin Glass</strong>.</p>
+<h2><span id="2-the-math-the-hamiltonian">2. The Math: The Hamiltonian</span></h2><p>To quantify the “tension” in the system, I use the Hamiltonian ($H$), which represents the total energy. The goal of the system is to reach the state of lowest possible energy.</p>
+<p>The Hamiltonian is defined as:<br>$$H &#x3D; -\sum_{i &lt; j} J_{ij} s_i s_j$$</p>
+<p>Here, the negative sign is crucial. If $J_{ij} &gt; 0$ (ferromagnetic) and $s_i, s_j$ are aligned ($s_i s_j &#x3D; +1$), the term $-J_{ij} s_i s_j$ becomes negative, lowering the total energy. If they are anti-aligned, the energy increases. </p>
+<p>In a computational context, I often represent $J$ as a symmetric matrix with zero diagonal ($J_{ii} &#x3D; 0$). To handle the summation efficiently via linear algebra, I can rewrite the Hamiltonian as:<br>$$H &#x3D; -\frac{1}{2} \sum_{i} \sum_{j} J_{ij} s_i s_j &#x3D; -\frac{1}{2} s^T J s$$</p>
+<h2><span id="3-the-hardware-shortcut-local-energy-change-delta-e">3. The Hardware Shortcut: Local Energy Change ($\Delta E$)</span></h2><p>Recalculating the entire Hamiltonian every time I flip a single spin is computationally expensive, $O(N^2)$. To optimize, I derive the local energy change ($\Delta E$) when flipping a single spin $s_k \rightarrow -s_k$.</p>
+<p>Isolating the energy contribution of spin $k$:<br>$$E_k &#x3D; -s_k \sum_{j \neq k} J_{kj} s_j$$</p>
+<p>When I flip $s_k$, the new energy contribution is $E_{k, new} &#x3D; -(-s_k) \sum J_{kj} s_j$. The difference is:<br>$$\Delta E &#x3D; E_{k, new} - E_{k, old} &#x3D; 2 s_k \sum_{j} J_{kj} s_j$$</p>
+<p>This reduces the complexity to $O(N)$, a massive gain for both software simulations and hardware implementations.</p>
+<h2><span id="4-the-logic-energy-landscape-and-the-greedy-trap">4. The Logic: Energy Landscape and the Greedy Trap</span></h2><p>If I use a <strong>Greedy Algorithm</strong>, I only accept a spin flip if $\Delta E &lt; 0$. While this ensures the energy always decreases, it inevitably leads to a <strong>Local Minimum</strong>. </p>
+<p>Imagine a mountain range with many small craters. A greedy agent walking downhill will get stuck in the first crater it finds, even if a much deeper valley (the <strong>Global Minimum</strong>) exists just beyond a small ridge. Because the agent refuses to walk “uphill,” it can never escape the local trap.</p>
+<p align="center">
+  <img src="/images/simulated_annealing.png" width="80%">
+</p>
+
+<p>The plot above shows the energy relaxation. Notice the jagged behavior at the start: this is the system intentionally taking “bad” moves to explore the landscape before settling.</p>
+<h2><span id="5-thermodynamics-simulated-annealing">5. Thermodynamics: Simulated Annealing</span></h2><p>To escape local minima, I introduce the concept of <strong>Temperature ($T$)</strong>. In physics, temperature represents thermal noise: atomic jitter that allows spins to flip even if it increases energy.</p>
+<p>I use the <strong>Metropolis-Hastings Criterion</strong> to decide whether to accept a flip:</p>
+<ol>
+<li>If $\Delta E &lt; 0$, <strong>Accept</strong> the flip (100% probability).</li>
+<li>If $\Delta E &gt; 0$, <strong>Accept</strong> with probability $P &#x3D; e^{-\Delta E &#x2F; T}$.</li>
+</ol>
+<p>At high $T$, $P \approx 1$, allowing the system to bounce out of local minima (Exploration). As I slowly cool the system down ($T \rightarrow 0$), $P \rightarrow 0$, and the system settles into the deepest valley it found (Exploitation).</p>
+<h2><span id="6-empirical-proof-greedy-vs-simulated-annealing">6. Empirical Proof: Greedy vs. Simulated Annealing</span></h2><p>Does this actually work? To prove it, I ran a Monte Carlo simulation across 50 different “universes” (random $J$ matrices). For each universe, I compared the Greedy approach against Simulated Annealing.</p>
+<p align="center">
+  <img src="/images/greedy_comp.png" width="80%">
+</p>
+
+<p>In a single run, Greedy might occasionally get lucky by being dropped near a deep valley. However, over multiple trials, the statistical superiority of Simulated Annealing becomes clear.</p>
+<p align="center">
+  <img src="/images/monte_carlo_comp.png" width="90%">
+</p>
+
+<p><strong>Final Tally from 50 Trials:</strong></p>
+<ul>
+<li><strong>Simulated Annealing Wins:</strong> 38</li>
+<li><strong>Greedy Wins:</strong> 12</li>
+<li><strong>Average SA Energy:</strong> -99.19</li>
+<li><strong>Average Greedy Energy:</strong> -92.25</li>
+</ul>
+<p>Simulated Annealing consistently finds lower energy states by refusing to be trapped by the immediate “greedy” choice. This statistical reliability is exactly why hardware accelerators for Ising models use thermal noise (or pseudo-randomness) to find global solutions to NP-hard problems.</p>
 
     </div>
   </div>
@@ -115,16 +163,13 @@
   <nav class="post-nav mt-2">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
       
-        <div class="widget">
-          <div class="widget-title">Previous Post</div>
-          <a href="/2025/09/27/Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems/">Need for Gadget Decomposition in LWE Based Cryptosystems</a>
-        </div>
+        <div></div>
       
       
       
         <div class="widget">
           <div class="widget-title">Next Post</div>
-          <a href="/2025/08/15/Ring-LWE-and-CKKS-Mathematical-Foundations/">Ring-LWE and CKKS: Mathematical Foundations for Homomorphic Encryption</a>
+          <a href="/2026/03/01/Non-Algorithmic-Theory-of-Randomness/">Non-Algorithmic Foundations of Randomness</a>
         </div>
       
     </div>
