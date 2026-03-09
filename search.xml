@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Mapping the Max-Cut Problem to Ising Spin Glasses</title>
+      <link href="/2026/03/09/Mapping-the-Max-Cut-Problem-to-Ising-Spin-Glasses/"/>
+      <url>/2026/03/09/Mapping-the-Max-Cut-Problem-to-Ising-Spin-Glasses/</url>
+      
+        <content type="html"><![CDATA[<p>In the previous post, I explored the physics of Ising models and how Simulated Annealing can find global minima in complex energy landscapes. Now, I want to step away from pure physics and enter the realm of combinatorial optimization. I am going to look at a classic NP-hard problem: the <strong>Max-Cut Problem</strong>. The goal here is to show how I can mathematically “trick” a physics engine into solving a telecommunications network problem through a process known as QUBO (Quadratic Unconstrained Binary Optimization) mapping.</p><h2><span id="1-the-problem-max-cut-in-networks">1. The Problem: Max-Cut in Networks</span></h2><p>Imagine I am managing a telecommunications network. I have a set of nodes (routers or cities) connected by edges (cables). Each edge has a weight $W_{ij}$, representing the cost or traffic capacity of that connection.</p><p>The objective is simple: I must divide every node into exactly two distinct teams, let’s call them Team A and Team B.</p><ul><li>If two connected nodes are on the same team, the edge between them is <strong>kept</strong>.</li><li>If they are on opposite teams, the edge is <strong>cut</strong>.</li></ul><p>The goal is to maximize the total weight of all cut edges. I want to slice the network so that the heaviest connections are severed. Because there are $2^n$ possible ways to divide $n$ nodes, this problem is mathematically intractable for large $n$. There is no known polynomial-time algorithm to solve it perfectly.</p><h2><span id="2-the-integration-qubo-mapping">2. The Integration: QUBO Mapping</span></h2><p>To solve this using an Ising model, I need to translate “Teams” and “Cables” into “Spins” and “Couplings.”</p><h3><span id="step-1-mapping-the-variables">Step 1: Mapping the Variables</span></h3><p>In Max-Cut, a node belongs to Team A or Team B. In the Ising model, a spin $s_i$ is $+1$ or $-1$.</p><ul><li>If node $i$ is on Team A: $s_i &#x3D; +1$</li><li>If node $i$ is on Team B: $s_i &#x3D; -1$</li></ul><h3><span id="step-2-the-mathematical-switch">Step 2: The Mathematical Switch</span></h3><p>I need a formula that outputs $1$ if an edge is cut ($s_i \neq s_j$) and $0$ if it is kept ($s_i &#x3D; s_j$). Consider the expression:<br>$$\frac{1 - s_i s_j}{2}$$<br>If $s_i &#x3D; s_j$, their product is $1$, and the expression becomes $\frac{1-1}{2} &#x3D; 0$. If $s_i \neq s_j$, their product is $-1$, and we get $\frac{1-(-1)}{2} &#x3D; 1$. The switch works flawlessly.</p><h3><span id="step-3-formulating-the-total-cut">Step 3: Formulating the Total Cut</span></h3><p>The total weight of the cut $C$ is the sum of weights multiplied by this switch:<br>$$C &#x3D; \sum_{i &lt; j} W_{ij} \left( \frac{1 - s_i s_j}{2} \right)$$</p><p>By expanding this, I get:<br>$$C &#x3D; \frac{1}{2} \sum_{i &lt; j} W_{ij} - \frac{1}{2} \sum_{i &lt; j} W_{ij} s_i s_j$$</p><p>The first term is a constant (half the total weight of all edges). To maximize $C$, I must maximize the second term: $-\frac{1}{2} \sum W_{ij} s_i s_j$.</p><h3><span id="step-4-algebra-to-physics">Step 4: Algebra to Physics</span></h3><p>Compare this to the Ising Hamiltonian $H$ I want to minimize:<br>$$H &#x3D; -\sum_{i &lt; j} J_{ij} s_i s_j$$</p><p>The mapping is now obvious. If I set the coupling strengths $J_{ij}$ to be the negative of the weights $W_{ij}$:<br>$$J_{ij} &#x3D; -W_{ij}$$<br>Then minimizing the physical energy $H$ is mathematically identical to maximizing the graph cut $C$. By setting $J_{ij} &lt; 0$, I am using <strong>Antiferromagnetic Coupling</strong>: the spins “hate” each other and want to point in opposite directions, which is exactly what happens when I cut an edge.</p><h2><span id="3-the-algorithmic-showdown">3. The Algorithmic Showdown</span></h2><p>To prove this works, I pitted three agents against the same random weighted network:</p><ol><li><strong>Blind Guesser:</strong> Randomly assigns teams (the baseline).</li><li><strong>Greedy CS Heuristic:</strong> Flips a node only if it immediately increases the cut (the standard approach).</li><li><strong>Physics Engine (SA):</strong> My QUBO-mapped Ising solver using Simulated Annealing.</li></ol><p align="center">  <img src="/images/max_cut_algo_comp.png" width="80%"></p><p>As the plot shows, the Greedy heuristic (red) climbs quickly but often hits a local maximum and flatlines. The Physics Engine (blue) initially dips as it explores the landscape with thermal noise, but eventually climbs past the greedy plateau to find a superior solution.</p><h2><span id="4-statistical-superiority">4. Statistical Superiority</span></h2><p>I never trust a single run. To definitively prove the advantage of the physics-based approach, I ran a Monte Carlo simulation across 50 unique network topologies.</p><p align="center">  <img src="/images/max_cut_monte_carlo.png" width="90%"></p><p>The results are conclusive: the Physics Engine (SA) won 80% of the trials. The bar chart on the right shows the “Advantage” of SA over Greedy. While Greedy occasionally gets lucky with a favorable starting position, Simulated Annealing’s ability to take “bad” moves to escape local traps makes it the mathematically superior architecture for complex optimization.</p><p>By mapping computer science to thermodynamics, I have created a solver that doesn’t just look for a quick answer, but uses physical randomness to navigate toward the global optimum. This justifies the effort of designing dedicated hardware to solve these equations in silicon.</p><hr>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Computer Science </tag>
+            
+            <tag> Graph Theory </tag>
+            
+            <tag> Physics </tag>
+            
+            <tag> Optimization </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings</title>
       <link href="/2026/03/07/Stochastic-Modeling-of-Ising-Spin-Glasses-via-Metropolis-Hastings/"/>
       <url>/2026/03/07/Stochastic-Modeling-of-Ising-Spin-Glasses-via-Metropolis-Hastings/</url>
@@ -217,9 +242,9 @@
             
             <tag> Cryptography </tag>
             
-            <tag> Fully Homomorphic Encryption </tag>
-            
             <tag> Post Quantum Cryptography </tag>
+            
+            <tag> Fully Homomorphic Encryption </tag>
             
             <tag> Abstract Algebra </tag>
             
@@ -246,9 +271,9 @@
             
             <tag> Cryptanalysis </tag>
             
-            <tag> Fully Homomorphic Encryption </tag>
-            
             <tag> Post Quantum Cryptography </tag>
+            
+            <tag> Fully Homomorphic Encryption </tag>
             
         </tags>
       
