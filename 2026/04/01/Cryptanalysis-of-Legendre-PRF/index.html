@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptanalysis of the Legendre PRF | da1729&#39;s Blog</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Daksh Pandey">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cryptanalysis of the Legendre PRF">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="post">
+  <meta property="og:url" content="/2026/04/01/Cryptanalysis-of-Legendre-PRF/">
+  <meta property="og:site_name" content="da1729&#39;s Blog">
+  
+  <!-- CSS -->
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <!-- RSS Feed -->
+  
+  
+  <!-- Favicon -->
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="header">
+      <h1>
+        <a href="/" class="site-title">da1729&#39;s Blog</a>
+      </h1>
+      
+        <p class="site-subtitle">cryptography, digital design, embedded, rf, ...</p>
+      
+      
+      <!-- Navigation -->
+      <nav class="nav">
+        
+          <a href="/" class="nav-link">Home</a>
+        
+          <a href="/book" class="nav-link">Book</a>
+        
+          <a href="/quick" class="nav-link">Quick Posts</a>
+        
+          <a href="/archives" class="nav-link">Archives</a>
+        
+          <a href="/about" class="nav-link">About</a>
+        
+        
+        <!-- Social Links -->
+        
+          
+            <a href="https://github.com/DA1729" class="nav-link" target="_blank" rel="noopener">github</a>
+          
+            <a href="https://x.com/sp0oky_daksh" class="nav-link" target="_blank" rel="noopener">twitter</a>
+          
+            <a href="mailto:dakshpandey177@gmail.com" class="nav-link" target="_blank" rel="noopener">email</a>
+          
+            <a href="https://da-k-sh.github.io/" class="nav-link" target="_blank" rel="noopener">portfolio</a>
+          
+        
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="content">
+        <main class="main-content">
+          <!-- Individual Post Page -->
+<article class="article-card">
+  <header class="article-header">
+    <div class="article-meta">
+      <time datetime="2026-04-01T08:30:41.000Z">
+        April 1, 2026
+      </time>
+      
+      
+        <span> • Updated: April 1, 2026</span>
+      
+    </div>
+    
+    <h1 class="article-title">Cryptanalysis of the Legendre PRF</h1>
+    
+    
+      <div class="article-tags">
+        
+          <a href="/tags/Cryptography/" class="tag">#Cryptography</a>
+        
+          <a href="/tags/Cryptanalysis/" class="tag">#Cryptanalysis</a>
+        
+          <a href="/tags/MPC/" class="tag">#MPC</a>
+        
+      </div>
+    
+  </header>
+  
+  <div class="article-content">
+    <div class="post-content">
+      <p>The search for “MPC-friendly” primitives has led cryptographers back to some very classical number theory. In the world of Secure Multi-Party Computation (MPC), the cost of a protocol is often dominated by its “multiplicative depth,” the number of sequential multiplications required. This makes traditional symmetric primitives like AES or SHA-256, which rely heavily on non-linear S-boxes, quite expensive to compute securely. Enter the <strong>Legendre PRF</strong>, a construction so simple it almost feels like a trick, yet it has become a serious candidate for usage in the Ethereum 2.0 blockchain and other MPC-heavy architectures.</p>
+<p>However, as we often find in cryptanalysis, extreme simplicity is frequently a double-edged sword. The very algebraic structure that makes the Legendre PRF efficient also opens the door to a variety of “virtual” attacks that exploit the deep tension between addition and multiplication in finite fields.</p>
+<h2><span id="the-foundation-quadratic-residues-and-the-legendre-symbol">The Foundation: Quadratic Residues and the Legendre Symbol</span></h2><p>At the heart of this PRF lies the Legendre symbol, $(\frac{a}{p})$. Originally proposed as a Pseudorandom Generator (PRG) by Damgård in 1988, it was later suggested as a Pseudorandom Function (PRF) by Grassi et al. for its efficiency in multiparty settings.</p>
+<p>Mathematically, for an odd prime $p$ and an integer $a$, the symbol $(\frac{a}{p})$ checks if $a$ is a “perfect square” modulo $p$:<br>$$ \left(\frac{a}{p}\right) &#x3D; \begin{cases} 1 &amp; \text{if } a &#x3D; b^2 \pmod{p} \text{ for some } b \in \mathbb{F}_p^\times \\ 0 &amp; \text{if } a \equiv 0 \pmod{p} \\ -1 &amp; \text{otherwise} \end{cases} $$</p>
+<p>The most critical property for our analysis is that the Legendre symbol is <strong>multiplicative</strong>:<br>$$ \left(\frac{ab}{p}\right) &#x3D; \left(\frac{a}{p}\right) \left(\frac{b}{p}\right) $$</p>
+<p>This property is what makes the symbol a “homomorphism” from the multiplicative group of the field to the set $\{1, -1\}$. In the world of MPC, this is a dream, but in the world of cryptanalysis, this is the “mathematical loophole.”</p>
+<h2><span id="why-does-it-look-random-the-weil-bound">Why Does it Look Random? (The Weil Bound)</span></h2><p>Before we trust a sequence for cryptography, we must be convinced it actually behaves like unpredictable noise. If you calculate the Legendre symbol for consecutive integers $1, 2, 3, \dots$, you get a string of $+1$s and $-1$s. The <strong>Weil Bound</strong> provides the theoretical guarantee that this sequence is virtually indistinguishable from a series of fair coin flips.</p>
+<p>Specifically, the bound states that the number of occurrences of any fixed pattern of length $l$ among the integers $1, 2, \dots, p-1$ is:<br>$$ \frac{p}{2^l} + O(\sqrt{p}) $$</p>
+<p>To get an intuition for this, imagine you are looking for the pattern $(+1, -1, -1)$. In a perfectly random sequence, the chance of any 3-bit pattern is $1&#x2F;2^3 &#x3D; 1&#x2F;8$. Thus, over a range of $p$ numbers, you expect $p&#x2F;8$ occurrences. The $O(\sqrt{p})$ term is the “margin of error.” Since the square root grows much slower than $p$ itself, as the prime becomes cryptographically large, this error becomes a negligible fraction of the total count.</p>
+<p align="center">
+  <img src="/images/legendre_plot.png" width="90%">
+</p>
+
+<p>As visualized in the plot above, while the error fluctuates pseudo-randomly, it is strictly and aggressively constrained by the $\sqrt{p}$ boundary. This convergence ensures that an attacker cannot easily predict the next bit in the sequence based on a local pattern.</p>
+<h2><span id="the-prf-construction-hidden-shifts">The PRF Construction: Hidden Shifts</span></h2><p>The <strong>Legendre PRF</strong>, $L_k(x)$, is defined by taking this public sequence and adding a “secret shift” $k$. Since $p$ is public, anyone can calculate the sequence starting from zero. The secret $k$ acts as a hidden starting point on a massive, public ribbon of bits.</p>
+<p>To map the mathematical symbols to computer-friendly bits, we use a bit-mapping trick:<br>$$ L_k(x) &#x3D; \left\lfloor \frac{1}{2} \left( 1 - \left(\frac{k+x}{p}\right) \right) \right\rfloor $$</p>
+<p>If the symbol is $+1$ (a square), the formula yields $(1-1)&#x2F;2 &#x3D; 0$. If the symbol is $-1$ (not a square), it yields $(1-(-1))&#x2F;2 &#x3D; 1$. Thus, the PRF outputs a sequence of $0$s and $1$s that inherits the pseudorandomness of the Legendre symbol.</p>
+<h2><span id="the-linear-attack-collision-search">The Linear Attack: Collision Search</span></h2><p>The first major attack on the “linear” (Degree-1) Legendre PRF was proposed by Khovratovich. It relies on a <strong>memoryless collision search</strong>. </p>
+<p>The attacker’s goal is to find the secret shift $k$ by looking for a collision between the real PRF and a “dummy” version. By Assumption 1 in the literature, a sequence of bits of length $m &#x3D; \lceil \log_2 p \rceil$ acts as a unique fingerprint for the key. The attacker defines:</p>
+<ol>
+<li>$f_1(x) &#x3D; L_k(x + [m])$ : The real sequence (queried from the oracle).</li>
+<li>$f_2(b) &#x3D; L_0(b + [m])$ : The public sequence starting at $b$ (computed locally).</li>
+</ol>
+<p>A collision $f_1(a) &#x3D; f_2(b)$ implies $L_k(a + [m]) &#x3D; L_0(b + [m])$, which mathematically translates to $a + k &#x3D; b$. Instantly, the secret key is revealed: $k &#x3D; b - a$. Due to the Birthday Paradox, this requires roughly $O(\sqrt{p} \log p)$ queries and computations.</p>
+<h2><span id="the-virtual-expansion-breakthrough">The “Virtual Expansion” Breakthrough</span></h2><p>The paper we are examining introduces a massive improvement. The authors realized that we can exploit the multiplicative property to turn $M$ queries into $M^2$ “virtual” fingerprints.</p>
+<p>Consider a set of $M$ queries to the PRF oracle. In a standard attack, you have $M$ pieces of data. But the authors use <strong>Arithmetic and Geometric progressions</strong> to expand this. By Lemma 1, for any $b \in \mathbb{F}_p^\times$:<br>$$ L_{k&#x2F;b}(a&#x2F;b + [m]) &#x3D; (l(b), \dots, l(b)) \oplus L_k(a + b[m]) $$</p>
+<p>Think about what this means: by changing our “stride” (the step size $b$) and applying the multiplicative property, we can mathematically predict the output of the PRF for a <em>different</em> key $k&#x2F;b$ using the data we already have for key $k$.</p>
+<p>By iterating over many values of $b$, we “squish” and “stretch” the original $M$ outputs to generate $M^2&#x2F;m$ virtual fingerprints. This exponentially increases the size of our lookup table without costing a single additional query to the oracle. Consequently, the time complexity of finding a collision drops from $O(p&#x2F;M)$ to $O(p \log^2 p &#x2F; M^2)$. This attack was used to break several concrete challenges proposed by the Ethereum Foundation, proving that instances with 44 and 54 bits of expected security were much more vulnerable than initially assumed.</p>
+<h2><span id="higher-degree-generalizations-and-the-mobius-trap">Higher-Degree Generalizations and the Möbius Trap</span></h2><p>To increase security, one might consider a <strong>Degree-d</strong> Legendre PRF, where the key $k$ is a vector of $d$ coefficients for a polynomial $P_k(x)$:<br>$$ L_k(x) &#x3D; l\left( x^d + \sum_{i&#x3D;0}^{d-1} k_{i+1} x^i \right) $$</p>
+<p>While this seems harder, it actually introduces a devastating vulnerability to <strong>Möbius Transformations</strong>. A Möbius transformation is a rational function:<br>$$ f(x) &#x3D; \frac{cx+d}{ax+b} \pmod{p} $$</p>
+<p>As it turns out, the Legendre symbol of such a fraction behaves almost perfectly:<br>$$ L_k\left( \frac{cx+d}{ax+b} \right) &#x3D; \pm L_{k’}(x) \cdot L_0(cx+d) $$</p>
+<p>where $k’$ is a brand new, transformed key. This creates an interconnected web of virtual keys. For the linear PRF, the “unknown sign” ($\pm 1$) makes this attack difficult to coordinate. However, for degree $d \geq 3$, we can calculate <strong>absolute invariants</strong> of the secret polynomial. </p>
+<p>These invariants are mathematical fingerprints that do not change under Möbius shifts. By calculating these, an attacker can identify equivalent polynomials without ever needing to resolve the unknown $\pm 1$ sign. Research by Kaluderovic et al. has shown that for $d \geq 3$, the key can be recovered in $O(1)$ time after a precomputation phase. This essentially kills the security of any Legendre PRF generalization with a degree higher than 2.</p>
+<h2><span id="the-security-verdict-addition-vs-multiplication">The Security Verdict: Addition vs. Multiplication</span></h2><p>The ultimate security of the Legendre PRF rests on a deep mathematical tension. The symbol is perfectly multiplicative: $(\frac{ab}{p}) &#x3D; (\frac{a}{p})(\frac{b}{p})$. But the secret key $k$ is applied <strong>additively</strong>: $(\frac{x+k}{p})$. </p>
+<p>Addition and multiplication modulo a prime do not “play nicely” together inside a radical. There is no known general formula to simplify $(\frac{a+b}{p})$. This “algebraic friction” is what protects the secret key. </p>
+<p>Is it insecure? Not exactly. The linear version (Degree 1) remains secure for real-world applications like Ethereum 2.0, provided the prime $p$ is large (e.g., 256 or 384 bits). Even if our “virtual expansion” reduces the security from $2^{256}$ to $2^{128}$, the cost of $2^{128}$ operations is still beyond any current or foreseeable computational capacity. However, the higher-degree versions are effectively dead, and the quantum threat, while currently only theoretical, reminds us that our “ MPC-friendly” shortcuts are always under the microscope of cryptanalysts.</p>
+<p>peace. da1729</p>
+
+    </div>
+  </div>
+</article>
+
+<!-- Post Navigation -->
+
+  <nav class="post-nav mt-2">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      
+        <div></div>
+      
+      
+      
+        <div class="widget">
+          <div class="widget-title">Next Post</div>
+          <a href="/2026/03/09/Mapping-the-Max-Cut-Problem-to-Ising-Spin-Glasses/">Mapping the Max-Cut Problem to Ising Spin Glasses</a>
+        </div>
+      
+    </div>
+  </nav>
+
+
+<!-- Related Posts -->
+
+        </main>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <!-- Sidebar Widgets -->
+
+<!-- Recent Posts Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul>
+      
+        <li>
+          <a href="/2026/04/01/Cryptanalysis-of-Legendre-PRF/">Cryptanalysis of the Legendre PRF</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Apr 1, 2026
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2026/03/09/Mapping-the-Max-Cut-Problem-to-Ising-Spin-Glasses/">Mapping the Max-Cut Problem to Ising Spin Glasses</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Mar 9, 2026
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2026/03/07/Stochastic-Modeling-of-Ising-Spin-Glasses-via-Metropolis-Hastings/">Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Mar 7, 2026
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2026/03/01/Non-Algorithmic-Theory-of-Randomness/">Non-Algorithmic Foundations of Randomness</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Mar 1, 2026
+          </div>
+        </li>
+      
+        <li>
+          <a href="/2025/12/27/Block-Korkine-Zolotarev-BKZ-Algorithm/">Algebraic Cryptanalysis of Lattice Cryptography</a>
+          <div style="font-size: 0.8em; color: var(--text-secondary); margin-top: 4px;">
+            Dec 27, 2025
+          </div>
+        </li>
+      
+    </ul>
+  </div>
+
+
+<!-- Categories Widget -->
+
+
+<!-- Tags Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      
+        <a href="/tags/Abstract-Algebra/" class="tag">
+          #Abstract Algebra
+        </a>
+      
+        <a href="/tags/Algorithmic-Information-Theory/" class="tag">
+          #Algorithmic Information Theory
+        </a>
+      
+        <a href="/tags/Analog/" class="tag">
+          #Analog
+        </a>
+      
+        <a href="/tags/Computer-Science/" class="tag">
+          #Computer Science
+        </a>
+      
+        <a href="/tags/Cryptanalysis/" class="tag">
+          #Cryptanalysis
+        </a>
+      
+        <a href="/tags/Cryptography/" class="tag">
+          #Cryptography
+        </a>
+      
+        <a href="/tags/Fully-Homomorphic-Encryption/" class="tag">
+          #Fully Homomorphic Encryption
+        </a>
+      
+        <a href="/tags/Graph-Theory/" class="tag">
+          #Graph Theory
+        </a>
+      
+        <a href="/tags/Hardware-Acceleration/" class="tag">
+          #Hardware Acceleration
+        </a>
+      
+        <a href="/tags/Ising-Model/" class="tag">
+          #Ising Model
+        </a>
+      
+        <a href="/tags/MPC/" class="tag">
+          #MPC
+        </a>
+      
+        <a href="/tags/Optimization/" class="tag">
+          #Optimization
+        </a>
+      
+        <a href="/tags/Philosphy/" class="tag">
+          #Philosphy
+        </a>
+      
+        <a href="/tags/Physics/" class="tag">
+          #Physics
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Post-Quantum-Cryptography/" class="tag">
+          #Post-Quantum Cryptography
+        </a>
+      
+        <a href="/tags/Randomness/" class="tag">
+          #Randomness
+        </a>
+      
+        <a href="/tags/Ring-Theory/" class="tag">
+          #Ring Theory
+        </a>
+      
+        <a href="/tags/Secure-Computing/" class="tag">
+          #Secure Computing
+        </a>
+      
+        <a href="/tags/Simulated-Annealing/" class="tag">
+          #Simulated Annealing
+        </a>
+      
+        <a href="/tags/Statistics/" class="tag">
+          #Statistics
+        </a>
+      
+        <a href="/tags/VLSI/" class="tag">
+          #VLSI
+        </a>
+      
+        <a href="/tags/Zero-Knowledge/" class="tag">
+          #Zero-Knowledge
+        </a>
+      
+    </div>
+  </div>
+
+
+<!-- Archive Widget -->
+
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <ul>
+      
+      
+        
+          <li>
+            <a href="/archives/2025/">
+              December 2025 (5)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              September 2025 (2)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              August 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              July 2025 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2025/">
+              March 2025 (2)
+            </a>
+          </li>
+        
+      
+        
+          <li>
+            <a href="/archives/2026/">
+              April 2026 (1)
+            </a>
+          </li>
+        
+          <li>
+            <a href="/archives/2026/">
+              March 2026 (3)
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+
+<!-- About Widget -->
+<div class="widget">
+  <h3 class="widget-title">About</h3>
+  <p style="font-size: 0.9em; line-height: 1.6;">
+    i write about things i study and work upon... you will see a lot of cryptology (yes, even analysis), math and computer engineering... and bits of philosophy
+  </p>
+  
+  
+    <div style="margin-top: 15px;">
+      <strong style="font-size: 0.9em;">Find me on:</strong>
+      <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px;">
+        
+          <a href="https://github.com/DA1729" class="tag" target="_blank" rel="noopener">
+            github
+          </a>
+        
+          <a href="https://x.com/sp0oky_daksh" class="tag" target="_blank" rel="noopener">
+            twitter
+          </a>
+        
+          <a href="mailto:dakshpandey177@gmail.com" class="tag" target="_blank" rel="noopener">
+            email
+          </a>
+        
+          <a href="https://da-k-sh.github.io/" class="tag" target="_blank" rel="noopener">
+            portfolio
+          </a>
+        
+      </div>
+    </div>
+  
+  
+  <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+    <p style="font-size: 0.8em; color: var(--text-secondary); opacity: 0.8;">
+      Theme designed with 
+      <a href="https://claude.ai/code" target="_blank" rel="noopener" style="color: var(--link-color); text-decoration: none;">Claude Code</a>
+    </p>
+  </div>
+</div>
+
+        </aside>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 Daksh Pandey. Portfolio-inspired theme crafted with Claude Code.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  
+<script src="/js/main.js"></script>
+
+  
+  <!-- Math Support -->
+  
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+</body>
+</html>

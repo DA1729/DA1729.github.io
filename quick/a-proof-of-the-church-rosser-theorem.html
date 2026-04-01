@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>da1729&#39;s Blog</title>
+  <title>A Proof of the Church-Rosser Theorem | da1729&#39;s Blog</title>
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="">
@@ -11,10 +11,10 @@
   <meta name="author" content="Daksh Pandey">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="da1729&#39;s Blog">
+  <meta property="og:title" content="A Proof of the Church-Rosser Theorem">
   <meta property="og:description" content="">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="/tags/Statistics/index.html">
+  <meta property="og:type" content="page">
+  <meta property="og:url" content="/_quick/a-proof-of-the-church-rosser-theorem.html">
   <meta property="og:site_name" content="da1729&#39;s Blog">
   
   <!-- CSS -->
@@ -73,55 +73,96 @@
     <div class="container">
       <div class="content">
         <main class="main-content">
-          <!-- Archive Page -->
-<div class="article-card">
+          <!-- Individual Quick Post Page -->
+<article class="article-card quick-post-single">
   <header class="article-header">
-    <h1 class="article-title">
-      
-        Tag: #Statistics
-      
-    </h1>
-    
     <div class="article-meta">
+      <a href="/quick" style="color: var(--accent-warm);">← Back to Quick Posts</a>
+      <span> • </span>
+      <time datetime="2026-03-14T03:21:26.786Z">
+        March 14, 2026
+      </time>
       
-        1 post
+        <span> • Updated: March 14, 2026</span>
       
     </div>
+
+    <h1 class="article-title">A Proof of the Church-Rosser Theorem</h1>
+
+    
+      <div class="article-tags">
+        
+          
+            <span class="tag">#Lambda Calculus</span>
+          
+            <span class="tag">#Logic</span>
+          
+            <span class="tag">#Computer Science</span>
+          
+        
+      </div>
+    
   </header>
-  
+
   <div class="article-content">
-    
-      <ul class="archive-list">
-        
-          <li class="archive-item">
-            <div class="archive-date">
-              March 1, 2026
-            </div>
-            <h3 class="archive-title">
-              <a href="/2026/03/01/Non-Algorithmic-Theory-of-Randomness/">Non-Algorithmic Foundations of Randomness</a>
-            </h3>
-            
-            
-            
-              <div class="article-tags" style="margin-top: 10px;">
-                
-                  <a href="/tags/Randomness/" class="tag">#Randomness</a>
-                
-                  <a href="/tags/Algorithmic-Information-Theory/" class="tag">#Algorithmic Information Theory</a>
-                
-                  <a href="/tags/Statistics/" class="tag">#Statistics</a>
-                
-              </div>
-            
-          </li>
-        
-      </ul>
-      
-      <!-- Pagination -->
-      
-    
+    <div class="post-content">
+      <p>In this quick post, we will walk through the proof of the <strong>Church-Rosser theorem</strong> for the untyped lambda calculus. We use the standard <strong>Tait-Martin-Löf</strong> development, which relies on the notion of <strong>parallel reduction</strong>.</p>
+<p>The Church-Rosser theorem (or confluence) ensures that even if we reduce a term in different orders, we can always find a common term to “meet” at later.</p>
+<hr>
+<h3><span id="1-the-problem-one-step-reduction">1. The Problem: One-Step Reduction</span></h3><p>The standard one-step $\beta$-reduction $\rightarrow_{ \beta}$ does not satisfy the <strong>diamond property</strong>. If a term $M$ has two redexes, reducing one might destroy or duplicate the other, making it impossible to close the diamond in exactly one step.</p>
+<p>For example, consider $M &#x3D; (\lambda x. x x) ((\lambda y. y) z)$. </p>
+<ul>
+<li>$M \rightarrow_{\beta} (\lambda x. x x) z$</li>
+<li>$M \rightarrow_{\beta} ((\lambda y. y) z) ((\lambda y. y) z)$</li>
+</ul>
+<p>To prove confluence for the transitive-reflexive closure $\twoheadrightarrow_{\beta}$, we introduce a middle ground.</p>
+<hr>
+<h3><span id="2-parallel-reduction">2. Parallel Reduction</span></h3><p>We define a new relation, <strong>parallel reduction</strong> ($\Rightarrow$), which allows reducing multiple redexes simultaneously in a single step. It is defined inductively:</p>
+<ol>
+<li>$x \Rightarrow x$</li>
+<li>If $M \Rightarrow M’$, then $\lambda x. M \Rightarrow \lambda x. M’$</li>
+<li>If $M \Rightarrow M’$ and $N \Rightarrow N’$, then $M N \Rightarrow M’ N’$</li>
+<li>If $M \Rightarrow M’$ and $N \Rightarrow N’$, then $(\lambda x. M) N \Rightarrow M’[x :&#x3D; N’]$</li>
+</ol>
+<p>Crucially, $\Rightarrow$ sits between $\rightarrow_{\beta}$ and $\twoheadrightarrow_{\beta}$:</p>
+<p>$$<br>\rightarrow_{\beta} ;\subset; \Rightarrow ;\subset; \twoheadrightarrow_{\beta}<br>$$</p>
+<hr>
+<h3><span id="3-the-diamond-property-for-rightarrow">3. The Diamond Property for $\Rightarrow$</span></h3><p>The core of the proof is showing that $\Rightarrow$ satisfies the <strong>diamond property</strong>:<br>If $M \Rightarrow A$ and $M \Rightarrow B$, then there exists some $Z$ such that $A \Rightarrow Z$ and $B \Rightarrow Z$.</p>
+<p>To prove this, we define the <strong>maximal parallel reduction</strong> $M^{\star}$, which reduces <em>all</em> existing redexes in $M$:</p>
+<ul>
+<li>$x^{\star} &#x3D; x$</li>
+<li>$(\lambda x. M)^{\star} &#x3D; \lambda x. M^{\star}$</li>
+<li>$(M N)^{\star} &#x3D; M^{\star} N^{\star}$ (if $M N$ is not a redex)</li>
+<li>$((\lambda x. M) N)^{\star} &#x3D; M^{\star}[x :&#x3D; N^{\star}]$</li>
+</ul>
+<p>By induction on the structure of the proof of $M \Rightarrow A$, one can show that if $M \Rightarrow A$, then $A \Rightarrow M^{\star}$. This immediately closes the diamond:</p>
+<p>$$<br>\begin{CD}<br>M @&gt;&gt;&gt; A \<br>@VVV @VVV \<br>B @&gt;&gt;&gt; M^{\star}<br>\end{CD}<br>$$</p>
+<hr>
+<h3><span id="4-confluence-of-twoheadrightarrow-beta">4. Confluence of $\twoheadrightarrow_{\beta}$</span></h3><p>The final step is the <strong>Strip Lemma</strong> and tiling. Since $\twoheadrightarrow_{\beta}$ is the transitive closure of $\Rightarrow$, and $\Rightarrow$ satisfies the diamond property, we can “tile” any two diverging sequences of reductions to find a common reduct.</p>
+<p>If $M \twoheadrightarrow_{\beta} A$ and $M \twoheadrightarrow_{\beta} B$, then there exists $Z$ such that:</p>
+<p>$$<br>A \twoheadrightarrow_{\beta} Z \quad \text{and} \quad B \twoheadrightarrow_{\beta} Z<br>$$</p>
+<hr>
+<h3><span id="5-intuition-recap">5. Intuition Recap</span></h3><ul>
+<li>One-step reduction is too “small” to have the diamond property.</li>
+<li>Parallel reduction allows us to reduce everything at once.</li>
+<li>The “maximal” reduction $M^{\star}$ acts as a universal target for any parallel step.</li>
+<li>By tiling these diamonds, we prove that the lambda calculus is confluent.</li>
+</ul>
+<p>This result is fundamental: it implies that <strong>normal forms are unique</strong> if they exist. If $M$ reduces to a normal form, that normal form is the unique “endpoint” of the computation.</p>
+<p>peace. da1729</p>
+
+    </div>
   </div>
-</div>
+</article>
+
+<!-- Navigation back to quick posts -->
+<nav class="post-nav mt-2">
+  <div class="widget">
+    <div class="widget-title">Quick Posts</div>
+    <a href="/quick">← View all quick posts</a>
+  </div>
+</nav>
+
         </main>
         
         <!-- Sidebar -->
