@@ -139,6 +139,15 @@
 <h2><span id="the-security-verdict-addition-vs-multiplication">The Security Verdict: Addition vs. Multiplication</span></h2><p>The ultimate security of the Legendre PRF rests on a deep mathematical tension. The symbol is perfectly multiplicative: $(\frac{ab}{p}) &#x3D; (\frac{a}{p})(\frac{b}{p})$. But the secret key $k$ is applied <strong>additively</strong>: $(\frac{x+k}{p})$. </p>
 <p>Addition and multiplication modulo a prime do not “play nicely” together inside a radical. There is no known general formula to simplify $(\frac{a+b}{p})$. This “algebraic friction” is what protects the secret key. </p>
 <p>Is it insecure? Not exactly. The linear version (Degree 1) remains secure for real-world applications like Ethereum 2.0, provided the prime $p$ is large (e.g., 256 or 384 bits). Even if our “virtual expansion” reduces the security from $2^{256}$ to $2^{128}$, the cost of $2^{128}$ operations is still beyond any current or foreseeable computational capacity. However, the higher-degree versions are effectively dead, and the quantum threat, while currently only theoretical, reminds us that our “ MPC-friendly” shortcuts are always under the microscope of cryptanalysts.</p>
+<h2><span id="references">References</span></h2><ol>
+<li><strong>Beullens, W., Beyne, T., Udovenko, A., &amp; Vitto, G. (2020).</strong> <em>Cryptanalysis of the Legendre PRF and generalizations.</em> IACR Transactions on Symmetric Cryptology, 2020(1), 313–330.</li>
+<li><strong>Khovratovich, D. (2019).</strong> <em>Key recovery attacks on the Legendre PRFs within the birthday bound.</em> Cryptology ePrint Archive, Report 2019&#x2F;862.</li>
+<li><strong>Kaluđerović, N., Kleinjung, T., &amp; Kostić, D. (2020).</strong> <em>Improved key recovery on the legendre prf.</em> Cryptology ePrint Archive, Report 2020&#x2F;098.</li>
+<li><strong>Damgård, I. (1990).</strong> <em>On the randomness of Legendre and Jacobi sequences.</em> In Conference on the Theory and Application of Cryptographic Techniques (pp. 163-172). Springer, Berlin, Heidelberg.</li>
+<li><strong>Grassi, L., Rechberger, C., Rotaru, D., Scholl, P., &amp; Smart, N. P. (2016).</strong> <em>MPC-friendly symmetric key primitives.</em> In Proceedings of the 2016 ACM SIGSAC Conference on Computer and Communications Security (pp. 430-443).</li>
+<li><strong>van Dam, W., &amp; Hallgren, S. (2000).</strong> <em>Efficient quantum algorithms for shifted quadratic character problems.</em> arXiv preprint quant-ph&#x2F;0011067.</li>
+<li><strong>Weil, A. (1948).</strong> <em>On some exponential sums.</em> Proceedings of the National Academy of Sciences, 34(5), 204.</li>
+</ol>
 <p>peace. da1729</p>
 
     </div>
