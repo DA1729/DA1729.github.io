@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Graham-Entringer-Szekely Theorem</title>
+      <link href="/2026/04/23/Graham-Entringer-Szekely-Theorem/"/>
+      <url>/2026/04/23/Graham-Entringer-Szekely-Theorem/</url>
+      
+        <content type="html"><![CDATA[<p>Here is the Theorem Statement out of the DB West book (Theorem 8.3.2)</p><h1><span id="theorem">Theorem</span></h1><p>If $T$ is a spanning tree of the $k$-dimensional cube $Q_k$, then there is an edge of $Q_k$ outside of $T$ whose addition to $T$ creates a cycle of length at least $2k$.</p><h1><span id="proof">Proof</span></h1><h2><span id="setup">Setup</span></h2><p>In $Q_k$, every vertex $v$ (a binary $k$-tuple) has a complement $v’$ (flip all the bits). These two vertices are as far apart as possible, i.e., distance exactly $k$, since we must flip every bit.</p><p>Since $T$ is a spanning tree, there is a unique path in $T$ between any two vertices. So for every $v$, there’s a unique $v \rightarrow v’$ path in $T$.</p><h2><span id="the-claiming-argument">The Claiming Argument</span></h2><p>We define a rule: every vertex $v$ <strong>claims</strong> the first edge on its unique tree-path toward $v’$.</p><p>Now count:</p><ul><li>Vertices doing the claiming: $2^k$</li><li>Edges in $T$ available to be claimed: $2^k - 1$.</li></ul><p>By Pigeonhole Principle, some edge ${u, v}$  in $T$ gets claimed by two different vertices.</p><h2><span id="double-claiming">Double-Claiming</span></h2><p>The only way both $u$ and $v$ claim the edge ${u, v}$ is if: </p><ul><li>$v$ lies on the $u$-to-$u’$ path in $T$, and is immediate neighbour of $u$ on that path.</li><li>$v$’s parth towards $v’$ starts by stepping to $u$ so $u$ lies on the $v$-to-$v’$ path in $T$.</li></ul><p>Now if we remove this ${u, v}$ edge, we are essentially splitting $T$ into two components: $T_u$ (containing $u$) and $T_v$ (containing $v$).</p><p>From above, we know:</p><ul><li>$u’$ is in $T_v$</li><li>$v’$ is in $T_u$</li></ul><h2><span id="building-the-cycle">Building the Cycle</span></h2><p>We know for a fact that all such paths between complements, have length atleast $k$, therefore $u-v’$ and $v-u’$ paths both have lengths atleast $k-1$.</p><p>Since $u$ and $v$ are neighbours, their complements are also neighbours for each other and they must not have any edge between them, since they both lie in different components and we know that those components were obtained by deleting $uv$ edge.</p><p>So we can stitch together a cycle using this edge not in $T$ with total length $L$: $$ L \geq (k - 1) + 1 + (k - 1) + 1 &#x3D; 2k$$ </p><p>QED</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Graph Theory </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Cryptanalysis of the Legendre PRF</title>
       <link href="/2026/04/01/Cryptanalysis-of-Legendre-PRF/"/>
       <url>/2026/04/01/Cryptanalysis-of-Legendre-PRF/</url>
@@ -37,9 +56,9 @@
       
         <tags>
             
-            <tag> Computer Science </tag>
-            
             <tag> Graph Theory </tag>
+            
+            <tag> Computer Science </tag>
             
             <tag> Physics </tag>
             
