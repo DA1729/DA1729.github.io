@@ -236,6 +236,109 @@ footer {
     margin-top: 1.2em;
 }
 
+/* Theorems index */
+.theorem-topic {
+    margin: 2em 0;
+}
+
+.topic-label {
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: #b86535;
+    border-bottom: 1px solid #e8d5c8;
+    padding-bottom: 0.25em;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    font-size: 1.05em;
+}
+
+.theorem {
+    margin: 1.4em 0 1.8em;
+    padding-left: 0.2em;
+}
+
+.theorem-header {
+    margin: 0 0 0.4em 0;
+    line-height: 1.55;
+}
+
+.theorem-header strong {
+    color: #2d2d2d;
+    font-weight: 600;
+}
+
+.theorem-statement {
+    font-style: italic;
+    color: #3a2a1a;
+}
+
+.theorem-meta {
+    margin: 0.3em 0 0 0;
+    padding-left: 1.4em;
+    font-size: 0.85em;
+    color: #8b6540;
+}
+
+.theorem-meta .theorem-tags span {
+    margin-right: 0.35em;
+}
+
+.theorem-meta .theorem-sep {
+    margin: 0 0.4em;
+    color: #c0a890;
+}
+
+.theorem-meta a {
+    font-style: italic;
+}
+
+.theorem-reference {
+    margin: 0.2em 0 0 1.4em !important;
+    font-size: 0.82em;
+    font-style: italic;
+    color: #a08260;
+}
+
+.theorem-statement-block .theorem-reference {
+    margin: 0.4em 0 0 0 !important;
+}
+
+/* Theorem reader (full page) */
+.theorem-statement-block {
+    background: #faf6f2;
+    border-left: 3px solid #d97745;
+    padding: 0.8em 1.1em;
+    margin: 1.5em 0 2em;
+    border-radius: 2px;
+}
+
+.theorem-statement-block p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.theorem-statement-block strong {
+    color: #2d2d2d;
+    font-weight: 600;
+}
+
+.proof-opener {
+    margin: 1.2em 0 0.8em 0 !important;
+    color: #5a4a3a;
+}
+
+.proof-opener em {
+    color: #5a4a3a;
+}
+
+.qed {
+    text-align: right;
+    color: #b86535;
+    font-size: 1.3em;
+    margin: 1.5em 0 0 0 !important;
+    line-height: 1;
+}
+
 /* Responsive tweaks */
 @media (max-width: 600px) {
     body {
@@ -246,5 +349,8 @@ footer {
     }
     h2 {
         font-size: 1.5em;
+    }
+    .theorem-meta {
+        padding-left: 0;
     }
 }

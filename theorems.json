@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "Ramsey",
+    "title": "Ramsey",
+    "topic": "Graph Theory",
+    "statement": "For positive integers $p_1, \\dots, p_n$ and $r \\geq 1$, there exists $N$ such that every $n$-coloring of $\\binom{[N]}{r}$ admits, for some color $i$, a set of $p_i$ elements all of whose $r$-subsets receive color $i$.",
+    "reference": "West, <em>Introduction to Graph Theory</em>, &sect;8.3.7",
+    "date": "2026-04-26",
+    "tags": ["Graph Theory", "Ramsey Theory", "Combinatorics"]
+  },
+  {
+    "slug": "Graham-Entringer-Szekely",
+    "title": "Graham-Entringer-Szekely",
+    "topic": "Graph Theory",
+    "statement": "If $T$ is a spanning tree of the $k$-dimensional cube $Q_k$, then there is an edge of $Q_k$ outside of $T$ whose addition to $T$ creates a cycle of length at least $2k$.",
+    "reference": "West, <em>Introduction to Graph Theory</em>, &sect;8.3.2",
+    "date": "2026-04-23",
+    "tags": ["Graph Theory", "Combinatorics"]
+  }
+]

@@ -7,13 +7,6 @@
     "description": "Existing techniques and algorithms for cryptanalysis of the Legendre Pseudo-Random Function."
   },
   {
-    "slug": "Graham-Entringer-Szekely-Theorem",
-    "title": "Graham-Entringer-Szekely Theorem",
-    "date": "2026-04-23",
-    "tags": ["Graph Theory"],
-    "description": "A proof that any spanning tree of the k-cube has a non-tree edge whose addition creates a cycle of length at least 2k."
-  },
-  {
     "slug": "Mapping-the-Max-Cut-Problem-to-Ising-Spin-Glasses",
     "title": "Mapping the Max-Cut Problem to Ising Spin Glasses",
     "date": "2026-03-09",

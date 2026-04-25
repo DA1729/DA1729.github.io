@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theorems — Daksh Pandey</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
+    <p><em>On mathematics, cryptography and stuff.</em></p>
+
+    <nav class="topnav">
+        <a href="index.html">Home</a> |
+        <a href="theorems.html">Theorems</a> |
+        <a href="tags.html">Tags</a> |
+        <a href="https://da-k-sh.github.io/" target="_blank">Portfolio</a> |
+        <a href="https://github.com/DA1729" target="_blank">GitHub</a> |
+        <a href="mailto:daksh_p@ph.iitr.ac.in">Email</a>
+    </nav>
+
+    <hr>
+
+    <h2>Theorems</h2>
+    <p><em>A small collection of proofs I've worked through. Statements first; click <strong>Proof &rarr;</strong> to read the argument.</em></p>
+
+    <div id="theorems-root">
+        <p><em>Loading&hellip;</em></p>
+    </div>
+
+    <footer>
+        <p><small>&copy; 2026 Daksh Pandey. Built using Claude Code.</small></p>
+    </footer>
+
+    <script>
+        (async () => {
+            const res = await fetch("theorems.json");
+            const theorems = await res.json();
+
+            // Group by topic, preserving discovery order of topics by first
+            // appearance, with theorems within a topic sorted newest first.
+            const byTopic = new Map();
+            for (const t of theorems) {
+                const key = t.topic || "Other";
+                if (!byTopic.has(key)) byTopic.set(key, []);
+                byTopic.get(key).push(t);
+            }
+            for (const arr of byTopic.values()) {
+                arr.sort((a, b) => b.date.localeCompare(a.date));
+            }
+
+            const root = document.getElementById("theorems-root");
+            root.innerHTML = "";
+
+            if (byTopic.size === 0) {
+                root.innerHTML = "<p><em>No theorems yet.</em></p>";
+                return;
+            }
+
+            for (const [topic, items] of byTopic) {
+                const section = document.createElement("section");
+                section.className = "theorem-topic";
+
+                const label = document.createElement("h3");
+                label.className = "topic-label";
+                label.textContent = topic;
+                section.appendChild(label);
+
+                for (const t of items) {
+                    const article = document.createElement("article");
+                    article.className = "theorem";
+
+                    const attr = t.attribution ? ` (${escapeHtml(t.attribution)})` : "";
+                    const url = `post.html?post=${encodeURIComponent(t.slug)}&kind=theorem`;
+                    const tagsHtml = (t.tags || [])
+                        .map(x => `<span>#${escapeHtml(x)}</span>`)
+                        .join("");
+                    const refHtml = t.reference
+                        ? `<p class="theorem-reference">in ${t.reference}</p>`
+                        : "";
+
+                    article.innerHTML = `
+                        <p class="theorem-header">
+                            <strong>Theorem${attr}.</strong>
+                            <span class="theorem-statement">${t.statement}</span>
+                        </p>
+                        <p class="theorem-meta">
+                            <span class="theorem-tags">${tagsHtml}</span>
+                            <span class="theorem-sep">&middot;</span>
+                            <span class="theorem-date">${formatDate(t.date)}</span>
+                            <span class="theorem-sep">&middot;</span>
+                            <a href="${url}">Proof &rarr;</a>
+                        </p>
+                        ${refHtml}
+                    `;
+                    section.appendChild(article);
+                }
+
+                root.appendChild(section);
+            }
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([root]);
+            }
+        })();
+    </script>
+</body>
+</html>

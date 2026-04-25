@@ -12,8 +12,9 @@
 </head>
 <body>
     <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
-    <nav class="topnav">
+    <nav class="topnav" id="topnav">
         <a href="index.html">&larr; All posts</a> |
+        <a href="theorems.html">Theorems</a> |
         <a href="tags.html">Tags</a>
     </nav>
 
@@ -26,12 +27,14 @@
             <p class="post-tags-line" id="post-tags"></p>
         </header>
 
-        <div class="post-content loading" id="post-content">Loading post…</div>
+        <div id="theorem-statement-block" class="theorem-statement-block" hidden></div>
+
+        <div class="post-content loading" id="post-content">Loading…</div>
     </article>
 
     <hr>
     <footer>
-        <p><a href="index.html">&larr; Back to all posts</a></p>
+        <p id="back-link"><a href="index.html">&larr; Back to all posts</a></p>
         <p><small>&copy; 2026 Daksh Pandey</small></p>
     </footer>
 
@@ -39,6 +42,7 @@
         (async () => {
             const params = new URLSearchParams(window.location.search);
             const slug = params.get("post");
+            const kind = params.get("kind") === "theorem" ? "theorem" : "post";
             const content = document.getElementById("post-content");
 
             if (!slug) {
@@ -52,12 +56,21 @@
                 return;
             }
 
-            // Fetch post metadata.
+            const dir = kind === "theorem" ? "theorems" : "posts";
+            const manifestFile = kind === "theorem" ? "theorems.json" : "posts.json";
+
+            // Adjust back link for theorems.
+            if (kind === "theorem") {
+                document.getElementById("back-link").innerHTML =
+                    '<a href="theorems.html">&larr; Back to theorems</a>';
+            }
+
+            // Fetch metadata.
             let meta = null;
             try {
-                const postsRes = await fetch("posts.json");
-                const posts = await postsRes.json();
-                meta = posts.find(p => p.slug === slug);
+                const res = await fetch(manifestFile);
+                const entries = await res.json();
+                meta = entries.find(p => p.slug === slug);
             } catch (e) {}
 
             if (meta) {
@@ -68,25 +81,47 @@
                     (meta.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("");
             }
 
+            // For theorems, show the statement at the top in a styled block.
+            if (kind === "theorem" && meta && meta.statement) {
+                const block = document.getElementById("theorem-statement-block");
+                const attr = meta.attribution ? ` (${escapeHtml(meta.attribution)})` : "";
+                const refHtml = meta.reference
+                    ? `<p class="theorem-reference">in ${meta.reference}</p>`
+                    : "";
+                block.innerHTML = `
+                    <p><strong>Theorem${attr}.</strong>
+                       <span class="theorem-statement">${meta.statement}</span></p>
+                    ${refHtml}
+                `;
+                block.hidden = false;
+            }
+
             // Fetch markdown body.
-            const mdRes = await fetch(`posts/${slug}.md`);
+            const mdRes = await fetch(`${dir}/${slug}.md`);
             if (!mdRes.ok) {
                 content.classList.remove("loading");
-                content.textContent = "Post not found.";
+                content.textContent = kind === "theorem" ? "Theorem not found." : "Post not found.";
                 return;
             }
 
             let md = await mdRes.text();
             md = stripFrontmatter(md);
 
-            // If the post didn't have its title/meta in posts.json, fall back to
-            // the first H1 in the markdown body, if any.
+            // Fall back to first H1 if metadata missing.
             if (!meta) {
                 const m = md.match(/^#\s+(.+)$/m);
                 if (m) document.getElementById("post-title").textContent = m[1];
             }
 
-            content.innerHTML = renderMarkdownWithMath(md);
+            let html = renderMarkdownWithMath(md);
+
+            // For theorems: prepend a "Proof." marker and append a QED tombstone.
+            if (kind === "theorem") {
+                html = `<p class="proof-opener"><em>Proof.</em></p>` + html +
+                       `<p class="qed">&#x220e;</p>`;
+            }
+
+            content.innerHTML = html;
             content.classList.remove("loading");
 
             // Fix up image paths: Hexo used `/images/foo.png`; keep working.
@@ -98,7 +133,7 @@
             });
 
             if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise([content]);
+                window.MathJax.typesetPromise([document.body]);
             }
         })();
     </script>
