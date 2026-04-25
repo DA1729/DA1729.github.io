@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading… — Daksh Pandey</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
+    <nav class="topnav">
+        <a href="index.html">&larr; All posts</a> |
+        <a href="tags.html">Tags</a>
+    </nav>
+
+    <hr>
+
+    <article>
+        <header class="post-header">
+            <h1 id="post-title">Loading…</h1>
+            <p class="post-meta-line" id="post-meta"></p>
+            <p class="post-tags-line" id="post-tags"></p>
+        </header>
+
+        <div class="post-content loading" id="post-content">Loading post…</div>
+    </article>
+
+    <hr>
+    <footer>
+        <p><a href="index.html">&larr; Back to all posts</a></p>
+        <p><small>&copy; 2026 Daksh Pandey</small></p>
+    </footer>
+
+    <script>
+        (async () => {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get("post");
+            const content = document.getElementById("post-content");
+
+            if (!slug) {
+                content.textContent = "No post specified.";
+                return;
+            }
+
+            // Basic slug sanity check: allow letters, numbers, dash, underscore.
+            if (!/^[A-Za-z0-9_\-]+$/.test(slug)) {
+                content.textContent = "Invalid post identifier.";
+                return;
+            }
+
+            // Fetch post metadata.
+            let meta = null;
+            try {
+                const postsRes = await fetch("posts.json");
+                const posts = await postsRes.json();
+                meta = posts.find(p => p.slug === slug);
+            } catch (e) {}
+
+            if (meta) {
+                document.title = `${meta.title} — Daksh Pandey`;
+                document.getElementById("post-title").textContent = meta.title;
+                document.getElementById("post-meta").textContent = formatDate(meta.date);
+                document.getElementById("post-tags").innerHTML =
+                    (meta.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("");
+            }
+
+            // Fetch markdown body.
+            const mdRes = await fetch(`posts/${slug}.md`);
+            if (!mdRes.ok) {
+                content.classList.remove("loading");
+                content.textContent = "Post not found.";
+                return;
+            }
+
+            let md = await mdRes.text();
+            md = stripFrontmatter(md);
+
+            // If the post didn't have its title/meta in posts.json, fall back to
+            // the first H1 in the markdown body, if any.
+            if (!meta) {
+                const m = md.match(/^#\s+(.+)$/m);
+                if (m) document.getElementById("post-title").textContent = m[1];
+            }
+
+            content.innerHTML = renderMarkdownWithMath(md);
+            content.classList.remove("loading");
+
+            // Fix up image paths: Hexo used `/images/foo.png`; keep working.
+            content.querySelectorAll("img").forEach(img => {
+                const src = img.getAttribute("src") || "";
+                if (src.startsWith("/images/")) {
+                    img.setAttribute("src", src.slice(1));
+                }
+            });
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([content]);
+            }
+        })();
+    </script>
+</body>
+</html>

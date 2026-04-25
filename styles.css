@@ -1,0 +1,250 @@
+body {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    font-family: serif;
+    line-height: 1.6;
+    color: #2d2d2d;
+    background: #fdfbf7;
+}
+
+h1 {
+    color: #c47545;
+    font-size: 2.5em;
+    margin-bottom: 0.3em;
+}
+
+h2 {
+    color: #d97745;
+    font-size: 1.8em;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    border-bottom: 2px solid #f4e5dc;
+    padding-bottom: 0.3em;
+}
+
+h3 {
+    color: #b86535;
+    font-size: 1.3em;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+h4 {
+    color: #b86535;
+    font-size: 1.15em;
+    margin-top: 1.3em;
+    margin-bottom: 0.4em;
+}
+
+a {
+    color: #d97745;
+    text-decoration: none;
+    border-bottom: 1px solid #f4e5dc;
+    transition: border-color 0.2s;
+}
+
+a:hover {
+    border-bottom-color: #d97745;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e8d5c8;
+    margin: 2em 0;
+}
+
+strong {
+    color: #b86535;
+}
+
+em {
+    color: #7a5530;
+}
+
+small {
+    color: #666;
+}
+
+ul, ol {
+    line-height: 1.8;
+}
+
+li {
+    margin-bottom: 0.3em;
+}
+
+/* Navigation */
+nav.topnav {
+    margin: 0.5em 0 1em 0;
+}
+
+nav.topnav a {
+    margin-right: 0.5em;
+}
+
+/* Post listing on index */
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list li {
+    margin-bottom: 1.4em;
+}
+
+.post-list .post-title {
+    font-size: 1.25em;
+    color: #b86535;
+    display: block;
+    border-bottom: none;
+}
+
+.post-list .post-title:hover {
+    border-bottom: 1px solid #d97745;
+}
+
+.post-list .post-meta {
+    color: #8b6540;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.post-list .post-tags {
+    font-size: 0.85em;
+    color: #8b6540;
+}
+
+.post-list .post-tags span {
+    margin-right: 0.4em;
+}
+
+/* Individual post */
+.post-header {
+    margin-bottom: 2em;
+}
+
+.post-header h1 {
+    margin-bottom: 0.1em;
+}
+
+.post-meta-line {
+    color: #8b6540;
+    font-size: 0.95em;
+    font-style: italic;
+    margin-top: 0;
+}
+
+.post-tags-line {
+    color: #8b6540;
+    font-size: 0.9em;
+}
+
+.post-tags-line span {
+    margin-right: 0.4em;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1em auto;
+}
+
+.post-content p {
+    margin: 1em 0;
+}
+
+/* Code */
+code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    background: #f4e5dc;
+    color: #7a3f1a;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-size: 0.92em;
+}
+
+pre {
+    background: #faf0e6;
+    border: 1px solid #f0dccb;
+    border-left: 3px solid #d97745;
+    padding: 0.9em 1em;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.45;
+    border-radius: 2px;
+}
+
+pre code {
+    background: transparent;
+    color: #3a2a1a;
+    padding: 0;
+    font-size: inherit;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 3px solid #f4e5dc;
+    padding: 0.3em 1em;
+    margin: 1em 0;
+    color: #5a4a3a;
+    background: #faf6f2;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    margin: 1em 0;
+    width: 100%;
+}
+
+table th, table td {
+    border: 1px solid #e8d5c8;
+    padding: 0.5em 0.8em;
+    text-align: left;
+}
+
+table th {
+    background: #faf0e6;
+    color: #b86535;
+}
+
+/* MathJax display */
+mjx-container[display="true"] {
+    margin: 1em 0 !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Loading state */
+#post-content.loading {
+    color: #8b6540;
+    font-style: italic;
+}
+
+footer {
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid #e8d5c8;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Tags page */
+.tag-group h3 {
+    margin-top: 1.2em;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+}

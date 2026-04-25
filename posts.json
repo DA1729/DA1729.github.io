@@ -1,0 +1,51 @@
+[
+  {
+    "slug": "Cryptanalysis-of-Legendre-PRF",
+    "title": "Cryptanalysis of the Legendre PRF",
+    "date": "2026-04-01",
+    "tags": ["Cryptography", "Cryptanalysis"],
+    "description": "Existing techniques and algorithms for cryptanalysis of the Legendre Pseudo-Random Function."
+  },
+  {
+    "slug": "Graham-Entringer-Szekely-Theorem",
+    "title": "Graham-Entringer-Szekely Theorem",
+    "date": "2026-04-23",
+    "tags": ["Graph Theory"],
+    "description": "A proof that any spanning tree of the k-cube has a non-tree edge whose addition creates a cycle of length at least 2k."
+  },
+  {
+    "slug": "Mapping-the-Max-Cut-Problem-to-Ising-Spin-Glasses",
+    "title": "Mapping the Max-Cut Problem to Ising Spin Glasses",
+    "date": "2026-03-09",
+    "tags": ["Graph Theory", "Physics"],
+    "description": "Reducing Max-Cut to finding ground states of an Ising spin-glass Hamiltonian."
+  },
+  {
+    "slug": "Stochastic-Modeling-of-Ising-Spin-Glasses-via-Metropolis-Hastings",
+    "title": "Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings",
+    "date": "2026-03-07",
+    "tags": ["Physics"],
+    "description": "Using Metropolis-Hastings and simulated annealing on Ising spin-glass systems."
+  },
+  {
+    "slug": "MPC-in-the-Head-MPCitH",
+    "title": "MPC in the Head (MPCitH)",
+    "date": "2025-12-06",
+    "tags": ["Cryptography", "Secure Computing", "Zero-Knowledge", "MPC"],
+    "description": "Constructing zero-knowledge proofs by simulating multi-party computation protocols in the head."
+  },
+  {
+    "slug": "Gentry-Lee-Encoding-for-Efficient-Matrix-FHE",
+    "title": "Gentry-Lee Encoding for Efficient Matrix FHE",
+    "date": "2025-12-04",
+    "tags": ["Cryptography", "Fully Homomorphic Encryption"],
+    "description": "Breaking down the encoding behind the new Gentry-Lee FHE scheme."
+  },
+  {
+    "slug": "Need-for-Gadget-Decomposition-in-LWE-Based-Cryptosystems",
+    "title": "Need for Gadget Decomposition in LWE Based Cryptosystems",
+    "date": "2025-09-27",
+    "tags": ["Fully Homomorphic Encryption", "Cryptography", "Post-Quantum Cryptography"],
+    "description": "Why gadget decomposition is necessary for noise control in LWE-based homomorphic operations."
+  }
+]
