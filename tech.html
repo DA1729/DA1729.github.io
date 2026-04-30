@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daksh Pandey — Blog</title>
+    <title>Tech Blogs &mdash; Daksh Pandey</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js"></script>
 </head>
 <body>
-    <h1>Daksh Pandey</h1>
+    <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
     <p><em>On mathematics, cryptography and stuff.</em></p>
 
     <nav class="topnav">
@@ -23,9 +23,11 @@
 
     <hr>
 
-    <h2>Posts</h2>
+    <h2>Tech Blogs</h2>
+    <p><em>Higher-level technical writing that doesn't quite fit with the math blog. Type theory, security, systems, and other things at the intersection.</em></p>
+
     <ul class="post-list" id="post-list">
-        <li><em>Loading...</em></li>
+        <li><em>Loading&hellip;</em></li>
     </ul>
 
     <footer>
@@ -34,7 +36,7 @@
 
     <script>
         (async () => {
-            const res = await fetch("posts.json");
+            const res = await fetch("tech.json");
             const posts = await res.json();
             posts.sort((a, b) => b.date.localeCompare(a.date));
 
@@ -43,7 +45,7 @@
             for (const p of posts) {
                 const li = document.createElement("li");
                 li.innerHTML = `
-                    <a class="post-title" href="post.html?post=${encodeURIComponent(p.slug)}">${escapeHtml(p.title)}</a>
+                    <a class="post-title" href="post.html?post=${encodeURIComponent(p.slug)}&kind=tech">${escapeHtml(p.title)}</a>
                     <div class="post-meta">${formatDate(p.date)}</div>
                     <div>${escapeHtml(p.description || "")}</div>
                     <div class="post-tags">${(p.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("")}</div>

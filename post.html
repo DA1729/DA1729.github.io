@@ -15,6 +15,7 @@
     <nav class="topnav" id="topnav">
         <a href="index.html">&larr; All posts</a> |
         <a href="theorems.html">Theorems</a> |
+        <a href="tech.html">Tech Blogs</a> |
         <a href="tags.html">Tags</a>
     </nav>
 
@@ -42,7 +43,10 @@
         (async () => {
             const params = new URLSearchParams(window.location.search);
             const slug = params.get("post");
-            const kind = params.get("kind") === "theorem" ? "theorem" : "post";
+            const kindParam = params.get("kind");
+            const kind = kindParam === "theorem" ? "theorem"
+                       : kindParam === "tech"    ? "tech"
+                       :                            "post";
             const content = document.getElementById("post-content");
 
             if (!slug) {
@@ -56,13 +60,22 @@
                 return;
             }
 
-            const dir = kind === "theorem" ? "theorems" : "posts";
-            const manifestFile = kind === "theorem" ? "theorems.json" : "posts.json";
+            const dirs = { theorem: "theorems", tech: "tech", post: "posts" };
+            const manifests = {
+                theorem: "theorems.json",
+                tech: "tech.json",
+                post: "posts.json"
+            };
+            const dir = dirs[kind];
+            const manifestFile = manifests[kind];
 
-            // Adjust back link for theorems.
+            // Adjust back link for non-default sections.
             if (kind === "theorem") {
                 document.getElementById("back-link").innerHTML =
                     '<a href="theorems.html">&larr; Back to theorems</a>';
+            } else if (kind === "tech") {
+                document.getElementById("back-link").innerHTML =
+                    '<a href="tech.html">&larr; Back to tech blogs</a>';
             }
 
             // Fetch metadata.

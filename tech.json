@@ -1,0 +1,16 @@
+[
+  {
+    "slug": "Prompt-Injection-in-MCP-Part-1",
+    "title": "On the Structural Sources of Prompt Injection in MCP",
+    "date": "2026-04-30",
+    "tags": ["Security", "MCP", "Prompt Injection", "Type Theory"],
+    "description": "Architecture, primitives, and the four fundamental flaws that make MCP a prompt-injection minefield."
+  },
+  {
+    "slug": "Prompt-Injection-in-MCP-Part-2",
+    "title": "On Type-Theoretic Containment of Prompt Injection in MCP",
+    "date": "2026-04-30",
+    "tags": ["Security", "MCP", "Prompt Injection", "Type Theory"],
+    "description": "Cryptographic identity, continuous trust, capability containment, and what dependent types can buy us against the unsolvable flaw."
+  }
+]
