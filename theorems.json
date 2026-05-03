@@ -1,5 +1,14 @@
 [
   {
+    "slug": "Kuratowski",
+    "title": "Kuratowski",
+    "topic": "Graph Theory",
+    "statement": "A graph is planar if and only if it contains no subdivision of $K_5$ or $K_{3,3}$.",
+    "reference": "West, <em>Introduction to Graph Theory</em>, &sect;6.2",
+    "date": "2026-05-04",
+    "tags": ["Graph Theory", "Planarity", "Combinatorics"]
+  },
+  {
     "slug": "Ramsey",
     "title": "Ramsey",
     "topic": "Graph Theory",
