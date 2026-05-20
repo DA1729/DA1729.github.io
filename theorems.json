@@ -1,5 +1,14 @@
 [
   {
+    "slug": "First-Isomorphism-Theorem",
+    "title": "First Isomorphism Theorem",
+    "topic": "Algebra",
+    "statement": "Let $f : A \\to B$ be any function, and let $\\sim$ be the equivalence relation on $A$ defined by $a' \\sim a'' \\iff f(a') = f(a'')$. Then $f$ decomposes as $A \\twoheadrightarrow A/{\\sim} \\xrightarrow{\\sim} \\operatorname{im} f \\hookrightarrow B$, where the first map is the canonical surjection, the last is the inclusion, and the middle map $\\tilde{f} \\colon [a]_\\sim \\mapsto f(a)$ is a bijection.",
+    "reference": "Aluffi, <em>Algebra: Chapter 0</em>, Theorem I.2.7",
+    "date": "2026-05-20",
+    "tags": ["Algebra", "Set Theory"]
+  },
+  {
     "slug": "Kuratowski",
     "title": "Kuratowski",
     "topic": "Graph Theory",
