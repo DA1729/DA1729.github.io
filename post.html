@@ -15,6 +15,7 @@
         <a href="index.html">&larr; All posts</a> |
         <a href="theorems.html">Theorems</a> |
         <a href="tech.html">Tech Blogs</a> |
+        <a href="languages.html">Languages</a> |
         <a href="tags.html">Tags</a>
     </nav>
 
@@ -43,8 +44,9 @@
             const params = new URLSearchParams(window.location.search);
             const slug = params.get("post");
             const kindParam = params.get("kind");
-            const kind = kindParam === "theorem" ? "theorem"
-                       : kindParam === "tech"    ? "tech"
+            const kind = kindParam === "theorem"  ? "theorem"
+                       : kindParam === "tech"     ? "tech"
+                       : kindParam === "language" ? "language"
                        :                            "post";
             const content = document.getElementById("post-content");
 
@@ -59,10 +61,11 @@
                 return;
             }
 
-            const dirs = { theorem: "theorems", tech: "tech", post: "posts" };
+            const dirs = { theorem: "theorems", tech: "tech", language: "languages", post: "posts" };
             const manifests = {
                 theorem: "theorems.json",
                 tech: "tech.json",
+                language: "languages.json",
                 post: "posts.json"
             };
             const dir = dirs[kind];
@@ -75,6 +78,9 @@
             } else if (kind === "tech") {
                 document.getElementById("back-link").innerHTML =
                     '<a href="tech.html">&larr; Back to tech blogs</a>';
+            } else if (kind === "language") {
+                document.getElementById("back-link").innerHTML =
+                    '<a href="languages.html">&larr; Back to languages</a>';
             }
 
             // Fetch metadata.

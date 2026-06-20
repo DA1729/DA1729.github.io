@@ -326,6 +326,11 @@ footer {
     margin: 2em 0;
 }
 
+/* Languages index */
+.language-group {
+    margin: 2em 0;
+}
+
 .topic-label {
     font-variant: small-caps;
     letter-spacing: 0.08em;
