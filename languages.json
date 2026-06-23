@@ -22,5 +22,13 @@
     "date": "2026-06-20",
     "tags": ["Dutch", "Language Log"],
     "description": "How I'm going about learning Dutch: reading Herman Koch's Het Diner against its translation and reverse engineering the language from real sentences."
+  },
+  {
+    "slug": "german-starting",
+    "title": "Starting German",
+    "language": "German",
+    "date": "2026-06-23",
+    "tags": ["German", "Language Log"],
+    "description": "Starting German with Wolfgang Herrndorf's Tschick as the novel and Duden Die Grammatik as the reference, same method as Dutch on harder terrain."
   }
 ]
