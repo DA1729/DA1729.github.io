@@ -1,5 +1,5 @@
 ---
-title: Reading the Grammar Book (ANS)
+title: De Algemene Nederlandse Spraakkunst lezen
 language: Dutch
 date: 2026-06-23
 tags:
