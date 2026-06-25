@@ -13,6 +13,7 @@
     <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
     <nav class="topnav" id="topnav">
         <a href="index.html">&larr; All posts</a> |
+        <a href="blogs.html">Blogs</a> |
         <a href="theorems.html">Theorems</a> |
         <a href="tech.html">Cluttered Stuff</a> |
         <a href="languages.html">Languages</a> |
@@ -48,6 +49,7 @@
             const kind = kindParam === "theorem"  ? "theorem"
                        : kindParam === "tech"     ? "tech"
                        : kindParam === "language" ? "language"
+                       : kindParam === "blog"     ? "blog"
                        :                            "post";
             const content = document.getElementById("post-content");
 
@@ -62,11 +64,12 @@
                 return;
             }
 
-            const dirs = { theorem: "theorems", tech: "tech", language: "languages", post: "posts" };
+            const dirs = { theorem: "theorems", tech: "tech", language: "languages", blog: "blogs", post: "posts" };
             const manifests = {
                 theorem: "theorems.json",
                 tech: "tech.json",
                 language: "languages.json",
+                blog: "blogs.json",
                 post: "posts.json"
             };
             const dir = dirs[kind];
@@ -82,6 +85,9 @@
             } else if (kind === "language") {
                 document.getElementById("back-link").innerHTML =
                     '<a href="languages.html">&larr; Back to languages</a>';
+            } else if (kind === "blog") {
+                document.getElementById("back-link").innerHTML =
+                    '<a href="blogs.html">&larr; Back to blogs</a>';
             }
 
             // Fetch metadata.
