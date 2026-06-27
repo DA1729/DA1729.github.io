@@ -106,19 +106,6 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* A gentle settle-in on first paint. */
-@keyframes fade-up {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: none; }
-}
-
-.section-list,
-.post-list,
-article,
-#tags {
-    animation: fade-up 0.45s ease both;
-}
-
 h1 {
     color: var(--heading-1);
     font-size: 2.5em;
@@ -252,55 +239,43 @@ nav.topnav a:hover {
     margin-right: 0.4em;
 }
 
-/* Home section directory */
+/* Home section directory: a quiet two-column index. */
 .section-list {
     list-style: none;
     padding: 0;
-    margin-top: 1.5em;
+    margin-top: 1.8em;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2.5em;
+    row-gap: 1.8em;
 }
 
 .section-list li {
-    margin: 0 -1em 0.5em;
-    padding: 0.85em 1em;
-    border-left: 3px solid transparent;
-    border-radius: 7px;
-    transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-}
-
-.section-list li:hover {
-    background: var(--hover-tint);
-    border-left-color: var(--link-accent);
-    transform: translateX(3px);
+    padding-top: 0.9em;
+    border-top: 1px solid var(--border-soft);
 }
 
 .section-list .section-title {
-    font-size: 1.35em;
+    font-size: 1.3em;
     color: var(--heading-2);
     display: inline-block;
     border-bottom: none;
 }
 
-.section-list li:hover .section-title {
+.section-list .section-title:hover {
     border-bottom: 1px solid var(--link-accent);
 }
 
 .section-list .section-desc {
     color: var(--text);
-    margin: 0.15em 0 0.35em;
+    font-size: 0.95em;
+    margin: 0.25em 0 0.4em;
 }
 
 .section-list .section-latest {
     font-family: var(--font-sans);
-    font-size: 0.86em;
+    font-size: 0.84em;
     color: var(--muted-warm);
-}
-
-.section-list .section-latest a {
-    border-bottom: none;
-}
-
-.section-list .section-latest a:hover {
-    border-bottom: 1px solid var(--link-accent);
 }
 
 .section-list .section-latest-date {
@@ -544,28 +519,8 @@ footer {
     font-family: var(--font-sans);
 }
 
-/* Listing rows echo the home cards, a touch lighter. */
-.post-list li {
-    margin: 0 -1em 0.5em;
-    padding: 0.7em 1em 0.85em;
-    border-left: 3px solid transparent;
-    border-radius: 7px;
-    transition: background-color 0.18s ease, border-color 0.18s ease;
-}
-
-.post-list li:hover {
-    background: var(--hover-tint);
-    border-left-color: var(--link-accent);
-}
-
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .section-list,
-    .post-list,
-    article,
-    #tags { animation: none; }
-    .section-list li,
-    .post-list li { transition: none; }
 }
 
 /* Responsive tweaks */
@@ -582,9 +537,8 @@ footer {
     .theorem-meta {
         padding-left: 0;
     }
-    .section-list li,
-    .post-list li {
-        margin-left: 0;
-        margin-right: 0;
+    .section-list {
+        grid-template-columns: 1fr;
+        row-gap: 1.4em;
     }
 }
