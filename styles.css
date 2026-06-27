@@ -103,7 +103,18 @@ body {
     background: var(--bg);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-variant-numeric: oldstyle-nums proportional-nums;
+    hanging-punctuation: first last;
     transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+/* Keep monospaced contexts on plain lining figures. */
+code, pre, .theorem-statement, mjx-container {
+    font-variant-numeric: normal;
 }
 
 h1 {
@@ -320,6 +331,25 @@ nav.topnav a:hover {
     margin: 1em 0;
 }
 
+/* Drop cap on the opening line of a long-form essay. */
+.kind-blog .post-content > p:first-of-type::first-letter {
+    float: left;
+    font-size: 3.2em;
+    line-height: 0.78;
+    margin: 0.02em 0.09em 0 0;
+    color: var(--heading-2);
+}
+
+/* Printer's end-mark closing essays and writeups. */
+.endmark {
+    text-align: center;
+    color: var(--reference);
+    font-size: 1.25em;
+    letter-spacing: 0.1em;
+    margin: 2.2em 0 0 !important;
+    line-height: 1;
+}
+
 /* Code */
 code {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -348,13 +378,17 @@ pre code {
     font-size: inherit;
 }
 
-/* Blockquotes */
+/* Blockquotes, set like an epigraph rather than a callout */
 blockquote {
-    border-left: 3px solid var(--blockquote-border);
-    padding: 0.3em 1em;
-    margin: 1em 0;
+    border-left: 2px solid var(--blockquote-border);
+    padding: 0.1em 0 0.1em 1.3em;
+    margin: 1.4em 0;
     color: var(--blockquote-text);
-    background: var(--blockquote-bg);
+    font-style: italic;
+}
+
+blockquote p {
+    margin: 0.4em 0;
 }
 
 /* Tables */

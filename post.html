@@ -54,6 +54,8 @@
                        : kindParam === "niche"    ? "niche"
                        :                            "post";
             const content = document.getElementById("post-content");
+            const article = document.querySelector("article");
+            if (article) article.classList.add("kind-" + kind);
 
             if (!slug) {
                 content.textContent = "No post specified.";
@@ -147,9 +149,12 @@
             let html = renderMarkdownWithMath(md);
 
             // For theorems: prepend a "Proof." marker and append a QED tombstone.
+            // For essays and writeups: close with a printer's end-mark.
             if (kind === "theorem") {
                 html = `<p class="proof-opener"><em>Proof.</em></p>` + html +
                        `<p class="qed">&#x220e;</p>`;
+            } else if (kind === "blog" || kind === "niche") {
+                html = html + `<p class="endmark">&#10087;</p>`;
             }
 
             content.innerHTML = html;
