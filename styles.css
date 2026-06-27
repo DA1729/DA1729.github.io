@@ -163,10 +163,22 @@ a:hover {
     border-bottom-color: var(--link-accent);
 }
 
+/* Dividers set as a centered fleuron rather than a rule. */
 hr {
     border: none;
-    border-top: 1px solid var(--hr);
-    margin: 2em 0;
+    height: auto;
+    margin: 2.4em 0;
+    text-align: center;
+    overflow: visible;
+}
+
+hr::after {
+    content: "\2767";
+    display: inline-block;
+    color: var(--reference);
+    font-size: 1.15em;
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
 }
 
 strong {
@@ -259,11 +271,23 @@ nav.topnav a:hover {
     grid-template-columns: repeat(2, 1fr);
     column-gap: 2.5em;
     row-gap: 1.8em;
+    counter-reset: section;
 }
 
 .section-list li {
     padding-top: 0.9em;
     border-top: 1px solid var(--border-soft);
+}
+
+.section-list li::before {
+    counter-increment: section;
+    content: counter(section, upper-roman);
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.72em;
+    letter-spacing: 0.16em;
+    color: var(--reference);
+    margin-bottom: 0.35em;
 }
 
 .section-list .section-title {
@@ -551,6 +575,13 @@ footer {
 .theorem-meta,
 footer {
     font-family: var(--font-sans);
+}
+
+/* Quieter, book-style list markers in prose. */
+.post-content ul li::marker,
+.booklist li::marker {
+    content: "\2013\00a0";
+    color: var(--reference);
 }
 
 @media (prefers-reduced-motion: reduce) {
