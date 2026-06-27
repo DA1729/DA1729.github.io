@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daksh Pandey — Blog</title>
+    <title>Daksh Pandey</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js"></script>
 </head>
@@ -14,6 +14,7 @@
     <nav class="topnav">
         <a href="index.html">Home</a> |
         <a href="blogs.html">Blogs</a> |
+        <a href="niche.html">Niche Posts</a> |
         <a href="theorems.html">Theorems</a> |
         <a href="tech.html">Cluttered Stuff</a> |
         <a href="languages.html">Languages</a> |
@@ -26,9 +27,8 @@
 
     <hr>
 
-    <h2>Posts</h2>
-    <ul class="post-list" id="post-list">
-        <li><em>Loading...</em></li>
+    <ul class="section-list" id="section-list">
+        <li><em>Loading&hellip;</em></li>
     </ul>
 
     <footer>
@@ -37,21 +37,72 @@
 
     <script>
         (async () => {
-            const res = await fetch("posts.json");
-            const posts = await res.json();
-            posts.sort((a, b) => b.date.localeCompare(a.date));
+            // The home page is a directory of the site's sections. Each section
+            // links to its own landing page and surfaces its most recent entry.
+            const sections = [
+                {
+                    name: "Blogs", href: "blogs.html",
+                    manifest: "blogs.json", kind: "blog",
+                    desc: "Long-form writing, whatever I happen to be thinking about. Reading, work, and the things I keep circling back to."
+                },
+                {
+                    name: "Niche Posts", href: "niche.html",
+                    manifest: "posts.json", kind: "niche",
+                    desc: "Worked-through writeups from the math and cryptography rabbit holes."
+                },
+                {
+                    name: "Theorems", href: "theorems.html",
+                    manifest: "theorems.json", kind: "theorem",
+                    desc: "Proofs I've worked through, statements first."
+                },
+                {
+                    name: "Languages", href: "languages.html",
+                    manifest: "languages.json", kind: "language",
+                    desc: "Learning Dutch and German by immersion, logged as I go."
+                },
+                {
+                    name: "Cluttered Stuff", href: "tech.html",
+                    manifest: "tech.json", kind: "tech",
+                    desc: "Higher-level technical writing: security, systems, architecture, and the intersections."
+                },
+                {
+                    name: "Reading List", href: "reading.html",
+                    manifest: null, kind: null,
+                    desc: "Textbooks, papers, and notes I've found worth recommending."
+                }
+            ];
 
-            const ul = document.getElementById("post-list");
-            ul.innerHTML = "";
-            for (const p of posts) {
+            // Fetch every section's latest entry in parallel.
+            const results = await Promise.all(sections.map(async s => {
+                if (!s.manifest) return { s, latest: null };
+                try {
+                    const res = await fetch(s.manifest);
+                    const items = await res.json();
+                    items.sort((a, b) => b.date.localeCompare(a.date));
+                    return { s, latest: items[0] || null };
+                } catch (e) {
+                    return { s, latest: null };
+                }
+            }));
+
+            const root = document.getElementById("section-list");
+            root.innerHTML = "";
+            for (const { s, latest } of results) {
                 const li = document.createElement("li");
+                let latestHtml = "";
+                if (latest) {
+                    latestHtml = `
+                        <div class="section-latest">&rarr;
+                            <a href="post.html?post=${encodeURIComponent(latest.slug)}&kind=${s.kind}">${escapeHtml(latest.title)}</a>
+                            <span class="section-latest-date">&middot; ${formatDate(latest.date)}</span>
+                        </div>`;
+                }
                 li.innerHTML = `
-                    <a class="post-title" href="post.html?post=${encodeURIComponent(p.slug)}">${escapeHtml(p.title)}</a>
-                    <div class="post-meta">${formatDate(p.date)}</div>
-                    <div>${escapeHtml(p.description || "")}</div>
-                    <div class="post-tags">${(p.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("")}</div>
+                    <a class="section-title" href="${s.href}">${escapeHtml(s.name)}</a>
+                    <div class="section-desc">${escapeHtml(s.desc)}</div>
+                    ${latestHtml}
                 `;
-                ul.appendChild(li);
+                root.appendChild(li);
             }
         })();
     </script>

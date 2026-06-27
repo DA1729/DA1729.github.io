@@ -12,8 +12,9 @@
 <body>
     <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
     <nav class="topnav" id="topnav">
-        <a href="index.html">&larr; All posts</a> |
+        <a href="index.html">&larr; Home</a> |
         <a href="blogs.html">Blogs</a> |
+        <a href="niche.html">Niche Posts</a> |
         <a href="theorems.html">Theorems</a> |
         <a href="tech.html">Cluttered Stuff</a> |
         <a href="languages.html">Languages</a> |
@@ -37,7 +38,7 @@
 
     <hr>
     <footer>
-        <p id="back-link"><a href="index.html">&larr; Back to all posts</a></p>
+        <p id="back-link"><a href="index.html">&larr; Home</a></p>
         <p><small>&copy; 2026 Daksh Pandey</small></p>
     </footer>
 
@@ -50,6 +51,7 @@
                        : kindParam === "tech"     ? "tech"
                        : kindParam === "language" ? "language"
                        : kindParam === "blog"     ? "blog"
+                       : kindParam === "niche"    ? "niche"
                        :                            "post";
             const content = document.getElementById("post-content");
 
@@ -64,12 +66,13 @@
                 return;
             }
 
-            const dirs = { theorem: "theorems", tech: "tech", language: "languages", blog: "blogs", post: "posts" };
+            const dirs = { theorem: "theorems", tech: "tech", language: "languages", blog: "blogs", niche: "posts", post: "posts" };
             const manifests = {
                 theorem: "theorems.json",
                 tech: "tech.json",
                 language: "languages.json",
                 blog: "blogs.json",
+                niche: "posts.json",
                 post: "posts.json"
             };
             const dir = dirs[kind];
@@ -88,6 +91,9 @@
             } else if (kind === "blog") {
                 document.getElementById("back-link").innerHTML =
                     '<a href="blogs.html">&larr; Back to blogs</a>';
+            } else if (kind === "niche" || kind === "post") {
+                document.getElementById("back-link").innerHTML =
+                    '<a href="niche.html">&larr; Back to niche posts</a>';
             }
 
             // Fetch metadata.

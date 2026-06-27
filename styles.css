@@ -204,6 +204,43 @@ nav.topnav a {
     margin-right: 0.4em;
 }
 
+/* Home section directory */
+.section-list {
+    list-style: none;
+    padding: 0;
+}
+
+.section-list li {
+    margin-bottom: 1.8em;
+}
+
+.section-list .section-title {
+    font-size: 1.35em;
+    color: var(--heading-2);
+    display: inline-block;
+    border-bottom: none;
+}
+
+.section-list .section-title:hover {
+    border-bottom: 1px solid var(--link-accent);
+}
+
+.section-list .section-desc {
+    color: var(--text);
+    margin: 0.15em 0 0.35em;
+}
+
+.section-list .section-latest {
+    font-size: 0.95em;
+    color: var(--muted-warm);
+}
+
+.section-list .section-latest-date {
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--muted-warm);
+}
+
 /* Individual post */
 .post-header {
     margin-bottom: 2em;
