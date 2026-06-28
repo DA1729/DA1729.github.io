@@ -1,13 +1,13 @@
 ---
 title: "The Dvole Cycle"
-date: "2026-03-01"
+date: "2026-06-28"
 ---
 
 # The Dvole Cycle
 
 *A Theory of Intelligence, Clutter, Offloading, and Perpetual Appreciation*
 
-*March 2026*
+*Wrote this a while back, in March 2026. Just restructured it a little and published it here.*
 
 ## Introduction
 
