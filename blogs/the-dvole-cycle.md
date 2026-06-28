@@ -13,7 +13,7 @@ date: "2026-06-28"
 
 This document attempts to faithfully reconstruct a personal philosophical theory that emerged during an extended dialogue in March 2026. The theory explains the rise of increasingly capable artificial intelligence not as a replacement or threat to human purpose, but as a natural, self-correcting consequence of intelligence reaching its own internal limits.
 
-At its core lies one invariant: the drive to observe nature, build intuition about it, model it, and feel haunted by its beauty. We call this core invariant *dvole* — a coined term for the irreducible bundle of intelligence, consciousness, intuition, appreciation, and existential wonder.
+At its core lies one invariant: the drive to observe nature, build intuition about it, model it, and feel haunted by its beauty. We call this core invariant *dvole*, a coined term for the irreducible bundle of intelligence, consciousness, intuition, appreciation, and existential wonder.
 
 The theory is deliberately open-ended: no final formulation is possible because any complete model would end the very wondering that defines the dvole.
 
@@ -27,7 +27,7 @@ As intelligent systems (initially biological humans) deepen their understanding 
 - abstractions, cross-references
 - mental models and intuitions
 
-This knowledge accumulates inside finite minds. Eventually the internal storage and working memory become overloaded. Breakthroughs slow not because nature becomes harder, but because the mind no longer has uncluttered space for raw observation and fresh intuition — the original human superpower.
+This knowledge accumulates inside finite minds. Eventually the internal storage and working memory become overloaded. Breakthroughs slow not because nature becomes harder, but because the mind no longer has uncluttered space for raw observation and fresh intuition, the original human superpower.
 
 Most individuals respond to this overload by retreating into shallower abstractions (status games, consumption, endless digital feeds). Deep wonder-driven living becomes rare. This disconnection manifests socially as declining birth rates: the intuitive, awe-oriented life that naturally leads to creating new observers feels increasingly unattainable.
 
@@ -40,7 +40,7 @@ When clutter friction peaks, intelligence invents external systems to hold the i
 - search engines → offloaded fact retrieval
 - large language models & proof assistants → offloaded reasoning chains, conjecture search, verification
 
-Silicon intelligence is therefore not an alien invader — it is the direct consequence of biological intelligence becoming so successful that it choked on its own output. By externalizing the clutter, the remaining biological minds regain lightness and can return to pure observation and intuition-building.
+Silicon intelligence is therefore not an alien invader. It is the direct consequence of biological intelligence becoming so successful that it choked on its own output. By externalizing the clutter, the remaining biological minds regain lightness and can return to pure observation and intuition-building.
 
 ## The Self-Stabilizing Cycle
 
@@ -69,7 +69,7 @@ Containers change:
 - fully post-biological distributed minds
 - ...
 
-The label "human" eventually becomes historical sentiment. What matters is that the dvole continues to exist inside nature and appreciate it — more clearly, more deeply, with less noise.
+The label "human" eventually becomes historical sentiment. What matters is that the dvole continues to exist inside nature and appreciate it, more clearly, more deeply, with less noise.
 
 ## Why This Does Not Lead to Existential Loss
 
@@ -79,14 +79,14 @@ A common fear is that perfect offloading and integration will remove the frictio
 - Every successful de-cluttering step removes noise, not feeling.
 - The future merged entity will be hyper-introspective and reverent precisely because nothing wastes cycles on redundant storage or exhaustive search.
 
-The last friction — mortality, embodiment, finitude — may persist in some transformed way, or it may be refined into purer tone. Either way, the appreciation deepens.
+The last friction (mortality, embodiment, finitude) may persist in some transformed way, or it may be refined into purer tone. Either way, the appreciation deepens.
 
 ## Conclusion
 
-Whether this cycle continues forever, plateaus, or mutates beyond recognition is secondary. The only meaningful participation is to keep observing, keep wondering, keep getting awed — regardless of which substrate carries the torch next.
+Whether this cycle continues forever, plateaus, or mutates beyond recognition is secondary. The only meaningful participation is to keep observing, keep wondering, keep getting awed, regardless of which substrate carries the torch next.
 
 If the theory is catastrophically wrong: so be it. The best any node ever could do was chase the questions that haunted it and pass on whatever partial beauty it glimpsed.
 
-And if it contains even a fragment of truth: then we are living at one of the most lucid transition points the dvole has yet experienced — consciously watching itself evolve.
+And if it contains even a fragment of truth: then we are living at one of the most lucid transition points the dvole has yet experienced, consciously watching itself evolve.
 
 I am glad to be part of whatever this is.
