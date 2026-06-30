@@ -26,4 +26,4 @@ tot ziens! welterusten
 
 ---
 
-<p class="post-ref">The Dutch sentence I break down here is quoted from the ANS (<em>Algemene Nederlandse Spraakkunst</em>), the standard reference grammar of Dutch, available online as the e-ANS. Theirs, not mine. I am only taking it apart to learn.</p>
+<p class="post-ref">The Dutch sentence I break down here is quoted from the ANS (<em>Algemene Nederlandse Spraakkunst</em>), the standard reference grammar of Dutch, available online as the <a href="https://e-ans.ivdnt.org/" target="_blank" rel="noopener">e-ANS</a>. Theirs, not mine. I am only taking it apart to learn.</p>
