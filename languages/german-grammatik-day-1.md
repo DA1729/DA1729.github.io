@@ -27,3 +27,7 @@ The heading after it also seems to be teaching something, it's `1 Artikulation u
 Yeah let's see one sentence, then I go to sleep. `Zu den Grundbausteinen der Sprache gehört das Wort.` *Sprache* I think is speech? No language. The analogue for the first part *Zu den Grundbausteinen* is 'the basic building block' and just ignore 'of' as one would use in english, and say zu den Grundbausteinen der Sprache (basic building block of the language is the word), so gehort, perhaps is? does map. So far, I have seen three forms of the noun 'word' itself bruhh... ok, german is weirder than dutch, anyway. Enough for today.
 
 Guten nacht :)
+
+---
+
+<p class="post-ref">The German headings and the sentence I work through here are quoted from Duden, <em>Die Grammatik</em> (Duden Band 4, Dudenverlag), the reference I am reading. Theirs, I am only decoding it.</p>

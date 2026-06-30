@@ -30,3 +30,7 @@ Now I noticed something spooky: in the Dutch sentences I typed above, *worden* a
 I have also started watching *De Tatta's* show on Prime. I think Tatta is just a family name.
 
 peace. da1729
+
+---
+
+<p class="post-ref">The Dutch sentence I break down here is quoted from the ANS (<em>Algemene Nederlandse Spraakkunst</em>), the standard reference grammar of Dutch, available online as the e-ANS. Theirs, not mine. I am only taking it apart to learn.</p>

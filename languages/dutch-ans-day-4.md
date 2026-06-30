@@ -33,3 +33,7 @@ last part's analogue is: difficult to give.
 Now gotta go to the jam pad I've booked for today to play drums.
 
 tot ziens! :)
+
+---
+
+<p class="post-ref">The Dutch sentence I break down here is quoted from the ANS (<em>Algemene Nederlandse Spraakkunst</em>), the standard reference grammar of Dutch, available online as the e-ANS. Theirs, not mine. I am only taking it apart to learn.</p>

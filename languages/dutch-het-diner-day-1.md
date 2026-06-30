@@ -71,3 +71,7 @@ moet bellen – of zes, of acht, ik ben inmiddels de tel kwijt.
 - the last line translates to "the restaurant is the kind where you have to call three months in advance, or six, or eight, I've lost count by now"
 
 peace. da1729
+
+---
+
+<p class="post-ref">The Dutch passages here are quoted from Herman Koch's <em>Het Diner</em> (Ambo|Anthos, 2009), the book I am reading. They are his, I am just pulling them apart to learn.</p>

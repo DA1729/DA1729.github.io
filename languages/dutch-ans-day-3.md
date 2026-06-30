@@ -23,3 +23,7 @@ The verb, to distinguish, came in at the very end of the second part of the sent
 tot ziens! welterusten
 
 :)
+
+---
+
+<p class="post-ref">The Dutch sentence I break down here is quoted from the ANS (<em>Algemene Nederlandse Spraakkunst</em>), the standard reference grammar of Dutch, available online as the e-ANS. Theirs, not mine. I am only taking it apart to learn.</p>

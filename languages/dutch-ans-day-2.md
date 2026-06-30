@@ -41,3 +41,7 @@ Okay, I think I can form one more sentence:
 Okay I think I will stop here for today. tot ziens!
 
 peace. da1729
+
+---
+
+<p class="post-ref">The Dutch sentence I break down here is quoted from the ANS (<em>Algemene Nederlandse Spraakkunst</em>), the standard reference grammar of Dutch, available online as the e-ANS. Theirs, not mine. I am only taking it apart to learn.</p>
