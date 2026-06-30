@@ -1,5 +1,13 @@
 [
   {
+    "slug": "german-grammatik-day-1",
+    "title": "Der Laut und die Lautstruktur des Wortes",
+    "language": "German",
+    "date": "2026-06-30",
+    "tags": ["German", "Language Log", "Die Grammatik"],
+    "description": "First content day in Duden's Die Grammatik, and of course it opens on phonology: decoding Phonem und Graphem, a heading on the sound structure of words, and watching the noun Wort shapeshift across three forms."
+  },
+  {
     "slug": "dutch-ans-day-4",
     "title": "Wat is een zin?",
     "language": "Dutch",
