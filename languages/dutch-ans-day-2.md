@@ -2,10 +2,6 @@
 title: Klankleer en de eerste vertakkingen
 language: Dutch
 date: 2026-06-24
-tags:
-    - Dutch
-    - Language Log
-    - ANS
 ---
 
 Back to the ANS (still not typing the big ass name). Today we are into *klankleer*, een onderdeel van de grammatica.

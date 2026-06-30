@@ -2,10 +2,6 @@
 title: Pak en bak van elkaar onderscheiden
 language: Dutch
 date: 2026-06-25
-tags:
-    - Dutch
-    - Language Log
-    - ANS
 ---
 
 Very sleepy today, long day, but to keep the streak going here is a short one.

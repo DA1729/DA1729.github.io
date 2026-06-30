@@ -2,9 +2,6 @@
 title: Starting German
 language: German
 date: 2026-06-23
-tags:
-    - German
-    - Language Log
 ---
 
 Second language in the section, and this time it is German. Same spirit as the Dutch project, slightly different tools.

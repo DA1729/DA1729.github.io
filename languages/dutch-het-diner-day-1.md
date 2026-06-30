@@ -2,10 +2,6 @@
 title: Het Diner, Day 1
 language: Dutch
 date: 2026-06-20
-tags:
-    - Dutch
-    - Language Log
-    - Het Diner
 ---
 
 First day of reading *Het Diner*. A little thing I picked up about *het*: it is the article for gender neutral nouns, like house, and in this case "the dinner". It can also show up as a pronoun, translating to "it" in English. Pretty cool.

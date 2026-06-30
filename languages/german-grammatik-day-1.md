@@ -2,10 +2,6 @@
 title: Der Laut und die Lautstruktur des Wortes
 language: German
 date: 2026-06-30
-tags:
-    - German
-    - Language Log
-    - Die Grammatik
 ---
 
 Ok, can only escape Deutsch so much.

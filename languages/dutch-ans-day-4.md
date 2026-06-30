@@ -2,10 +2,6 @@
 title: Wat is een zin?
 language: Dutch
 date: 2026-06-27
-tags:
-    - Dutch
-    - Language Log
-    - ANS
 ---
 
 Ok, went out for what my friends called "Friday Beer" yesterday, so two posts today (one morning, one evening).

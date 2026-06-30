@@ -2,9 +2,6 @@
 title: Starting Dutch
 language: Dutch
 date: 2026-06-20
-tags:
-    - Dutch
-    - Language Log
 ---
 
 So I am learning Dutch, and I want to write down how I am going about it, mostly so that future me can see whether the method actually worked.

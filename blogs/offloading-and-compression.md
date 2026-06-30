@@ -26,3 +26,7 @@ I shall write more about this compression of gathered knowledge theory of mine.
 Around the same time, Terence Tao wrote something that fits this almost too well:
 
 > Just as modern societies no longer consider raw food ingredients as constituting a meal, I predict that mathematical research culture will cease considering "raw", "undigested" proofs as constituting a solution to a problem, and focus more on how the field as a whole, as opposed to just the problem itself, is enriched by the contribution.
+
+---
+
+<p class="post-ref">That closing quote is Terence Tao's, word for word, from his Mathstodon thread (<a href="https://mathstodon.xyz/@tao" target="_blank" rel="noopener">mathstodon.xyz/@tao</a>). Not mine, everything else here is.</p>

@@ -2,10 +2,6 @@
 title: De Algemene Nederlandse Spraakkunst lezen
 language: Dutch
 date: 2026-06-23
-tags:
-    - Dutch
-    - Language Log
-    - ANS
 ---
 
 What better way to learn a language than reading the standard grammar book written in that language itself, lol. I present to you the ANS (and no, I am not typing out that big name more than once: *Algemene Nederlandse Spraakkunst*, there, done).

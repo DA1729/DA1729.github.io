@@ -519,6 +519,19 @@ footer {
     margin: 0.4em 0 0 0 !important;
 }
 
+/* Source / attribution note at the foot of a blog post. */
+.post-ref {
+    margin-top: 1.6em;
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    line-height: 1.6;
+    color: var(--muted-warm);
+}
+
+.post-ref a {
+    color: inherit;
+}
+
 /* Theorem reader (full page) */
 .theorem-statement-block {
     background: var(--statement-block-bg);

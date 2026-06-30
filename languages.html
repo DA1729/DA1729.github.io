@@ -80,7 +80,6 @@
                         <a class="post-title" href="post.html?post=${encodeURIComponent(e.slug)}&kind=language">${escapeHtml(e.title)}</a>
                         <div class="post-meta">${formatDate(e.date)}</div>
                         <div>${escapeHtml(e.description || "")}</div>
-                        <div class="post-tags">${(e.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("")}</div>
                     `;
                     ul.appendChild(li);
                 }
