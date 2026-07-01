@@ -29,6 +29,6 @@ Am I implying less human level interaction and all that? Oh no, that is on you b
 
 > AI is taking your jobs because your beautiful mind is not supposed to be doing that.
 
-Well, I opened my laptop to write about the second thing over which I just cannot wrap my head, the other thing as wondrous and haunting as AI. It is kind of related. Well, "everything is the same if you think deep enough" (daksh, 2026, lol), but yeah, later. It will mostly be me writing raw thoughts that come up spontaneously whenever I think about it.
+Well, I opened my laptop to write about the second thing over which I just cannot wrap my head, the other thing as wondrous and hauntingly beautiful as AI. It is kind of related. Well, "everything is the same if you think deep enough" (daksh, 2026, lol), but yeah, later. It will mostly be me writing raw thoughts that come up spontaneously whenever I think about it.
 
 guten nacht :)
