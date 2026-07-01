@@ -1,0 +1,34 @@
+---
+title: "You Can Actually Think"
+date: "2026-07-01"
+---
+
+# You Can Actually Think
+
+First, I want to write down a few things that people are just not realizing. That is, AI. I am not writing about how AI is bad, how people are losing jobs because of it and stuff like that. What I will say is, it is not good for a capitalist, but I am not here to discuss that either. Well, kind of. There are implications of my main opinions to all this, but I would gently request everyone to refrain from going there, because with different minds applying different logic, you might reach the same conclusions, but then they will be your conclusions, not mine. And I will vouch for that. See if you can get the core of what I am trying to say, because words merely communicate 10% of what I actually mean, but if you are able to connect the dots and see how my logic unfolds, please make your own conclusions.
+
+The problem happens when people are not able to "super-pose" their different "personalities", and no, I am not talking about multiple personality disorder. What I am trying to say is, I do not know what kind of article I am trying to write. Is it poetic, scientific, literature, tech? I do not know. I have a sense of it, but I cannot put it into words, and I will not even try to. It is foolish.
+
+But what I can put into words is how one, keeping the majority of their "personalities" (I should come up with a better word for this than personalities, but for now we can roll with it) under the rug, might perceive this blog. Say a poet, after writing the most beautiful looking words, free verse, after flattering a room full of poets who were able to look through your entire soul via a few centuries of words, might not even read past the second sentence of this blog. A performative techy, attending talks on AI, might not read past, what, maybe the 5th sentence. The reason I am hypothesizing this, well, you can figure it out. I can certainly explain it, just too many words to type.
+
+Enough with the prologue, now onto the main stuff. I really want to say that people are not understanding the weight, and, I do not know what to call it, but the fact that we are able to use the word "AI", "ARTIFICIAL INTELLIGENCE", is in itself, I do not know how to put it, "big deal" does not do justice to how the situation actually is. And no, I am not saying it in terms of people losing jobs, AI generated content and all that. Get past that for a moment. There are BIG existential and metaphysical and metamathematical waterfalls beyond. And I think THIS, and only THIS, is the reason why people are anti AI or questioning its purpose (and to these people, it is better to question your own purpose, it is a much less sad position to be in).
+
+Now, what do I mean by this. It is pretty simple. You have just not been respecting, or even acknowledging, the fact that you can actually THINK. That is it. If you exactly get what I am trying to say, although I am afraid there is no way to verify this fact, but if you do, you can have all the implications and thoughts I have about AI.
+
+If you really change your lens, you can trace the roots of people's worries down to the fact that they are somehow convinced that AI is actually taking away their thinking. Not the ability to think, but think, which I believe is, what, the most fundamental property of, I do not know, a living being, although I really do not know whether my table can think too or not.
+
+Now, I can get into a debate with some anti AI person with a lot of valid, concrete, literal arguments, but I am just not interested. What I am saying is, intelligence is a word, and as a consequence, thinking is a word, whose meaning just cannot be taken casually. Well, their meanings, not the word itself, do whatever you want with the word.
+
+When I first heard about ChatGPT back in 2022, the intense feeling of wonder it gave me is just as intense even today, when AI, in a social lens, is viewed as evil and dumb. Like just think about it for a moment, how wondrous a thing this is. And the people who laid the foundation for all this. I am not saying appreciate their hard work, that is a completely different story, but the amount of time they must have spent inside their minds thinking about all this. I would call that beautiful. Alan Turing, even a poet would say that the guy's mind was beautiful, but would very conveniently discard the fact that AI is a consequence of his work, and that his work and his thoughts play a very direct and important role in AI.
+
+Almost all of my previous blogs deal with how perfecting AI would, I think, eventually converge to perfecting an organism, which I have hypothesized evolution does the best. You can go read them, or not, idc. Point is, I am not rewriting those here, which I was about to, but then I realized, nope.
+
+In a previous blog, I have also written that if you really think, one could, in some way, have given a "prophecy" guaranteeing the invention of AI, and not through seeing the progress in math and science, but through social observations across time. I have not explicitly written it, but the arguments fit very nicely into this picture as well. In a nutshell, there has to be something which would allow humans to think more deeply and freely again. You can literally go ahead and not worry about all the things that were cluttering up your mind, and later, with very advanced and affordable robots, get free of even more clutter, and think again.
+
+Am I implying less human level interaction and all that? Oh no, that is on you buddy. Stop justifying being a robot with a need for solitude. Not saying it is bad, I spend a lot of time alone, but at least I think, and it is OK that I have an image of myself, that is all anyone has. Yeah, I know that I am not a robot, and I know that I am a human. AND, being human and being deep are the same thing. If you say that you are human and then complain about AI writing your Python, then AI is a machine and you are a less capable machine. YES, this argument. AI is doing all those things, making humans a machine. AI is taking your jobs, because the really incredible and mysterious and, I do not know what to call it, the absolute most beautiful thing or whatever it is, the MIND, is not supposed to be doing all that. I will write it in short for anyone with a short attention span:
+
+> AI is taking your jobs because your beautiful mind is not supposed to be doing that.
+
+Well, I opened my laptop to write about the second thing over which I just cannot wrap my head, the other thing as wondrous and haunting as AI. It is kind of related. Well, "everything is the same if you think deep enough" (daksh, 2026, lol), but yeah, later. It will mostly be me writing raw thoughts that come up spontaneously whenever I think about it.
+
+guten nacht :)
