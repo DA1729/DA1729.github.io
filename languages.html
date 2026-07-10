@@ -72,9 +72,20 @@
                 label.textContent = language;
                 section.appendChild(label);
 
-                const ul = document.createElement("ul");
-                ul.className = "post-list";
+                let currentMonth = null;
+                let ul = null;
                 for (const e of items) {
+                    const month = formatMonthYear(e.date);
+                    if (month !== currentMonth) {
+                        currentMonth = month;
+                        const heading = document.createElement("h4");
+                        heading.className = "month-heading";
+                        heading.textContent = month;
+                        section.appendChild(heading);
+                        ul = document.createElement("ul");
+                        ul.className = "post-list";
+                        section.appendChild(ul);
+                    }
                     const li = document.createElement("li");
                     li.innerHTML = `
                         <a class="post-title" href="post.html?post=${encodeURIComponent(e.slug)}&kind=language">${escapeHtml(e.title)}</a>
@@ -83,7 +94,6 @@
                     `;
                     ul.appendChild(li);
                 }
-                section.appendChild(ul);
                 root.appendChild(section);
             }
         })();

@@ -22,6 +22,12 @@ function formatDate(iso) {
     return months[parseInt(parts[1], 10) - 1] + " " + parseInt(parts[2], 10) + ", " + parts[0];
 }
 
+function formatMonthYear(iso) {
+    const parts = iso.split("-");
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    return months[parseInt(parts[1], 10) - 1] + " " + parts[0];
+}
+
 function escapeHtml(s) {
     return s.replace(/[&<>"']/g, c => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"

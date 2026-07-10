@@ -30,9 +30,9 @@
     <h2>Cluttered Stuff</h2>
     <p><em>Higher-level technical writing that doesn't quite fit with the math blog. Majorly security, systems, computer architecture, and other things at the intersection.</em></p>
 
-    <ul class="post-list" id="post-list">
-        <li><em>Loading&hellip;</em></li>
-    </ul>
+    <div id="post-list">
+        <p><em>Loading&hellip;</em></p>
+    </div>
 
     <footer>
         <p><small>&copy; 2026 Daksh Pandey. Built using Claude Code.</small></p>
@@ -44,9 +44,26 @@
             const posts = await res.json();
             posts.sort((a, b) => b.date.localeCompare(a.date));
 
-            const ul = document.getElementById("post-list");
-            ul.innerHTML = "";
+            const root = document.getElementById("post-list");
+            root.innerHTML = "";
+
+            let currentMonth = null;
+            let ul = null;
             for (const p of posts) {
+                const month = formatMonthYear(p.date);
+                if (month !== currentMonth) {
+                    currentMonth = month;
+                    const section = document.createElement("section");
+                    section.className = "month-group";
+                    const heading = document.createElement("h3");
+                    heading.className = "month-heading";
+                    heading.textContent = month;
+                    section.appendChild(heading);
+                    ul = document.createElement("ul");
+                    ul.className = "post-list";
+                    section.appendChild(ul);
+                    root.appendChild(section);
+                }
                 const li = document.createElement("li");
                 li.innerHTML = `
                     <a class="post-title" href="post.html?post=${encodeURIComponent(p.slug)}&kind=tech">${escapeHtml(p.title)}</a>

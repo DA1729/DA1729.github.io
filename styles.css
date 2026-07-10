@@ -262,6 +262,29 @@ nav.topnav a:hover {
     margin-right: 0.4em;
 }
 
+/* Month grouping on listing pages: a quiet time divider above each group. */
+.month-group {
+    margin: 0 0 1.6em;
+}
+
+.month-heading {
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    font-weight: normal;
+    color: var(--muted-warm);
+    font-size: 0.95em;
+    margin: 1.8em 0 0.9em;
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+/* Inside a language section the month is a sub-divider, quieter and rule-less. */
+.language-group .month-heading {
+    border-bottom: none;
+    font-size: 0.85em;
+    margin: 1.1em 0 0.5em;
+}
+
 /* Home section directory: a quiet two-column index. */
 .section-list {
     list-style: none;
