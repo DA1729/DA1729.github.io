@@ -1,5 +1,12 @@
 [
   {
+    "slug": "information-theory",
+    "title": "Information Theory",
+    "date": "2026-07-20",
+    "tags": ["Information Theory", "Learning Notes"],
+    "description": "My learning notes from the very start of Cover and Thomas. Channel capacity, compression, Kolmogorov complexity, and entropy, and how info theory ties into electrical engineering, computer science, and physics."
+  },
+  {
     "slug": "Prompt-Injection-in-MCP-Part-1",
     "title": "On the Structural Sources of Prompt Injection in MCP",
     "date": "2026-04-30",
