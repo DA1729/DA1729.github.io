@@ -1,5 +1,12 @@
 [
   {
+    "slug": "When-Secure-Messages-Still-Leak-Information",
+    "title": "When Secure Messages Still Leak Information",
+    "date": "2026-08-07",
+    "tags": ["AI Safety", "Information Theory", "Multi-Agent Systems", "Security"],
+    "description": "Why authenticated, encrypted, perfectly legitimate messages can still leak: the gap between secure communication and secure information flow, seen through mutual information, couplings, and entropy."
+  },
+  {
     "slug": "Cryptanalysis-of-Legendre-PRF",
     "title": "Cryptanalysis of the Legendre PRF",
     "date": "2026-04-01",
