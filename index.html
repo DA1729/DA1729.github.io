@@ -8,21 +8,36 @@
     <script src="app.js"></script>
     <style>
       /* Home is split into two panes below a full-width header and footer. */
-      body.home-split { max-width: 940px; }
-      .home-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2em; align-items: start; }
-      .home-intro p { margin-top: 0; }
-      .home-intro p:first-child { margin-top: 0; }
+      body.home-split { max-width: 920px; }
+
+      .home-cols {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+        gap: 2.9em;
+        align-items: start;
+        margin-top: 2.4em;
+      }
+
+      .home-intro p { margin: 0 0 1.15em; line-height: 1.78; }
+      .home-intro p:last-child { margin-bottom: 0; }
       .home-intro .surprise {
         font-style: italic; color: var(--link-accent);
-        border-bottom: 1px dashed var(--link-accent); white-space: nowrap;
-        cursor: pointer;
+        border-bottom: 1px dashed var(--link-accent); white-space: nowrap; cursor: pointer;
       }
       .home-intro .surprise:hover { background: var(--hover-tint); }
-      /* In the right pane the section directory reads as a single column. */
-      .home-sections .section-list { grid-template-columns: 1fr; margin-top: 0; row-gap: 1.5em; }
+
+      /* Right pane: a calm single-column directory, set off by a quiet rule. */
+      .home-sections { border-left: 1px solid var(--border-soft); padding-left: 2.9em; }
+      .home-sections .section-list { grid-template-columns: 1fr; margin: 0; row-gap: 1.75em; }
+      .home-sections .section-list li { border-top: none; padding-top: 0; margin: 0; }
+      .home-sections .section-title { font-size: 1.2em; }
+      .home-sections .section-desc { margin: 0.3em 0 0.35em; }
+
       @media (max-width: 820px) {
         body.home-split { max-width: 760px; }
-        .home-cols { grid-template-columns: 1fr; gap: 2.2em; }
+        .home-cols { grid-template-columns: 1fr; gap: 2em; margin-top: 1.8em; }
+        .home-sections { border-left: none; padding-left: 0; }
+        .home-sections .section-list li { border-top: 1px solid var(--border-soft); padding-top: 1em; }
       }
     </style>
 </head>
