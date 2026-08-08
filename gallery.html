@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicks &amp; Doodles &mdash; Daksh Pandey</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+    <style>
+      /* Gallery page: a touch wider than the reading column. */
+      body.gallery-page { max-width: 1080px; }
+      .gallery-intro { font-style: italic; color: var(--em); max-width: 720px; }
+      .gallery-intro .aphorism { color: var(--muted-warm); }
+
+      .masonry { column-count: 3; column-gap: 14px; margin-top: 1.8em; }
+      .masonry figure { break-inside: avoid; margin: 0 0 14px; }
+      .masonry img {
+        width: 100%; height: auto; display: block;
+        border-radius: 3px; border: 1px solid var(--border-soft);
+        background: var(--pre-bg); cursor: zoom-in;
+        transition: filter .2s ease, transform .2s ease;
+      }
+      .masonry img:hover { filter: brightness(1.05) saturate(1.03); transform: translateY(-1px); }
+      @media (max-width: 900px) { body.gallery-page { max-width: 760px; } .masonry { column-count: 2; } }
+      @media (max-width: 520px) { .masonry { column-count: 1; column-gap: 0; } }
+
+      /* Lightbox */
+      .lightbox { position: fixed; inset: 0; z-index: 1000; display: none;
+        align-items: center; justify-content: center; padding: 24px;
+        background: rgba(8,5,3,0.92); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+      .lightbox.open { display: flex; }
+      .lightbox img { max-width: 94vw; max-height: 90vh; object-fit: contain;
+        border-radius: 2px; box-shadow: 0 10px 50px rgba(0,0,0,0.55); }
+      .lb-ctrl { position: fixed; background: none; border: none; color: #f3e9dc;
+        font-family: var(--font-serif); cursor: pointer; opacity: 0.72;
+        transition: opacity .15s ease; user-select: none; line-height: 1; }
+      .lb-ctrl:hover { opacity: 1; }
+      .lb-close { top: 16px; right: 22px; font-size: 2.4em; }
+      .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 3.4em; padding: 0 0.3em; }
+      .lb-prev { left: 6px; } .lb-next { right: 6px; }
+      .lb-count { position: fixed; bottom: 18px; left: 0; right: 0; text-align: center;
+        color: #cbb89f; font-family: var(--font-sans); font-size: 0.85em; letter-spacing: 0.05em; }
+      @media (max-width: 520px) { .lb-prev, .lb-next { font-size: 2.6em; } }
+    </style>
+</head>
+<body class="gallery-page">
+    <h1><a href="index.html" style="border-bottom: none;">Daksh Pandey</a></h1>
+    <p><em>On mathematical conspiracies...</em></p>
+
+    <nav class="topnav">
+        <a href="index.html">Home</a> |
+        <a href="blogs.html">Blogs</a> |
+        <a href="niche.html">Niche Posts</a> |
+        <a href="theorems.html">Theorems</a> |
+        <a href="tech.html">Cluttered Stuff</a> |
+        <a href="languages.html">Languages</a> |
+        <a href="notes.html">Notes</a> |
+        <a href="reading.html">Reading List</a> |
+        <a href="gallery.html">Clicks &amp; Doodles</a> |
+        <a href="https://da-k-sh.github.io/" target="_blank">Portfolio</a>
+    </nav>
+
+    <hr>
+
+    <h2>Clicks &amp; Doodles</h2>
+    <p class="gallery-intro">I am neither a photographer nor an artist, but I still find myself trying to take good shots, edit them, sometimes do crazy math experiments with them, and doodling around. So I am just presenting them without any worries about judgements -- <span class="aphorism">&ldquo;the whole point of a hobby is that you can suck at it&hellip;&rdquo;</span></p>
+
+    <div class="masonry" id="masonry">
+        <figure><img loading="lazy" src="images/gallery/g01.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g02.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g03.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g04.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g05.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g06.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g07.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g08.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g09.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g10.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g11.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g12.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g13.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g14.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g15.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g16.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g17.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g18.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g19.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g20.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g21.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g22.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g23.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g24.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g25.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g26.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g27.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g28.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g29.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g30.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g31.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g32.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g33.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g34.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g35.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g36.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g37.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g38.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g39.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g40.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g41.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g42.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g43.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g44.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g45.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g46.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g47.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g48.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g49.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g50.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g51.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g52.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g53.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g54.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g55.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g56.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g57.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g58.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g59.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g60.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g61.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g62.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g63.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g64.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g65.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g66.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g67.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g68.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g69.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g70.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g71.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g72.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g73.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g74.jpg" alt=""></figure>
+        <figure><img loading="lazy" src="images/gallery/g75.jpg" alt=""></figure>
+    </div>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <button class="lb-ctrl lb-close" id="lbClose" aria-label="Close">&times;</button>
+        <button class="lb-ctrl lb-prev" id="lbPrev" aria-label="Previous image">&lsaquo;</button>
+        <img id="lbImg" src="" alt="">
+        <button class="lb-ctrl lb-next" id="lbNext" aria-label="Next image">&rsaquo;</button>
+        <div class="lb-count" id="lbCount"></div>
+    </div>
+
+    <footer>
+        <p><small>&copy; 2026 Daksh Pandey. Built using Claude Code.</small></p>
+        <p><small><a href="https://github.com/DA1729" target="_blank">GitHub</a> &middot; <a href="mailto:daksh_p@ph.iitr.ac.in">Email</a></small></p>
+    </footer>
+
+    <script>
+        (function () {
+            var imgs = Array.prototype.slice.call(document.querySelectorAll(".masonry img"));
+            var lb = document.getElementById("lightbox");
+            var lbImg = document.getElementById("lbImg");
+            var lbCount = document.getElementById("lbCount");
+            var idx = -1;
+
+            function render() {
+                lbImg.src = imgs[idx].src;
+                lbCount.textContent = (idx + 1) + " / " + imgs.length;
+            }
+            function open(i) {
+                idx = i; render();
+                lb.classList.add("open");
+                lb.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+            }
+            function close() {
+                lb.classList.remove("open");
+                lb.setAttribute("aria-hidden", "true");
+                document.body.style.overflow = "";
+                lbImg.src = "";
+            }
+            function step(d) {
+                if (idx < 0) return;
+                idx = (idx + d + imgs.length) % imgs.length;
+                render();
+            }
+
+            imgs.forEach(function (im, i) {
+                im.addEventListener("click", function () { open(i); });
+            });
+            document.getElementById("lbClose").addEventListener("click", close);
+            document.getElementById("lbPrev").addEventListener("click", function (e) { e.stopPropagation(); step(-1); });
+            document.getElementById("lbNext").addEventListener("click", function (e) { e.stopPropagation(); step(1); });
+            lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+            document.addEventListener("keydown", function (e) {
+                if (!lb.classList.contains("open")) return;
+                if (e.key === "Escape") close();
+                else if (e.key === "ArrowLeft") step(-1);
+                else if (e.key === "ArrowRight") step(1);
+            });
+        })();
+    </script>
+</body>
+</html>
