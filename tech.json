@@ -1,5 +1,11 @@
 [
   {
+    "slug": "recovering-a-ruined-roll-part-three",
+    "title": "Recovering a Ruined Roll, Part Three",
+    "date": "2026-08-08",
+    "description": "The one defect that survived two rounds: a hard, frame-spanning light-leak seam. Deleting it in the gradient domain with a Poisson solve, plus two negative results (a chroma-gradient idea that was wrong about the physics, a dust detector that was just measuring grain) and the one restoration I refused to do."
+  },
+  {
     "slug": "recovering-a-ruined-roll-part-two",
     "title": "Recovering a Ruined Roll, Part Two",
     "date": "2026-08-08",
