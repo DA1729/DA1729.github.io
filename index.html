@@ -7,18 +7,33 @@
     <link rel="stylesheet" href="styles.css">
     <script src="app.js"></script>
     <style>
-      /* Home is split into two panes below a full-width header and footer. */
-      body.home-split { max-width: 920px; }
+      body.home-page { max-width: 900px; }
 
-      .home-cols {
-        display: grid;
-        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-        gap: 2.9em;
-        align-items: start;
-        margin-top: 2.4em;
+      /* A compact directory of every section, kept above the fold. */
+      .home-dir {
+        list-style: none; padding: 0;
+        margin: 2.1em 0 0;
+        display: grid; grid-template-columns: repeat(2, 1fr);
+        column-gap: 3em; row-gap: 1.3em;
+      }
+      .home-dir li { margin: 0; padding: 0; }
+      .home-dir .section-title {
+        font-size: 1.2em; color: var(--heading-2);
+        display: inline-block; border-bottom: none;
+      }
+      .home-dir .section-title:hover { border-bottom: 1px solid var(--link-accent); }
+      .home-dir .section-desc {
+        font-size: 0.88em; color: var(--muted-warm);
+        line-height: 1.5; margin-top: 0.15em;
       }
 
-      .home-intro p { margin: 0 0 1.15em; line-height: 1.78; }
+      /* The intro sits below the directory, as a comfortable single column. */
+      .home-intro {
+        max-width: 660px;
+        margin-top: 2.6em; padding-top: 2.2em;
+        border-top: 1px solid var(--border-soft);
+      }
+      .home-intro p { margin: 0 0 1.1em; line-height: 1.78; }
       .home-intro p:last-child { margin-bottom: 0; }
       .home-intro .surprise {
         font-style: italic; color: var(--link-accent);
@@ -26,22 +41,12 @@
       }
       .home-intro .surprise:hover { background: var(--hover-tint); }
 
-      /* Right pane: a calm single-column directory, set off by a quiet rule. */
-      .home-sections { border-left: 1px solid var(--border-soft); padding-left: 2.9em; }
-      .home-sections .section-list { grid-template-columns: 1fr; margin: 0; row-gap: 1.75em; }
-      .home-sections .section-list li { border-top: none; padding-top: 0; margin: 0; }
-      .home-sections .section-title { font-size: 1.2em; }
-      .home-sections .section-desc { margin: 0.3em 0 0.35em; }
-
-      @media (max-width: 820px) {
-        body.home-split { max-width: 760px; }
-        .home-cols { grid-template-columns: 1fr; gap: 2em; margin-top: 1.8em; }
-        .home-sections { border-left: none; padding-left: 0; }
-        .home-sections .section-list li { border-top: 1px solid var(--border-soft); padding-top: 1em; }
+      @media (max-width: 620px) {
+        .home-dir { grid-template-columns: 1fr; row-gap: 1.15em; }
       }
     </style>
 </head>
-<body class="home-split">
+<body class="home-page">
     <h1>Daksh Pandey</h1>
     <p><em>On mathematical conspiracies...</em></p>
 
@@ -60,22 +65,49 @@
 
     <hr>
 
-    <div class="home-cols">
-        <section class="home-intro">
-            <p>Helloo... this is my grand and ultimate website. It contains a LOT of stuff, and I have not done a good job naming the pages to explain themselves, although if you wear your specs, you should see little descriptions. Anyway, here you will find, in a nutshell, 5% of the things I think about. Even 5% seems like a big number given the amount of stuff we think about and are influenced by; the density is &ldquo;unimaginable&rdquo; (idk if I intend a pun here).</p>
+    <ul class="home-dir">
+        <li>
+            <a class="section-title" href="blogs.html">Blogs</a>
+            <div class="section-desc">Whatever I happen to be thinking about. Reading, work, and the things I keep circling back to.</div>
+        </li>
+        <li>
+            <a class="section-title" href="niche.html">Niche Posts</a>
+            <div class="section-desc">Worked-through writeups from the math and cryptography rabbit holes.</div>
+        </li>
+        <li>
+            <a class="section-title" href="theorems.html">Theorems</a>
+            <div class="section-desc">Proofs I've worked through, statements first.</div>
+        </li>
+        <li>
+            <a class="section-title" href="languages.html">Languages</a>
+            <div class="section-desc">Learning Dutch and German by immersion, logged as I go.</div>
+        </li>
+        <li>
+            <a class="section-title" href="tech.html">Cluttered Stuff</a>
+            <div class="section-desc">Higher-level technical writing: security, systems, architecture, and the intersections.</div>
+        </li>
+        <li>
+            <a class="section-title" href="notes.html">Notes</a>
+            <div class="section-desc">Notes from the courses and subjects I am studying, grouped by subject.</div>
+        </li>
+        <li>
+            <a class="section-title" href="reading.html">Reading List</a>
+            <div class="section-desc">Textbooks, papers, and notes I've found worth recommending.</div>
+        </li>
+        <li>
+            <a class="section-title" href="gallery.html">Clicks &amp; Doodles</a>
+            <div class="section-desc">Photographs, film experiments, and doodles. Presented without any worries about judgement.</div>
+        </li>
+    </ul>
 
-            <p>I really like to write and present my raw pieces of work and half-baked thoughts and workouts. The content on this website really lives on the entire spectrum of formal and casual. To test this, you will see a link <a class="surprise" id="surprise-me" href="#" role="button">[Surprise me]</a> which opens a random article or object on this website. Do it a couple of times, and you should see both formal and casual articles, with casual outnumbering the former (I didn&rsquo;t say the distribution was uniform lol).</p>
+    <div class="home-intro">
+        <p>Helloo... this is my grand and ultimate website. It contains a LOT of stuff, and I have not done a good job naming the pages to explain themselves, although if you wear your specs, you should see little descriptions. Anyway, here you will find, in a nutshell, 5% of the things I think about. Even 5% seems like a big number given the amount of stuff we think about and are influenced by; the density is &ldquo;unimaginable&rdquo; (idk if I intend a pun here).</p>
 
-            <p>Moving on, I would really appreciate anyone exploring this website however they want. And PLEASE, always read it with a fair amount of ambiguity and open-thought. I try to present my abstract thoughts here a lot, and I really don&rsquo;t think they can ever be presented through words alone. You need the words, in this case, to establish a direct communication channel between my mind and the mind of whoever&rsquo;s reading any of my stuff.</p>
+        <p>I really like to write and present my raw pieces of work and half-baked thoughts and workouts. The content on this website really lives on the entire spectrum of formal and casual. To test this, you will see a link <a class="surprise" id="surprise-me" href="#" role="button">[Surprise me]</a> which opens a random article or object on this website. Do it a couple of times, and you should see both formal and casual articles, with casual outnumbering the former (I didn&rsquo;t say the distribution was uniform lol).</p>
 
-            <p>A little about me -- I really like mathematics, and the rest you can read on my <a href="https://da-k-sh.github.io/" target="_blank">portfolio</a> page.</p>
-        </section>
+        <p>Moving on, I would really appreciate anyone exploring this website however they want. And PLEASE, always read it with a fair amount of ambiguity and open-thought. I try to present my abstract thoughts here a lot, and I really don&rsquo;t think they can ever be presented through words alone. You need the words, in this case, to establish a direct communication channel between my mind and the mind of whoever&rsquo;s reading any of my stuff.</p>
 
-        <section class="home-sections">
-            <ul class="section-list" id="section-list">
-                <li><em>Loading&hellip;</em></li>
-            </ul>
-        </section>
+        <p>A little about me -- I really like mathematics, and the rest you can read on my <a href="https://da-k-sh.github.io/" target="_blank">portfolio</a> page.</p>
     </div>
 
     <footer>
@@ -86,57 +118,19 @@
 
     <script>
         (async () => {
-            // The home page is a directory of the site's sections. Each section
-            // links to its own landing page and surfaces its most recent entry.
-            const sections = [
-                {
-                    name: "Blogs", href: "blogs.html",
-                    manifest: "blogs.json", kind: "blog",
-                    desc: "Whatever I happen to be thinking about. Reading, work, and the things I keep circling back to."
-                },
-                {
-                    name: "Niche Posts", href: "niche.html",
-                    manifest: "posts.json", kind: "niche",
-                    desc: "Worked-through writeups from the math and cryptography rabbit holes."
-                },
-                {
-                    name: "Theorems", href: "theorems.html",
-                    manifest: "theorems.json", kind: "theorem",
-                    desc: "Proofs I've worked through, statements first."
-                },
-                {
-                    name: "Languages", href: "languages.html",
-                    manifest: "languages.json", kind: "language",
-                    desc: "Learning Dutch and German by immersion, logged as I go."
-                },
-                {
-                    name: "Cluttered Stuff", href: "tech.html",
-                    manifest: "tech.json", kind: "tech",
-                    desc: "Higher-level technical writing: security, systems, architecture, and the intersections."
-                },
-                {
-                    name: "Notes", href: "notes.html",
-                    manifest: "notes.json", kind: "note",
-                    desc: "Notes from the courses and subjects I am studying, grouped by subject."
-                },
-                {
-                    name: "Reading List", href: "reading.html",
-                    manifest: null, kind: null,
-                    desc: "Textbooks, papers, and notes I've found worth recommending."
-                },
-                {
-                    name: "Clicks & Doodles", href: "gallery.html",
-                    manifest: null, kind: null,
-                    desc: "Photographs, film experiments, and doodles. Presented without any worries about judgement."
-                }
+            // "Surprise me" opens a uniformly random article or object. The section
+            // directory above is static; these manifests are only for the pool.
+            const sources = [
+                { manifest: "blogs.json", kind: "blog" },
+                { manifest: "posts.json", kind: "niche" },
+                { manifest: "theorems.json", kind: "theorem" },
+                { manifest: "languages.json", kind: "language" },
+                { manifest: "tech.json", kind: "tech" },
+                { manifest: "notes.json", kind: "note" }
             ];
-
             const GALLERY_COUNT = 75;
 
-            // Fetch every section's manifest once (used for both the directory
-            // and the "Surprise me" pool).
-            const loaded = await Promise.all(sections.map(async s => {
-                if (!s.manifest) return { s, items: [] };
+            const loaded = await Promise.all(sources.map(async s => {
                 try {
                     const res = await fetch(s.manifest);
                     const items = await res.json();
@@ -146,44 +140,14 @@
                 }
             }));
 
-            // --- Right pane: section directory with latest entry. ---
-            const root = document.getElementById("section-list");
-            root.innerHTML = "";
-            for (const { s, items } of loaded) {
-                let latest = null;
-                if (items.length) {
-                    latest = items.slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0];
-                }
-                let latestHtml = "";
-                if (latest && s.kind && latest.date) {
-                    latestHtml = `
-                        <div class="section-latest">&rarr;
-                            <a href="post.html?post=${encodeURIComponent(latest.slug)}&kind=${s.kind}">${escapeHtml(latest.title)}</a>
-                            <span class="section-latest-date">&middot; ${formatDate(latest.date)}</span>
-                        </div>`;
-                }
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <a class="section-title" href="${s.href}">${escapeHtml(s.name)}</a>
-                    <div class="section-desc">${escapeHtml(s.desc)}</div>
-                    ${latestHtml}
-                `;
-                root.appendChild(li);
-            }
-
-            // --- "Surprise me": a uniformly random article or object. ---
             const pool = [];
             for (const { s, items } of loaded) {
-                if (s.manifest && s.kind) {
-                    for (const it of items) {
-                        pool.push({ url: `post.html?post=${encodeURIComponent(it.slug)}&kind=${s.kind}` });
-                    }
-                } else if (s.href === "gallery.html") {
-                    pool.push({ gallery: true });
-                } else {
-                    pool.push({ url: s.href });
+                for (const it of items) {
+                    pool.push({ url: `post.html?post=${encodeURIComponent(it.slug)}&kind=${s.kind}` });
                 }
             }
+            pool.push({ url: "reading.html" });
+            pool.push({ gallery: true });
 
             const surprise = document.getElementById("surprise-me");
             if (surprise) {
@@ -196,7 +160,6 @@
                             ? "gallery.html?img=" + (1 + Math.floor(Math.random() * GALLERY_COUNT))
                             : pick.url;
                     } else {
-                        // Fallback if manifests failed to load.
                         const fb = ["blogs.html", "niche.html", "theorems.html", "tech.html",
                                     "languages.html", "notes.html", "reading.html", "gallery.html"];
                         dest = fb[Math.floor(Math.random() * fb.length)];
