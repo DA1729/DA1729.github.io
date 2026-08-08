@@ -1,5 +1,12 @@
 [
   {
+    "slug": "recovering-a-ruined-roll",
+    "title": "Recovering a Ruined Roll",
+    "date": "2026-08-08",
+    "tags": ["Image Processing", "Information Theory", "Photography"],
+    "description": "Got a Kodak M35, shot a roll around Belgium, and every frame came back a flat yellow-green wash. Recovering the few salvageable shots by measuring the statistics first: channel entropy, per-channel gamma, guided filtering, and knowing when to stop inventing colour."
+  },
+  {
     "slug": "information-theory",
     "title": "Information Theory",
     "date": "2026-07-20",
