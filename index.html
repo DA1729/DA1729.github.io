@@ -6,8 +6,27 @@
     <title>Daksh Pandey</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js"></script>
+    <style>
+      /* Home is split into two panes below a full-width header and footer. */
+      body.home-split { max-width: 940px; }
+      .home-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2em; align-items: start; }
+      .home-intro p { margin-top: 0; }
+      .home-intro p:first-child { margin-top: 0; }
+      .home-intro .surprise {
+        font-style: italic; color: var(--link-accent);
+        border-bottom: 1px dashed var(--link-accent); white-space: nowrap;
+        cursor: pointer;
+      }
+      .home-intro .surprise:hover { background: var(--hover-tint); }
+      /* In the right pane the section directory reads as a single column. */
+      .home-sections .section-list { grid-template-columns: 1fr; margin-top: 0; row-gap: 1.5em; }
+      @media (max-width: 820px) {
+        body.home-split { max-width: 760px; }
+        .home-cols { grid-template-columns: 1fr; gap: 2.2em; }
+      }
+    </style>
 </head>
-<body>
+<body class="home-split">
     <h1>Daksh Pandey</h1>
     <p><em>On mathematical conspiracies...</em></p>
 
@@ -26,9 +45,23 @@
 
     <hr>
 
-    <ul class="section-list" id="section-list">
-        <li><em>Loading&hellip;</em></li>
-    </ul>
+    <div class="home-cols">
+        <section class="home-intro">
+            <p>Helloo... this is my grand and ultimate website. It contains a LOT of stuff, and I have not done a good job naming the pages to explain themselves, although if you wear your specs, you should see little descriptions. Anyway, here you will find, in a nutshell, 5% of the things I think about. Even 5% seems like a big number given the amount of stuff we think about and are influenced by; the density is &ldquo;unimaginable&rdquo; (idk if I intend a pun here).</p>
+
+            <p>I really like to write and present my raw pieces of work and half-baked thoughts and workouts. The content on this website really lives on the entire spectrum of formal and casual. To test this, you will see a link <a class="surprise" id="surprise-me" href="#" role="button">[Surprise me]</a> which opens a random article or object on this website. Do it a couple of times, and you should see both formal and casual articles, with casual outnumbering the former (I didn&rsquo;t say the distribution was uniform lol).</p>
+
+            <p>Moving on, I would really appreciate anyone exploring this website however they want. And PLEASE, always read it with a fair amount of ambiguity and open-thought. I try to present my abstract thoughts here a lot, and I really don&rsquo;t think they can ever be presented through words alone. You need the words, in this case, to establish a direct communication channel between my mind and the mind of whoever&rsquo;s reading any of my stuff.</p>
+
+            <p>A little about me -- I really like mathematics, and the rest you can read on my <a href="https://da-k-sh.github.io/" target="_blank">portfolio</a> page.</p>
+        </section>
+
+        <section class="home-sections">
+            <ul class="section-list" id="section-list">
+                <li><em>Loading&hellip;</em></li>
+            </ul>
+        </section>
+    </div>
 
     <footer>
         <p><small>&copy; 2026 Daksh Pandey. Built using Claude Code.</small></p>
@@ -83,37 +116,78 @@
                 }
             ];
 
-            // Fetch every section's latest entry in parallel.
-            const results = await Promise.all(sections.map(async s => {
-                if (!s.manifest) return { s, latest: null };
+            const GALLERY_COUNT = 75;
+
+            // Fetch every section's manifest once (used for both the directory
+            // and the "Surprise me" pool).
+            const loaded = await Promise.all(sections.map(async s => {
+                if (!s.manifest) return { s, items: [] };
                 try {
                     const res = await fetch(s.manifest);
                     const items = await res.json();
-                    items.sort((a, b) => b.date.localeCompare(a.date));
-                    return { s, latest: items[0] || null };
+                    return { s, items: Array.isArray(items) ? items : [] };
                 } catch (e) {
-                    return { s, latest: null };
+                    return { s, items: [] };
                 }
             }));
 
+            // --- Right pane: section directory with latest entry. ---
             const root = document.getElementById("section-list");
             root.innerHTML = "";
-            for (const { s, latest } of results) {
-                const li = document.createElement("li");
+            for (const { s, items } of loaded) {
+                let latest = null;
+                if (items.length) {
+                    latest = items.slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0];
+                }
                 let latestHtml = "";
-                if (latest) {
+                if (latest && s.kind && latest.date) {
                     latestHtml = `
                         <div class="section-latest">&rarr;
                             <a href="post.html?post=${encodeURIComponent(latest.slug)}&kind=${s.kind}">${escapeHtml(latest.title)}</a>
                             <span class="section-latest-date">&middot; ${formatDate(latest.date)}</span>
                         </div>`;
                 }
+                const li = document.createElement("li");
                 li.innerHTML = `
                     <a class="section-title" href="${s.href}">${escapeHtml(s.name)}</a>
                     <div class="section-desc">${escapeHtml(s.desc)}</div>
                     ${latestHtml}
                 `;
                 root.appendChild(li);
+            }
+
+            // --- "Surprise me": a uniformly random article or object. ---
+            const pool = [];
+            for (const { s, items } of loaded) {
+                if (s.manifest && s.kind) {
+                    for (const it of items) {
+                        pool.push({ url: `post.html?post=${encodeURIComponent(it.slug)}&kind=${s.kind}` });
+                    }
+                } else if (s.href === "gallery.html") {
+                    pool.push({ gallery: true });
+                } else {
+                    pool.push({ url: s.href });
+                }
+            }
+
+            const surprise = document.getElementById("surprise-me");
+            if (surprise) {
+                surprise.addEventListener("click", e => {
+                    e.preventDefault();
+                    let dest;
+                    if (pool.length) {
+                        const pick = pool[Math.floor(Math.random() * pool.length)];
+                        dest = pick.gallery
+                            ? "gallery.html?img=" + (1 + Math.floor(Math.random() * GALLERY_COUNT))
+                            : pick.url;
+                    } else {
+                        // Fallback if manifests failed to load.
+                        const fb = ["blogs.html", "niche.html", "theorems.html", "tech.html",
+                                    "languages.html", "notes.html", "reading.html", "gallery.html"];
+                        dest = fb[Math.floor(Math.random() * fb.length)];
+                    }
+                    window.location.href = dest;
+                });
             }
         })();
     </script>

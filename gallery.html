@@ -24,6 +24,14 @@
       @media (max-width: 900px) { body.gallery-page { max-width: 760px; } .masonry { column-count: 2; } }
       @media (max-width: 520px) { .masonry { column-count: 1; column-gap: 0; } }
 
+      .gallery-controls { margin: 0.7em 0 0.2em; }
+      .shuffle-btn { font-family: var(--font-sans); font-size: 0.82em; letter-spacing: 0.02em;
+        color: var(--muted-warm); background: var(--pre-bg); border: 1px solid var(--border-soft);
+        padding: 0.4em 0.9em; border-radius: 5px; cursor: pointer;
+        transition: color .15s ease, border-color .15s ease, background .15s ease; }
+      .shuffle-btn:hover { color: var(--link-accent); border-color: var(--link-accent); background: var(--hover-tint); }
+      .shuffle-btn:active { transform: translateY(1px); }
+
       /* Lightbox */
       .lightbox { position: fixed; inset: 0; z-index: 1000; display: none;
         align-items: center; justify-content: center; padding: 24px;
@@ -64,6 +72,10 @@
 
     <h2>Clicks &amp; Doodles</h2>
     <p class="gallery-intro">I am neither a photographer nor an artist, but I still find myself trying to take good shots, edit them, sometimes do crazy math experiments with them, and doodling around. So I am just presenting them without any worries about judgements -- <span class="aphorism">&ldquo;the whole point of a hobby is that you can suck at it&hellip;&rdquo;</span></p>
+
+    <div class="gallery-controls">
+        <button type="button" id="shuffleBtn" class="shuffle-btn">&#8646;&nbsp; Shuffle</button>
+    </div>
 
     <div class="masonry" id="masonry">
         <figure><img loading="lazy" src="images/gallery/g01.jpg" alt=""></figure>
@@ -158,15 +170,19 @@
 
     <script>
         (function () {
-            var imgs = Array.prototype.slice.call(document.querySelectorAll(".masonry img"));
+            var masonry = document.getElementById("masonry");
             var lb = document.getElementById("lightbox");
             var lbImg = document.getElementById("lbImg");
             var lbCount = document.getElementById("lbCount");
             var idx = -1;
 
+            // Live image list, so reshuffles don't desync the lightbox.
+            function imgs() { return Array.prototype.slice.call(masonry.querySelectorAll("img")); }
+
             function render() {
-                lbImg.src = imgs[idx].src;
-                lbCount.textContent = (idx + 1) + " / " + imgs.length;
+                var list = imgs();
+                lbImg.src = list[idx].src;
+                lbCount.textContent = (idx + 1) + " / " + list.length;
             }
             function open(i) {
                 idx = i; render();
@@ -182,13 +198,31 @@
             }
             function step(d) {
                 if (idx < 0) return;
-                idx = (idx + d + imgs.length) % imgs.length;
+                var n = imgs().length;
+                idx = (idx + d + n) % n;
                 render();
             }
+            function shuffle() {
+                var figs = Array.prototype.slice.call(masonry.children);
+                for (var i = figs.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var t = figs[i]; figs[i] = figs[j]; figs[j] = t;
+                }
+                var frag = document.createDocumentFragment();
+                figs.forEach(function (f) { frag.appendChild(f); });
+                masonry.appendChild(frag);
+            }
 
-            imgs.forEach(function (im, i) {
-                im.addEventListener("click", function () { open(i); });
+            // Fresh random order on every visit.
+            shuffle();
+
+            // Event delegation, so clicks keep working after a reshuffle.
+            masonry.addEventListener("click", function (e) {
+                if (e.target && e.target.tagName === "IMG") {
+                    open(imgs().indexOf(e.target));
+                }
             });
+            document.getElementById("shuffleBtn").addEventListener("click", shuffle);
             document.getElementById("lbClose").addEventListener("click", close);
             document.getElementById("lbPrev").addEventListener("click", function (e) { e.stopPropagation(); step(-1); });
             document.getElementById("lbNext").addEventListener("click", function (e) { e.stopPropagation(); step(1); });
@@ -199,6 +233,13 @@
                 else if (e.key === "ArrowLeft") step(-1);
                 else if (e.key === "ArrowRight") step(1);
             });
+
+            // Deep link from "Surprise me": gallery.html?img=N opens the Nth tile.
+            var q = new URLSearchParams(window.location.search).get("img");
+            if (q) {
+                var n = parseInt(q, 10);
+                if (n >= 1 && n <= imgs().length) open(n - 1);
+            }
         })();
     </script>
 </body>
