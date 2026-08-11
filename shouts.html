@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shouts &mdash; Daksh</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+    <style>
+      .shouts-wrap { max-width: 620px; }
+
+      /* Compose box: hidden for everyone; revealed only when the owner key is
+         present in this browser. */
+      #compose { display: none; margin: 0 0 1.6em; }
+      #compose.on { display: block; }
+      #compose textarea {
+        width: 100%; box-sizing: border-box; resize: none; overflow: hidden;
+        min-height: 3.2em; padding: 0.7em 0.8em;
+        font-family: var(--font-serif); font-size: 1.02em; line-height: 1.5;
+        color: var(--text); background: var(--pre-bg);
+        border: 1px solid var(--border-soft); border-radius: 8px;
+      }
+      #compose textarea:focus { outline: none; border-color: var(--link-accent); }
+      .compose-row {
+        display: flex; align-items: center; justify-content: space-between;
+        margin-top: 0.5em; gap: 0.8em;
+      }
+      .compose-left { font-family: var(--font-sans); font-size: 0.78em; color: var(--muted-warm); }
+      .compose-left a { cursor: pointer; }
+      #char-count.over { color: #c0392b; }
+      #shout-btn {
+        font-family: var(--font-sans); font-size: 0.9em; font-weight: 600;
+        color: var(--bg); background: var(--link-accent);
+        border: none; border-radius: 999px; padding: 0.45em 1.2em; cursor: pointer;
+      }
+      #shout-btn:disabled { opacity: 0.45; cursor: default; }
+
+      .day-divider {
+        font-family: var(--font-sans); font-size: 0.74em; letter-spacing: 0.06em;
+        text-transform: uppercase; color: var(--muted-warm);
+        margin: 1.6em 0 0.8em; padding-bottom: 0.3em;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .day-divider:first-child { margin-top: 0.4em; }
+
+      .shout {
+        padding: 0.85em 0; border-bottom: 1px solid var(--border-soft);
+      }
+      .shout-body {
+        font-family: var(--font-serif); font-size: 1.05em; line-height: 1.6;
+        color: var(--text); white-space: pre-wrap; word-wrap: break-word;
+      }
+      .shout-body a { word-break: break-all; }
+      .shout-meta {
+        display: flex; align-items: center; gap: 1em;
+        margin-top: 0.5em; font-family: var(--font-sans); font-size: 0.8em;
+        color: var(--muted-warm);
+      }
+      .shout-time { border-bottom: none; }
+      .like-btn {
+        display: inline-flex; align-items: center; gap: 0.3em;
+        background: none; border: none; padding: 0; cursor: pointer;
+        font-family: var(--font-sans); font-size: 0.9em; color: var(--muted-warm);
+      }
+      .like-btn .heart { font-size: 1.05em; line-height: 1; }
+      .like-btn.liked { color: var(--link-accent); }
+      .like-btn.liked .heart { color: var(--link-accent); }
+      .del-btn {
+        background: none; border: none; padding: 0; cursor: pointer;
+        font-family: var(--font-sans); font-size: 0.8em; color: var(--muted-warm);
+        margin-left: auto;
+      }
+      .del-btn:hover { color: #c0392b; }
+
+      #feed-status { font-family: var(--font-sans); font-size: 0.82em; color: var(--muted-warm); padding: 1.4em 0; text-align: center; }
+      #sentinel { height: 1px; }
+    </style>
+</head>
+<body>
+    <h1><a href="index.html" style="border-bottom: none;">Daksh</a></h1>
+    <p><em>On mathematical conspiracies...</em></p>
+
+    <nav class="topnav">
+        <a href="index.html">Home</a> |
+        <a href="blogs.html">Blogs</a> |
+        <a href="niche.html">Niche Posts</a> |
+        <a href="theorems.html">Theorems</a> |
+        <a href="tech.html">Cluttered Stuff</a> |
+        <a href="languages.html">Languages</a> |
+        <a href="notes.html">Notes</a> |
+        <a href="reading.html">Reading List</a> |
+        <a href="gallery.html">Clicks &amp; Doodles</a> |
+        <a href="shouts.html">Shouts</a>
+    </nav>
+
+    <hr>
+
+    <div class="shouts-wrap">
+        <h2 id="shouts-heading">Shouts</h2>
+        <p><em>A one-person timeline: short thoughts, half-baked at 2am, dropped here as they come. You can&rsquo;t post, but you can leave a heart.</em></p>
+
+        <div id="compose">
+            <textarea id="compose-text" maxlength="1000" placeholder="what&rsquo;s the thought?" rows="2"></textarea>
+            <div class="compose-row">
+                <span class="compose-left">
+                    <span id="char-count">0</span>/1000 &middot; <a id="lock-link">lock</a>
+                </span>
+                <button id="shout-btn" disabled>Shout</button>
+            </div>
+        </div>
+
+        <div id="feed"></div>
+        <div id="sentinel"></div>
+        <div id="feed-status">Loading&hellip;</div>
+    </div>
+
+    <footer>
+        <p><small>&copy; 2026 Daksh Pandey. Built using Claude Code.</small></p>
+        <p><small><a href="https://github.com/DA1729" target="_blank">GitHub</a> &middot; <a href="mailto:daksh_p@ph.iitr.ac.in">Email</a></small></p>
+    </footer>
+
+    <script>
+    (() => {
+        // ---- CONFIG: set after the Worker is deployed --------------------------
+        const API_BASE = "https://daksh-shouts.da1729.workers.dev";
+        // ------------------------------------------------------------------------
+
+        const KEY_STORE = "shout_key";
+        const LIKED_STORE = "shout_liked";
+
+        const feed = document.getElementById("feed");
+        const status = document.getElementById("feed-status");
+        const compose = document.getElementById("compose");
+        const textarea = document.getElementById("compose-text");
+        const shoutBtn = document.getElementById("shout-btn");
+        const charCount = document.getElementById("char-count");
+
+        const configured = API_BASE && !API_BASE.includes("REPLACE_WITH");
+
+        // ---- owner key (post/delete) ------------------------------------------
+        function getKey() { try { return localStorage.getItem(KEY_STORE) || ""; } catch { return ""; } }
+        function setKey(k) { try { k ? localStorage.setItem(KEY_STORE, k) : localStorage.removeItem(KEY_STORE); } catch {} }
+        function refreshCompose() { compose.classList.toggle("on", !!getKey()); }
+
+        // Unlock by visiting #compose / #unlock, or re-unlock after a wrong key.
+        function promptKey() {
+            const k = prompt("Owner key:");
+            if (k) { setKey(k.trim()); refreshCompose(); textarea.focus(); }
+        }
+        if (["#compose", "#unlock"].includes(location.hash)) promptKey();
+        refreshCompose();
+
+        document.getElementById("lock-link").addEventListener("click", () => {
+            setKey(""); refreshCompose();
+        });
+
+        // ---- likes (one per browser) ------------------------------------------
+        function likedSet() {
+            try { return new Set(JSON.parse(localStorage.getItem(LIKED_STORE) || "[]")); }
+            catch { return new Set(); }
+        }
+        function markLiked(id) {
+            const s = likedSet(); s.add(id);
+            try { localStorage.setItem(LIKED_STORE, JSON.stringify([...s])); } catch {}
+        }
+
+        // ---- helpers ----------------------------------------------------------
+        function escapeHtml(s) {
+            return s.replace(/[&<>"']/g, c => (
+                { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+            ));
+        }
+        function linkify(text) {
+            return escapeHtml(text).replace(
+                /(https?:\/\/[^\s<]+)/g,
+                u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`
+            );
+        }
+        function relTime(ts) {
+            const s = (Date.now() - ts) / 1000;
+            if (s < 45) return "now";
+            if (s < 90) return "1m";
+            const m = s / 60; if (m < 45) return Math.round(m) + "m";
+            const h = m / 60; if (h < 22) return Math.round(h) + "h";
+            const d = h / 24; if (d < 7) return Math.round(d) + "d";
+            const w = d / 7; if (w < 5) return Math.round(w) + "w";
+            const dt = new Date(ts);
+            return dt.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+        }
+        function fullTime(ts) {
+            return new Date(ts).toLocaleString(undefined, {
+                weekday: "short", year: "numeric", month: "short", day: "numeric",
+                hour: "2-digit", minute: "2-digit"
+            });
+        }
+        function dayKey(ts) {
+            const d = new Date(ts);
+            return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        }
+        function dayLabel(ts) {
+            const now = new Date(), d = new Date(ts);
+            if (dayKey(now.getTime()) === dayKey(ts)) return "Today";
+            const y = new Date(now); y.setDate(now.getDate() - 1);
+            if (dayKey(y.getTime()) === dayKey(ts)) return "Yesterday";
+            return d.toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" });
+        }
+
+        function makeDivider(ts) {
+            const el = document.createElement("div");
+            el.className = "day-divider";
+            el.dataset.day = dayKey(ts);
+            el.textContent = dayLabel(ts);
+            return el;
+        }
+        function makeShout(s) {
+            const liked = likedSet().has(s.id);
+            const el = document.createElement("div");
+            el.className = "shout";
+            el.dataset.id = s.id;
+            el.innerHTML = `
+                <div class="shout-body">${linkify(s.body)}</div>
+                <div class="shout-meta">
+                    <span class="shout-time" title="${escapeHtml(fullTime(s.created_at))}">${relTime(s.created_at)}</span>
+                    <button class="like-btn${liked ? " liked" : ""}" ${liked ? "disabled" : ""}>
+                        <span class="heart">${liked ? "♥" : "♡"}</span>
+                        <span class="like-count">${s.likes || 0}</span>
+                    </button>
+                </div>`;
+
+            el.querySelector(".like-btn").addEventListener("click", e => like(s.id, e.currentTarget));
+
+            if (getKey()) {
+                const del = document.createElement("button");
+                del.className = "del-btn";
+                del.textContent = "delete";
+                del.addEventListener("click", () => removeShout(s.id, el));
+                el.querySelector(".shout-meta").appendChild(del);
+            }
+            return el;
+        }
+
+        // ---- rendering --------------------------------------------------------
+        let bottomDay = null;   // day-key of the last (oldest) rendered divider
+
+        function appendOlder(s) {
+            const k = dayKey(s.created_at);
+            if (k !== bottomDay) { feed.appendChild(makeDivider(s.created_at)); bottomDay = k; }
+            feed.appendChild(makeShout(s));
+        }
+        function prependNew(s) {
+            const k = dayKey(s.created_at);
+            const firstDiv = feed.querySelector(".day-divider");
+            if (firstDiv && firstDiv.dataset.day === k) {
+                firstDiv.after(makeShout(s));
+            } else {
+                feed.prepend(makeShout(s));
+                feed.prepend(makeDivider(s.created_at));
+            }
+            if (!bottomDay) bottomDay = k;
+        }
+
+        // ---- network ----------------------------------------------------------
+        let cursor = null, loading = false, done = false;
+
+        async function loadMore() {
+            if (loading || done || !configured) return;
+            loading = true;
+            status.textContent = "Loading…";
+            try {
+                const q = cursor ? `?before=${cursor}&limit=30` : `?limit=30`;
+                const res = await fetch(API_BASE + "/shouts" + q);
+                const data = await res.json();
+                (data.shouts || []).forEach(appendOlder);
+                cursor = data.nextCursor;
+                if (!cursor) { done = true; }
+                if (done && feed.children.length === 0) {
+                    status.textContent = "No shouts yet.";
+                } else if (done) {
+                    status.textContent = "— the beginning —";
+                } else {
+                    status.textContent = "";
+                }
+            } catch (e) {
+                status.textContent = "Couldn't load shouts.";
+            } finally {
+                loading = false;
+            }
+        }
+
+        async function like(id, btn) {
+            if (btn.disabled) return;
+            btn.disabled = true;
+            btn.classList.add("liked");
+            btn.querySelector(".heart").textContent = "♥";
+            const countEl = btn.querySelector(".like-count");
+            const optimistic = (parseInt(countEl.textContent) || 0) + 1;
+            countEl.textContent = optimistic;
+            markLiked(id);
+            try {
+                const res = await fetch(`${API_BASE}/shouts/${id}/like`, { method: "POST" });
+                const data = await res.json();
+                if (typeof data.likes === "number") countEl.textContent = data.likes;
+            } catch (e) { /* keep optimistic value */ }
+        }
+
+        async function postShout() {
+            const body = textarea.value.trim();
+            if (!body || !configured) return;
+            shoutBtn.disabled = true;
+            try {
+                const res = await fetch(API_BASE + "/shouts", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getKey() },
+                    body: JSON.stringify({ body })
+                });
+                if (res.status === 401) { alert("Wrong owner key. Unlock again."); setKey(""); refreshCompose(); return; }
+                const s = await res.json();
+                if (!res.ok) { alert("Couldn't post: " + (s.error || res.status)); return; }
+                prependNew(s);
+                textarea.value = "";
+                charCount.textContent = "0";
+                autosize();
+            } catch (e) {
+                alert("Couldn't post (network).");
+            } finally {
+                shoutBtn.disabled = textarea.value.trim().length === 0;
+            }
+        }
+
+        async function removeShout(id, el) {
+            if (!confirm("Delete this shout?")) return;
+            try {
+                const res = await fetch(`${API_BASE}/shouts/${id}`, {
+                    method: "DELETE",
+                    headers: { "Authorization": "Bearer " + getKey() }
+                });
+                if (res.status === 401) { alert("Wrong owner key. Unlock again."); setKey(""); refreshCompose(); return; }
+                if (res.ok) {
+                    const prev = el.previousElementSibling, next = el.nextElementSibling;
+                    el.remove();
+                    // Drop an orphaned day divider left with no shouts under it.
+                    if (prev && prev.classList.contains("day-divider") &&
+                        (!next || next.classList.contains("day-divider"))) prev.remove();
+                }
+            } catch (e) { alert("Couldn't delete (network)."); }
+        }
+
+        // ---- compose UI wiring ------------------------------------------------
+        function autosize() {
+            textarea.style.height = "auto";
+            textarea.style.height = textarea.scrollHeight + "px";
+        }
+        textarea.addEventListener("input", () => {
+            const n = textarea.value.length;
+            charCount.textContent = n;
+            charCount.classList.toggle("over", n >= 1000);
+            shoutBtn.disabled = textarea.value.trim().length === 0;
+            autosize();
+        });
+        textarea.addEventListener("keydown", e => {
+            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); postShout(); }
+        });
+        shoutBtn.addEventListener("click", postShout);
+
+        // ---- boot -------------------------------------------------------------
+        if (!configured) {
+            status.textContent = "Shouts backend isn't wired up yet.";
+        } else {
+            const io = new IntersectionObserver(entries => {
+                if (entries.some(e => e.isIntersecting)) loadMore();
+            }, { rootMargin: "400px" });
+            io.observe(document.getElementById("sentinel"));
+            loadMore();
+        }
+    })();
+    </script>
+</body>
+</html>
