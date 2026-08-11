@@ -25,8 +25,8 @@
 
     <hr>
 
-    <h2>Notes</h2>
-    <p><em>Notes from the courses and subjects I am studying, grouped by subject. Rough, first-pass, and mostly for me.</em></p>
+    <h2 id="subject-heading">Notes</h2>
+    <p><a href="notes.html">&larr; All subjects</a></p>
 
     <div id="notes-root">
         <p><em>Loading&hellip;</em></p>
@@ -39,35 +39,42 @@
 
     <script>
         (async () => {
+            const params = new URLSearchParams(window.location.search);
+            const subject = params.get("subject") || "";
+            const root = document.getElementById("notes-root");
+
+            if (!subject) {
+                document.getElementById("subject-heading").textContent = "Notes";
+                root.innerHTML = '<p><em>No subject specified.</em> <a href="notes.html">Browse all subjects.</a></p>';
+                return;
+            }
+
+            document.getElementById("subject-heading").textContent = subject;
+            document.title = `${subject} — Daksh`;
+
             const res = await fetch("notes.json");
             const entries = await res.json();
 
-            // Group by subject, preserving discovery order of subjects by first
-            // appearance. The landing page lists subjects only; clicking one
-            // opens a page with that subject's notes.
-            const bySubject = new Map();
-            for (const e of entries) {
-                const key = e.subject || "Other";
-                if (!bySubject.has(key)) bySubject.set(key, []);
-                bySubject.get(key).push(e);
-            }
+            // Notes for this subject, newest first.
+            const items = entries
+                .filter(e => (e.subject || "Other") === subject)
+                .sort((a, b) => b.date.localeCompare(a.date));
 
-            const root = document.getElementById("notes-root");
             root.innerHTML = "";
 
-            if (bySubject.size === 0) {
-                root.innerHTML = "<p><em>No notes yet.</em></p>";
+            if (items.length === 0) {
+                root.innerHTML = '<p><em>No notes in this subject yet.</em> <a href="notes.html">Browse all subjects.</a></p>';
                 return;
             }
 
             const ul = document.createElement("ul");
             ul.className = "post-list";
-            for (const [subject, items] of bySubject) {
-                const count = items.length;
+            for (const e of items) {
                 const li = document.createElement("li");
                 li.innerHTML = `
-                    <a class="post-title" href="notes-subject.html?subject=${encodeURIComponent(subject)}">${escapeHtml(subject)}</a>
-                    <div class="post-meta">${count} ${count === 1 ? "note" : "notes"}</div>
+                    <a class="post-title" href="post.html?post=${encodeURIComponent(e.slug)}&kind=note">${escapeHtml(e.title)}</a>
+                    <div class="post-meta">${formatDate(e.date)}</div>
+                    <div>${escapeHtml(e.description || "")}</div>
                 `;
                 ul.appendChild(li);
             }

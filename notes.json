@@ -1,5 +1,12 @@
 [
   {
+    "slug": "review-of-quantum-mechanics",
+    "title": "Review of Quantum Mechanics",
+    "subject": "Quantum Theory of Solids",
+    "date": "2026-08-11",
+    "description": "A compact refresher before the solid-state material: states and rays, bras and inner products, orthonormal bases, operators and eigenvalues, Hermitian observables, measurement, expectation and variance, commutators and the uncertainty relation, then position-space QM with the position and momentum operators and plane waves."
+  },
+  {
     "slug": "special-relativity-and-flat-spacetime",
     "title": "Special Relativity and Flat Spacetime",
     "subject": "General Relativity",
