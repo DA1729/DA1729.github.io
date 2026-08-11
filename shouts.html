@@ -62,9 +62,9 @@
         background: none; border: none; padding: 0; cursor: pointer;
         font-family: var(--font-sans); font-size: 0.9em; color: var(--muted-warm);
       }
-      .like-btn .heart { font-size: 1.05em; line-height: 1; }
+      .like-btn .up { font-size: 0.82em; line-height: 1; }
       .like-btn.liked { color: var(--link-accent); }
-      .like-btn.liked .heart { color: var(--link-accent); }
+      .like-btn.liked .up { color: var(--link-accent); }
       .del-btn {
         background: none; border: none; padding: 0; cursor: pointer;
         font-family: var(--font-sans); font-size: 0.8em; color: var(--muted-warm);
@@ -97,7 +97,7 @@
 
     <div class="shouts-wrap">
         <h2 id="shouts-heading">Shouts</h2>
-        <p><em>A one-person timeline: short thoughts, half-baked at 2am, dropped here as they come. You can&rsquo;t post, but you can leave a heart.</em></p>
+        <p><em>Attempt to make this website more autistic, here is my absolutely centralized social media.</em></p>
 
         <div id="compose">
             <textarea id="compose-text" maxlength="1000" placeholder="what&rsquo;s the thought?" rows="2"></textarea>
@@ -116,7 +116,7 @@
 
     <footer>
         <p><small>&copy; 2026 Daksh Pandey. Built using Claude Code.</small></p>
-        <p><small><a href="https://github.com/DA1729" target="_blank">GitHub</a> &middot; <a href="mailto:daksh_p@ph.iitr.ac.in">Email</a></small></p>
+        <p><small><a href="https://github.com/DA1729" target="_blank">GitHub</a> &middot; <a href="mailto:daksh_p@ph.iitr.ac.in">Email</a> &middot; <a href="shouts.html#unlock" id="unlock-link">unlock</a></small></p>
     </footer>
 
     <script>
@@ -134,13 +134,18 @@
         const textarea = document.getElementById("compose-text");
         const shoutBtn = document.getElementById("shout-btn");
         const charCount = document.getElementById("char-count");
+        const unlockLink = document.getElementById("unlock-link");
 
         const configured = API_BASE && !API_BASE.includes("REPLACE_WITH");
 
         // ---- owner key (post/delete) ------------------------------------------
         function getKey() { try { return localStorage.getItem(KEY_STORE) || ""; } catch { return ""; } }
         function setKey(k) { try { k ? localStorage.setItem(KEY_STORE, k) : localStorage.removeItem(KEY_STORE); } catch {} }
-        function refreshCompose() { compose.classList.toggle("on", !!getKey()); }
+        function refreshCompose() {
+            const has = !!getKey();
+            compose.classList.toggle("on", has);
+            if (unlockLink) unlockLink.style.display = has ? "none" : "";
+        }
 
         // Unlock by visiting #compose / #unlock, or re-unlock after a wrong key.
         function promptKey() {
@@ -148,6 +153,9 @@
             if (k) { setKey(k.trim()); refreshCompose(); textarea.focus(); }
         }
         if (["#compose", "#unlock"].includes(location.hash)) promptKey();
+        window.addEventListener("hashchange", () => {
+            if (["#compose", "#unlock"].includes(location.hash)) promptKey();
+        });
         refreshCompose();
 
         document.getElementById("lock-link").addEventListener("click", () => {
@@ -222,7 +230,7 @@
                 <div class="shout-meta">
                     <span class="shout-time" title="${escapeHtml(fullTime(s.created_at))}">${relTime(s.created_at)}</span>
                     <button class="like-btn${liked ? " liked" : ""}" ${liked ? "disabled" : ""}>
-                        <span class="heart">${liked ? "♥" : "♡"}</span>
+                        <span class="up">▲</span>
                         <span class="like-count">${s.likes || 0}</span>
                     </button>
                 </div>`;
@@ -291,7 +299,6 @@
             if (btn.disabled) return;
             btn.disabled = true;
             btn.classList.add("liked");
-            btn.querySelector(".heart").textContent = "♥";
             const countEl = btn.querySelector(".like-count");
             const optimistic = (parseInt(countEl.textContent) || 0) + 1;
             countEl.textContent = optimistic;
