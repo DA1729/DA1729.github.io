@@ -1,5 +1,12 @@
 [
   {
+    "slug": "Mechanistic-Interpretability-Part-1-The-Shape-of-the-Computation",
+    "title": "Mechanistic Interpretability, Part 1: The Shape of the Computation",
+    "date": "2026-08-13",
+    "tags": ["Mechanistic Interpretability", "Transformers", "Machine Learning"],
+    "description": "The first part of a series building transformer mechanistic interpretability from scratch: how token ids become embeddings, what the residual stream actually is, and how the final vector turns back into a distribution over the next token."
+  },
+  {
     "slug": "When-Secure-Messages-Still-Leak-Information",
     "title": "When Secure Messages Still Leak Information",
     "date": "2026-08-07",
