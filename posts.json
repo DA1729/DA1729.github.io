@@ -1,5 +1,12 @@
 [
   {
+    "slug": "Mechanistic-Interpretability-Part-2-Reading-the-Logits",
+    "title": "Mechanistic Interpretability, Part 2: Reading the Logits",
+    "date": "2026-08-16",
+    "tags": ["Mechanistic Interpretability", "Transformers", "Machine Learning"],
+    "description": "Part 2: what the logits actually mean, why only their differences matter, and how the additive residual stream gives us direct logit attribution, the first real mech-interp tool. Then how training and generation read the same logits."
+  },
+  {
     "slug": "Mechanistic-Interpretability-Part-1-The-Shape-of-the-Computation",
     "title": "Mechanistic Interpretability, Part 1: The Shape of the Computation",
     "date": "2026-08-13",
