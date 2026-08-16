@@ -214,14 +214,4 @@ $$\text{token IDs} \rightarrow \text{residual stream} \rightarrow \text{transfor
 
 Integers come in, get looked up into vectors, get repeatedly edited in a fixed-size workspace, and get read back out as scores over the vocabulary.
 
----
-
-## Where we go next
-
-That's the skeleton, and I really do mean it when I say we should let this settle before moving on. Everything ahead is just filling in the boxes we deliberately left closed:
-
-- what actually happens inside one attention block, and why "moving information between positions" turns into queries, keys, and values,
-- what the MLP is doing at each position,
-- and how the additive, shared structure of the residual stream lets us attribute pieces of the final logits back to individual components.
-
-That attribution step is where interpretation really begins. But it only works because of the shape we set up here: a fixed-width stream that every component writes into by addition. Part 2 opens the attention block.
+That's the skeleton, and I really do mean it when I say we should let this settle before moving on. Everything from here just fills in the boxes we deliberately left closed, and it all leans on the same shape we set up: a fixed-width stream that every component writes into by addition.

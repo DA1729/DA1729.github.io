@@ -7,7 +7,7 @@ tags:
     - Machine Learning
 ---
 
-> *Part 2 of building mechanistic interpretability from the ground up. A small confession to start: at the end of Part 1 I said this post would crack open the attention block. I am going to hold that off for one more part. We stopped Part 1 exactly at the logits, and there is a payoff sitting right there that I do not want to walk past, because it is the first place actual interpretability shows up, and it falls straight out of the additive structure we already built. Attention is worth doing slowly, and it honestly gets easier to explain once this output-side picture is in place.*
+> *Part 2 of building mechanistic interpretability from the ground up. We stopped Part 1 exactly at the logits, and there is a payoff sitting right there that I do not want to walk past, because it is the first place actual interpretability shows up, and it falls straight out of the additive structure we already built.*
 
 Quick recap of where Part 1 left us. The transformer turned a prefix into one final vector per position, $\mathbf{h}_t \in \mathbb{R}^d$, and the unembedding read that vector out into a score per vocab entry:
 
@@ -178,12 +178,4 @@ for step in range(max_new_tokens):
 
 Each pass produces the distribution for one new token, you pick one, append it, and run again. Done naively this recomputes the entire prefix every step, which is wasteful, so real implementations keep a **KV cache** to avoid redoing that work (Hugging Face's GPT-2 exposes cached keys and values for exactly this reason).
 
-But notice I just used the words "keys" and "values" as if they mean something, and so far in this series they do not. That is the whole motivation for Part 3.
-
----
-
-## Where we go next
-
-We finally have a reason to open the attention block, and a concrete question to open it with: *what are the keys and values that the KV cache is caching, and why does caching them work at all?* Answering that means finally saying what attention computes, in the same slow way we did everything here. And once we can name a head's contribution as a vector it writes into the stream, direct logit attribution stops being a toy and starts telling us which heads move which predictions.
-
-Part 3 opens the attention block, for real this time.
+But notice I just used the words "keys" and "values" as if they mean something, and so far in this series they do not. That gap is exactly where the interesting part of attention lives.
