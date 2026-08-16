@@ -17,7 +17,7 @@ Those scores are the logits. This whole post is about what they mean, how a sing
 
 ---
 
-## 10. Logits are not probabilities
+## Logits are not probabilities
 
 A logit is just a raw score. To turn the logit vector at a position into a distribution over the next token, we apply a softmax across the vocabulary dimension:
 
@@ -39,7 +39,7 @@ Saying "the logit for this token is $13.7$" tells you basically nothing, because
 
 ---
 
-## 11. The unembedding is a bank of linear questions
+## The unembedding is a bank of linear questions
 
 The cleanest way to see the output layer is not "it produces $V$ scores," but "it asks $V$ separate linear questions of the same vector $\mathbf{h}$." Each vocab token $i$ owns an unembedding vector $\mathbf{w}_i$, and its score is just a dot product:
 
@@ -65,7 +65,7 @@ Nothing semantic or mysterious happens in this last step. The transformer did al
 
 ---
 
-## 12. The logit-difference direction
+## The logit-difference direction
 
 Now combine the two ideas above: differences are what matter, and each score is a dot product. Say we care about two candidate tokens $a$ and $b$. Because $z_a = \mathbf{h}^\top \mathbf{w}_a$ and $z_b = \mathbf{h}^\top \mathbf{w}_b$, linearity lets us fold the comparison into a single dot product:
 
@@ -91,7 +91,7 @@ So a logit difference is literally the **log-odds** of one token against the oth
 
 ---
 
-## 13. The first real tool: direct logit attribution
+## The first real tool: direct logit attribution
 
 Here is where Part 1's obsession with the *additive* residual stream pays off. Recall that every component (an attention head, an MLP) does not overwrite the stream, it adds a vector into it. So the final vector is a sum of contributions:
 
@@ -115,7 +115,7 @@ and now you can say something concrete and testable: head 5.2 is directly pushin
 
 ---
 
-## 14. A direction is not a concept
+## A direction is not a concept
 
 I need to fence this off carefully, because it is exactly the kind of place interpretability gets sloppy. When I call $\mathbf{w}_{\text{Paris}} - \mathbf{w}_{\text{London}}$ "the Paris-vs-London direction," I am **not** claiming that this direction is the model's internal concept of Paris. The rigorous statement is much narrower:
 
@@ -133,7 +133,7 @@ The readout direction is known. The internal representation is the open question
 
 ---
 
-## 15. Which position predicts which token
+## Which position predicts which token
 
 One indexing convention has to become completely automatic, because it is the source of endless off-by-one bugs. Suppose the input is $[x_0, x_1, x_2, x_3]$ and the model produces logits $[\mathbf{z}_0, \mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3]$. The training interpretation is shifted by one: position $t$'s logits are a prediction of the *next* token, $x_{t+1}$. So $\mathbf{z}_0$ scores $x_1$, $\mathbf{z}_1$ scores $x_2$, and so on. The loss is the average negative log-probability of each true next token:
 
@@ -149,7 +149,7 @@ next_token_logits = logits[:, -1, :]   # shape [B, V]
 
 ---
 
-## 16. Training is parallel, generation is a loop
+## Training is parallel, generation is a loop
 
 A subtle but fundamental asymmetry closes out this part.
 
@@ -184,6 +184,6 @@ But notice I just used the words "keys" and "values" as if they mean something, 
 
 ## Where we go next
 
-We finally have a reason to open the attention block, and a concrete question to open it with: *what are the keys and values that the KV cache is caching, and why does caching them work at all?* Answering that means finally saying what attention computes, in the same slow way we did everything here. And once we can name a head's contribution as a vector it writes into the stream, direct logit attribution from Section 13 stops being a toy and starts telling us which heads move which predictions.
+We finally have a reason to open the attention block, and a concrete question to open it with: *what are the keys and values that the KV cache is caching, and why does caching them work at all?* Answering that means finally saying what attention computes, in the same slow way we did everything here. And once we can name a head's contribution as a vector it writes into the stream, direct logit attribution stops being a toy and starts telling us which heads move which predictions.
 
 Part 3 opens the attention block, for real this time.
