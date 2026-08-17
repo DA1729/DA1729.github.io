@@ -6,6 +6,16 @@
     <title>Blogs &mdash; Daksh</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js"></script>
+    <style>
+      /* Blog list previews: first couple of lines of the post itself,
+         clamped to two lines with a trailing ellipsis. */
+      .post-excerpt {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    </style>
 </head>
 <body>
     <h1><a href="index.html" style="border-bottom: none;">Daksh</a></h1>
@@ -40,6 +50,33 @@
 
     <script>
         (async () => {
+            // Build a short plain-text preview from the start of a post's
+            // markdown: drop the frontmatter and the title heading, strip the
+            // markdown/LaTeX syntax, and keep the opening prose. The two-line
+            // clamp and ellipsis are handled in CSS.
+            function markdownToExcerpt(md) {
+                const body = stripFrontmatter(md);
+                const lines = body.split("\n");
+                let i = 0;
+                while (i < lines.length && lines[i].trim() === "") i++;
+                if (i < lines.length && /^#{1,6}\s/.test(lines[i].trim())) i++;
+                return lines.slice(i).join("\n")
+                    .replace(/```[\s\S]*?```/g, " ")
+                    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+                    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+                    .replace(/\$\$[\s\S]*?\$\$/g, " ")
+                    .replace(/\$[^$\n]*\$/g, " ")
+                    .replace(/`([^`]*)`/g, "$1")
+                    .replace(/\*\*([^*]+)\*\*/g, "$1")
+                    .replace(/\*([^*]+)\*/g, "$1")
+                    .replace(/^\s{0,3}>+\s?/gm, "")
+                    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+                    .replace(/^\s{0,3}[-*+]\s+/gm, "")
+                    .replace(/\s+/g, " ")
+                    .trim()
+                    .slice(0, 300);
+            }
+
             const res = await fetch("blogs.json");
             const posts = await res.json();
             posts.sort((a, b) => b.date.localeCompare(a.date));
@@ -68,9 +105,15 @@
                 li.innerHTML = `
                     <a class="post-title" href="post.html?post=${encodeURIComponent(p.slug)}&kind=blog">${escapeHtml(p.title)}</a>
                     <div class="post-meta">${formatDate(p.date)}</div>
-                    <div>${escapeHtml(p.description || "")}</div>
+                    <div class="post-excerpt"></div>
                 `;
                 ul.appendChild(li);
+
+                const excerptEl = li.querySelector(".post-excerpt");
+                fetch(`blogs/${encodeURIComponent(p.slug)}.md`)
+                    .then(r => r.ok ? r.text() : "")
+                    .then(md => { if (md) excerptEl.textContent = markdownToExcerpt(md); })
+                    .catch(() => {});
             }
         })();
     </script>
