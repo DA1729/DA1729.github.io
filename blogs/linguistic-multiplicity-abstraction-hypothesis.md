@@ -1,9 +1,9 @@
 ---
-title: "Linguistic Multiplicity–Abstraction Hypothesis"
+title: "Linguistic Multiplicity -- Abstraction Hypothesis"
 date: "2026-08-17"
 ---
 
-# Linguistic Multiplicity–Abstraction Hypothesis
+# Linguistic Multiplicity -- Abstraction Hypothesis
 
 Ok, so I have this hypothesis. For this past month, it was constantly on my mind in a half-baked form. It's quite deeply rooted with this one thing I always say about what sentences mean and what your thought actually means. It also relates to my empirical proposition, that poets are the most vulnerable to being dumb ahahaha.
 
