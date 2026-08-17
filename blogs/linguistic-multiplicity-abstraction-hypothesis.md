@@ -74,6 +74,8 @@ Now that I am writing it again, I think that this term will definitely survive. 
 
 ---
 
+Also, I am quite sure that ideas, hypotheses, or empirical observations like these already exist somewhere out there. I have NOT done my literature research, so I am not claiming any of this to be new or novel. All I am saying is that I arrived at it on my own, without explicitly pulling from any existing work.
+
 Ok, this is all that I've got for today.
 
 tot ziens.
