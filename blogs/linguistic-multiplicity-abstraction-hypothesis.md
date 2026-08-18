@@ -9,7 +9,7 @@ Ok, so I have this hypothesis. For this past month, it was constantly on my mind
 
 Now, I have met a lot of people, who are just obsessed with words and can't function sanely if they find themselves at a place where there is a lack of words. I might write more on this later, but when I say, lack of words, I don't mean "less number of words," but rather when some text, or person, really attempts to put their actual thought out there, then they could write a textbook, and still fall short of words. Again, explaining that's a big task for me, and I am too tired for that. Right now, I am just converting my notes I made while having the best cold-brew ever (shout-out to Madmum's) this morning.
 
-Also, I just asked ChatGPT for some suggestions for this hypothesis, and I think it did a fair job. Looks boring, and I could have thought of something more interesting, but I'm too relaxed to care about that right now.
+Also, I just asked ChatGPT for some suggestions for the hypothesis' name, and I think it did a fair job. Looks boring, and I could have thought of something more interesting, but I'm too relaxed to care about that right now.
 
 I am also not in the mood to really blog my notes. I might write later in another post a "worded" interpretation, but not today.
 
@@ -46,7 +46,7 @@ I had a little more cold-brew left when I finished thinking and writing till her
 
 Let $$p_A + p_B = 1$$where $p_A, p_B$ = proportions of meaningful use/exposure. Now I think it makes sense, because of information theory, and how the entropy of a distribution is defined, to work with the following term: $$B = -\frac{p_A\log p_A + p_B \log p_B}{\log 2}.$$ Logs are in base 2.
 
-Now why this? Note exactly when $B$ attains its highest value. Exactly when $p_A = p_B$, in other words, when they are perfectly balanced.
+Now why this? Note when does $B$ attain its highest value. Exactly when $p_A = p_B$, in other words, when they are perfectly balanced.
 
 So, now I can say -- higher the value of $B$, higher the bilingual balance. Also, this quantity can easily be extended to more languages.
 
