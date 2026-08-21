@@ -72,6 +72,28 @@
       }
       .del-btn:hover { color: #c0392b; }
 
+      /* compose: attach a photo + preview thumbnail */
+      #compose-file { display: none; }
+      .compose-left a.attach { border-bottom: 1px dashed var(--muted-warm); }
+      .compose-preview { position: relative; display: none; margin-top: 0.7em; }
+      .compose-preview.on { display: inline-block; }
+      .compose-preview img {
+        display: block; max-width: 180px; max-height: 180px;
+        border-radius: 8px; border: 1px solid var(--border-soft);
+      }
+      .compose-preview button {
+        position: absolute; top: -9px; right: -9px;
+        width: 22px; height: 22px; padding: 0; line-height: 20px; text-align: center;
+        border: none; border-radius: 999px; cursor: pointer;
+        background: #c0392b; color: #fff; font-size: 0.95em;
+      }
+
+      /* an image inside a shout */
+      .shout-img {
+        display: block; max-width: 100%; height: auto; margin-top: 0.6em;
+        border-radius: 8px; border: 1px solid var(--border-soft);
+      }
+
       #feed-status { font-family: var(--font-sans); font-size: 0.82em; color: var(--muted-warm); padding: 1.4em 0; text-align: center; }
       #sentinel { height: 1px; }
     </style>
@@ -101,13 +123,18 @@
 
         <div id="compose">
             <textarea id="compose-text" maxlength="1000" placeholder="what&rsquo;s the thought?" rows="2"></textarea>
+            <div class="compose-preview" id="compose-preview">
+                <img id="compose-preview-img" alt="">
+                <button type="button" id="compose-preview-remove" title="Remove image">&times;</button>
+            </div>
             <div class="compose-row">
                 <span class="compose-left">
-                    <span id="char-count">0</span>/1000 &middot; <a id="lock-link">lock</a>
+                    <span id="char-count">0</span>/1000 &middot; <a id="lock-link">lock</a> &middot; <a id="attach-link" class="attach">photo</a>
                 </span>
                 <button id="shout-btn" disabled>Shout</button>
             </div>
         </div>
+        <input type="file" id="compose-file" accept="image/*">
 
         <div id="feed"></div>
         <div id="sentinel"></div>
@@ -135,6 +162,12 @@
         const shoutBtn = document.getElementById("shout-btn");
         const charCount = document.getElementById("char-count");
         const unlockLink = document.getElementById("unlock-link");
+        const fileInput = document.getElementById("compose-file");
+        const attachLink = document.getElementById("attach-link");
+        const preview = document.getElementById("compose-preview");
+        const previewImg = document.getElementById("compose-preview-img");
+
+        let selectedImage = null;   // compressed data-URL of the attached photo, or null
 
         const configured = API_BASE && !API_BASE.includes("REPLACE_WITH");
 
@@ -225,8 +258,14 @@
             const el = document.createElement("div");
             el.className = "shout";
             el.dataset.id = s.id;
+            const bodyHtml = s.body ? `<div class="shout-body">${linkify(s.body)}</div>` : "";
+            const imgUrl = `${API_BASE}/shouts/${s.id}/image`;
+            const imgHtml = s.image_mime
+                ? `<a href="${imgUrl}" target="_blank" rel="noopener"><img class="shout-img" loading="lazy" src="${imgUrl}" alt=""></a>`
+                : "";
             el.innerHTML = `
-                <div class="shout-body">${linkify(s.body)}</div>
+                ${bodyHtml}
+                ${imgHtml}
                 <div class="shout-meta">
                     <span class="shout-time" title="${escapeHtml(fullTime(s.created_at))}">${relTime(s.created_at)}</span>
                     <button class="like-btn${liked ? " liked" : ""}" ${liked ? "disabled" : ""}>
@@ -312,13 +351,15 @@
 
         async function postShout() {
             const body = textarea.value.trim();
-            if (!body || !configured) return;
+            if ((!body && !selectedImage) || !configured) return;
             shoutBtn.disabled = true;
             try {
+                const payload = { body };
+                if (selectedImage) payload.image = selectedImage;
                 const res = await fetch(API_BASE + "/shouts", {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getKey() },
-                    body: JSON.stringify({ body })
+                    body: JSON.stringify(payload)
                 });
                 if (res.status === 401) { alert("Wrong owner key. Unlock again."); setKey(""); refreshCompose(); return; }
                 const s = await res.json();
@@ -326,11 +367,12 @@
                 prependNew(s);
                 textarea.value = "";
                 charCount.textContent = "0";
+                clearImage();
                 autosize();
             } catch (e) {
                 alert("Couldn't post (network).");
             } finally {
-                shoutBtn.disabled = textarea.value.trim().length === 0;
+                updateShoutBtn();
             }
         }
 
@@ -357,11 +399,62 @@
             textarea.style.height = "auto";
             textarea.style.height = textarea.scrollHeight + "px";
         }
+        function updateShoutBtn() {
+            shoutBtn.disabled = textarea.value.trim().length === 0 && !selectedImage;
+        }
+        function clearImage() {
+            selectedImage = null;
+            fileInput.value = "";
+            preview.classList.remove("on");
+            previewImg.removeAttribute("src");
+        }
+
+        // Downscale + JPEG-compress in the browser so stored rows stay small.
+        async function fileToDataUrl(file) {
+            const MAX_DIM = 1400, MAX_B64 = 620000;
+            let bitmap;
+            try { bitmap = await createImageBitmap(file, { imageOrientation: "from-image" }); }
+            catch { bitmap = await createImageBitmap(file); }
+            let w = bitmap.width, h = bitmap.height;
+            const scale = Math.min(1, MAX_DIM / Math.max(w, h));
+            w = Math.max(1, Math.round(w * scale));
+            h = Math.max(1, Math.round(h * scale));
+            const canvas = document.createElement("canvas");
+            canvas.width = w; canvas.height = h;
+            canvas.getContext("2d").drawImage(bitmap, 0, 0, w, h);
+            if (bitmap.close) bitmap.close();
+            let q = 0.82, url = canvas.toDataURL("image/jpeg", q);
+            while (url.length > MAX_B64 && q > 0.35) { q -= 0.1; url = canvas.toDataURL("image/jpeg", q); }
+            return url;
+        }
+
+        attachLink.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", async () => {
+            const file = fileInput.files && fileInput.files[0];
+            if (!file) return;
+            attachLink.textContent = "…";
+            try {
+                selectedImage = await fileToDataUrl(file);
+                previewImg.src = selectedImage;
+                preview.classList.add("on");
+            } catch (e) {
+                alert("Couldn't read that image.");
+                clearImage();
+            } finally {
+                attachLink.textContent = "photo";
+                updateShoutBtn();
+            }
+        });
+        document.getElementById("compose-preview-remove").addEventListener("click", () => {
+            clearImage();
+            updateShoutBtn();
+        });
+
         textarea.addEventListener("input", () => {
             const n = textarea.value.length;
             charCount.textContent = n;
             charCount.classList.toggle("over", n >= 1000);
-            shoutBtn.disabled = textarea.value.trim().length === 0;
+            updateShoutBtn();
             autosize();
         });
         textarea.addEventListener("keydown", e => {
