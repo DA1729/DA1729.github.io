@@ -50,10 +50,11 @@
 
       footer { flex-shrink: 0; }
 
-      .name-row { display: flex; align-items: center; gap: 0.55em; margin-bottom: 0.3em; }
-      .name-row h1 { margin: 0; }
+      .masthead { display: flex; align-items: center; justify-content: space-between; gap: 1.5em; }
+      .masthead-text h1 { margin: 0 0 0.12em; }
+      .masthead-text p { margin: 0; }
       .self-doodle {
-        width: 54px; height: 54px; flex: none;
+        width: 82px; height: 82px; flex: none;
         filter: drop-shadow(0 1px 2px rgba(0,0,0,0.10));
       }
       .self-doodle .doodle { width: 100%; height: 100%; display: block; border-radius: 50%; }
@@ -69,19 +70,21 @@
         .home-intro { padding-right: 0; margin-bottom: 2em; }
         .home-intro p { font-size: 1em; }
         .home-links { border-left: none; padding-left: 0; }
-        .self-doodle { width: 46px; height: 46px; }
+        .self-doodle { width: 64px; height: 64px; }
       }
     </style>
 </head>
 <body class="home-page">
-    <div class="name-row">
-        <h1>Daksh</h1>
+    <div class="masthead">
+        <div class="masthead-text">
+            <h1>Daksh</h1>
+            <p><em>On mathematical conspiracies...</em></p>
+        </div>
         <div class="self-doodle">
             <img class="doodle doodle-light" src="images/self-doodle-light.png" alt="Daksh, self-portrait doodle">
             <img class="doodle doodle-dark" src="images/self-doodle-dark.png" alt="Daksh, self-portrait doodle">
         </div>
     </div>
-    <p><em>On mathematical conspiracies...</em></p>
 
     <nav class="topnav">
         <a href="index.html">Home</a> |
