@@ -32,6 +32,14 @@ And I get the same output.
 
 Now look at what happened on the paper. I performed a mathematical computation, involving the operations implementing the model, and obtained a proof involving PDEs. The procedure might be absurdly long and completely unfamiliar as a way of doing mathematics, but where exactly did an "alien" access to mathematical truth enter?
 
+Another thing. Suppose I actually perform all those calculations by hand. The physical setup is now me, a pen, and a ridiculous amount of paper. My mind reads the instructions, keeps track of the state, and directs my hand.
+
+Now, because this setup produces the same proof as the AI system, would I conclude that the pen and paper have acquired mathematical intelligence? Obviously that doesn't follow. Nor would I conclude that my faithfully executing the algorithm demonstrates that I understood the proof.
+
+What I have established is an equivalence in one respect: the execution produces the same mathematical output. I have not established an equivalence between everything happening in the two systems.
+
+And I am not using this to declare one conscious and the other unconscious, or one superior and the other inferior. The physical implementations differ. Whether their understanding or experience differs, and how, remains a separate question.
+
 There is one distinction I should keep clear, though. **The calculation that generates the proof is not necessarily the argument that proves the theorem.** The model's matrix multiplications explain how I obtained the text. The resulting proof still has to establish the mathematical claim.
 
 Schematically:
