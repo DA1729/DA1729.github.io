@@ -1,5 +1,12 @@
 [
   {
+    "slug": "Minkowskis-Metric-is-not-a-Real-Metric",
+    "title": "Minkowski's Metric is not a Real Metric",
+    "date": "2026-09-10",
+    "tags": ["Special Relativity", "Metric Spaces", "Pseudo-Riemannian Geometry", "Mathematics"],
+    "description": "The Minkowski metric fails to be a metric-space metric: a quick 1+1-dimensional check where both positivity and the identity of indiscernibles break, leaving a symmetric, non-degenerate but not positive-definite pseudo-Riemannian metric."
+  },
+  {
     "slug": "Mechanistic-Interpretability-Part-2-Reading-the-Logits",
     "title": "Mechanistic Interpretability, Part 2: Reading the Logits",
     "date": "2026-08-16",
