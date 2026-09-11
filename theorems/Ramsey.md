@@ -2,10 +2,6 @@
 title: Ramsey
 topic: Graph Theory
 date: 2026-04-26
-tags:
-    - Graph Theory
-    - Ramsey Theory
-    - Combinatorics
 ---
 
 Write $R(p\_1, \dots, p\_n; r)$ for the least integer $N$ that satisfies the conclusion; we are showing this number is finite. Call a set $X$ *$i$-homogeneous* under a coloring $f$ if every $r$-subset of $X$ has $f$-color $i$. We proceed by induction on $r$.

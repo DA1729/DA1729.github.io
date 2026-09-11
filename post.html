@@ -30,7 +30,6 @@
         <header class="post-header">
             <h1 id="post-title">Loading…</h1>
             <p class="post-meta-line" id="post-meta"></p>
-            <p class="post-tags-line" id="post-tags"></p>
         </header>
 
         <div id="theorem-statement-block" class="theorem-statement-block" hidden></div>
@@ -118,8 +117,6 @@
                 document.title = `${meta.title} — Daksh`;
                 document.getElementById("post-title").textContent = meta.title;
                 document.getElementById("post-meta").textContent = formatDate(meta.date);
-                document.getElementById("post-tags").innerHTML =
-                    (meta.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("");
             }
 
             // For theorems, show the statement at the top in a styled block.

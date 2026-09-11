@@ -80,9 +80,6 @@
 
                     const attr = t.attribution ? ` (${escapeHtml(t.attribution)})` : "";
                     const url = `post.html?post=${encodeURIComponent(t.slug)}&kind=theorem`;
-                    const tagsHtml = (t.tags || [])
-                        .map(x => `<span>#${escapeHtml(x)}</span>`)
-                        .join("");
                     const refHtml = t.reference
                         ? `<p class="theorem-reference">in ${t.reference}</p>`
                         : "";
@@ -93,8 +90,6 @@
                             <span class="theorem-statement">${t.statement}</span>
                         </p>
                         <p class="theorem-meta">
-                            <span class="theorem-tags">${tagsHtml}</span>
-                            <span class="theorem-sep">&middot;</span>
                             <span class="theorem-date">${formatDate(t.date)}</span>
                             <span class="theorem-sep">&middot;</span>
                             <a href="${url}">Proof &rarr;</a>

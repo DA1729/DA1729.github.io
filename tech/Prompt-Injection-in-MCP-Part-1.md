@@ -1,11 +1,6 @@
 ---
 title: "On the Structural Sources of Prompt Injection in MCP"
 date: 2026-04-30 12:00:00
-tags:
-    - Security
-    - MCP
-    - Prompt Injection
-    - Type Theory
 ---
 
 I have been reading about MCP, the Model Context Protocol, which is the new-ish standard that lets a host LLM application talk to a fleet of "tool servers" over a uniform interface. The promise is appealing: any agent can plug into any server and instantly gain new capabilities, file access, web search, database queries, whatever. Plug-and-play context for the model.

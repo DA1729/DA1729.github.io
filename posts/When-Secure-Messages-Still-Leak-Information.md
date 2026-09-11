@@ -1,11 +1,6 @@
 ---
 title: "When Secure Messages Still Leak Information"
 date: 2026-08-07
-tags:
-    - AI Safety
-    - Information Theory
-    - Multi-Agent Systems
-    - Security
 ---
 
 > *This post is based on general ideas I have been thinking about during my research internship at COSIC, KU Leuven. The actual research is ongoing, so I am deliberately avoiding unpublished results, concrete constructions, experimental numbers, and theorem statements.*

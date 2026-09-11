@@ -1,11 +1,6 @@
 ---
 title: MPC in the Head (MPCitH)
 date: 2025-12-06 18:04:01
-tags:
-    - Cryptography
-    - Secure Computing
-    - Zero-Knowledge
-    - MPC
 ---
 
 In continuation to my MPC blogs and my study of [FAEST](https://faest.info/), here is a blog explaining a method of constructing advanced **Zero Knowledge (ZK)** proofs by using simpler tools from **Multi-Party Computation (MPC)**.

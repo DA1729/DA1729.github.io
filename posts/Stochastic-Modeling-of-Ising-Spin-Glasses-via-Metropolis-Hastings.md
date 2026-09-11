@@ -1,8 +1,6 @@
 ---
 title: Stochastic Modeling of Ising Spin Glasses via Metropolis-Hastings
 date: 2026-03-07 19:12:11
-tags:
-    - Physics
 ---
 
 Finding the global minimum of a complex, non-convex energy landscape is a fundamental problem in both statistical mechanics and combinatorial optimization. When we deal with "Spin Glasses" (systems with random, competing interactions), the number of possible states grows exponentially as $2^n$. For $n=100$, the state space is $2^{100}$, far beyond the reach of exhaustive search. This post explores how we can leverage the physics of thermodynamics and the Metropolis-Hastings criterion to navigate this landscape effectively.

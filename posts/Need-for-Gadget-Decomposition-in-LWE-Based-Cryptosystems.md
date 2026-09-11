@@ -2,10 +2,6 @@
 title: Need for Gadget Decomposition in LWE Based Cryptosystems
 date: 2025-09-27 12:13:36
 mathjax: true
-tags:
-    - Fully Homomorphic Encryption
-    - Cryptography
-    - Post-Quantum Cryptography
 ---
 
 Gadget Decomposition is one of the key and essential **Homomorphic Operations** in FHE cryptosystems based on the LWE problem. I have already introduced the LWE problem and how to build a basic cryptosystem around it in my previous blogs. In this blog, we will:

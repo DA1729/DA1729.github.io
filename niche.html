@@ -69,7 +69,6 @@
                     <a class="post-title" href="post.html?post=${encodeURIComponent(p.slug)}&kind=niche">${escapeHtml(p.title)}</a>
                     <div class="post-meta">${formatDate(p.date)}</div>
                     <div>${escapeHtml(p.description || "")}</div>
-                    <div class="post-tags">${(p.tags || []).map(t => `<span>#${escapeHtml(t)}</span>`).join("")}</div>
                 `;
                 ul.appendChild(li);
             }

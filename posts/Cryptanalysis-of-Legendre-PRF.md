@@ -1,9 +1,6 @@
 ---
 title: "Cryptanalysis of the Legendre PRF"
 date: 2026-04-01 14:00:41
-tags:
-    - Cryptography
-    - Cryptanalysis
 ---
 
 The search for "MPC-friendly" primitives has led cryptographers back to some very classical number theory. In the world of Secure Multi-Party Computation (MPC), the cost of a protocol is often dominated by its "multiplicative depth," the number of sequential multiplications required. This makes traditional symmetric primitives like AES or SHA-256, which rely heavily on non-linear S-boxes, quite expensive to compute securely. Enter the **Legendre PRF**, a construction so simple it almost feels like a trick, yet it has become a serious candidate for usage in the Ethereum 2.0 blockchain and other MPC-heavy architectures.

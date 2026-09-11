@@ -2,9 +2,6 @@
 title: First Isomorphism Theorem
 topic: Algebra
 date: 2026-05-20
-tags:
-    - Algebra
-    - Set Theory
 ---
 
 The first isomorphism theorem is usually stated separately for groups, rings, vector spaces, modules, and so on: a homomorphism factors through a quotient as an isomorphism onto its image. The statement below is the underlying set-theoretic core, with no algebraic structure assumed. Each of the algebraic versions follows by checking that the construction respects the relevant structure (operations, scalar multiplication, etc.).

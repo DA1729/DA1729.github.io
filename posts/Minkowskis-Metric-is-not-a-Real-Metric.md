@@ -1,11 +1,6 @@
 ---
 title: "Minkowski's Metric is not a Real Metric"
 date: 2026-09-10
-tags:
-    - Special Relativity
-    - Metric Spaces
-    - Pseudo-Riemannian Geometry
-    - Mathematics
 ---
 
 I had my Analysis exam today. It was a lot of measure theory and point-set topology. It went well, and now I have General Relativity tomorrow, and in that we have what is called a Minkowski Metric. This is not a post explaining what's that and measure theory stuff, but on a very niche and well seemingly not interesting fact that Minkowski metric does not really satisfy conditions of a real metric. I am not really surprised, having studied both math and physics these past 3 years, but still IDK, it's interesting to me. Mostly because I am finding myself naturally being able to form connections between abstract math structures and abstract physics structures, and being able to point out such stuff by myself.

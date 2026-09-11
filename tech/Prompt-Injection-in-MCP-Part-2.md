@@ -1,11 +1,6 @@
 ---
 title: "On Type-Theoretic Containment of Prompt Injection in MCP"
 date: 2026-04-30 12:30:00
-tags:
-    - Security
-    - MCP
-    - Prompt Injection
-    - Type Theory
 ---
 
 In [Part 1](post.html?post=Prompt-Injection-in-MCP-Part-1&kind=tech), I sliced MCP's attack surface into four fundamental flaws:

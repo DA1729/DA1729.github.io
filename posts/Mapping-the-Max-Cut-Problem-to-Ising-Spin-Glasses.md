@@ -1,9 +1,6 @@
 ---
 title: Mapping the Max-Cut Problem to Ising Spin Glasses
 date: 2026-03-09 15:25:15
-tags:
-    - Graph Theory
-    - Physics
 ---
 
 In the previous post, I explored the physics of Ising models and how Simulated Annealing can find global minima in complex energy landscapes. Now, I want to step away from pure physics and enter the realm of combinatorial optimization. I am going to look at a classic NP-hard problem: the **Max-Cut Problem**. The goal here is to show how I can mathematically "trick" a physics engine into solving a telecommunications network problem through a process known as QUBO (Quadratic Unconstrained Binary Optimization) mapping.

@@ -1,10 +1,6 @@
 ---
 title: "Mechanistic Interpretability, Part 2: Reading the Logits"
 date: 2026-08-16
-tags:
-    - Mechanistic Interpretability
-    - Transformers
-    - Machine Learning
 ---
 
 > *Part 2 of building mechanistic interpretability from the ground up. We stopped Part 1 exactly at the logits, and there is a payoff sitting right there that I do not want to walk past, because it is the first place actual interpretability shows up, and it falls straight out of the additive structure we already built.*

@@ -2,10 +2,6 @@
 title: Kuratowski
 topic: Graph Theory
 date: 2026-05-04
-tags:
-    - Graph Theory
-    - Planarity
-    - Combinatorics
 ---
 
 ## Setup

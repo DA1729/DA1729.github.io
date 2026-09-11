@@ -1,10 +1,6 @@
 ---
 title: "Mechanistic Interpretability, Part 1: The Shape of the Computation"
 date: 2026-08-13
-tags:
-    - Mechanistic Interpretability
-    - Transformers
-    - Machine Learning
 ---
 
 > *This is the first post in a series where I try to build mechanistic interpretability from the ground up, in a way that actually made things click for me. This part has almost no "interpretability" in it yet. That is on purpose. Before you can ask how a network does something, you have to be very clear about what it computes and what shapes the computation moves through. So Part 1 is just the skeleton.*

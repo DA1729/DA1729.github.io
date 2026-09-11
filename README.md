@@ -8,10 +8,9 @@ Minimal hand-rolled static blog. No build step — just markdown files rendered 
 new_blog/
 ├── index.html       # homepage (lists posts from posts.json)
 ├── post.html        # post reader (reads ?post=<slug>)
-├── tags.html        # posts grouped by tag
 ├── styles.css       # warm serif palette, same as portfolio
 ├── app.js           # shared helpers: markdown + math rendering
-├── posts.json       # post index: slug, title, date, tags, description
+├── posts.json       # post index: slug, title, date, description
 ├── posts/           # markdown sources, one file per post
 └── images/          # images referenced by posts
 ```

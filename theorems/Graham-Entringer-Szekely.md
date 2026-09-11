@@ -2,9 +2,6 @@
 title: Graham-Entringer-Szekely
 topic: Graph Theory
 date: 2026-04-23
-tags:
-    - Graph Theory
-    - Combinatorics
 ---
 
 ## Setup

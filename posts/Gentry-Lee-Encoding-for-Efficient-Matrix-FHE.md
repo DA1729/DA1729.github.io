@@ -1,9 +1,6 @@
 ---
 title: Gentry-Lee Encoding for Efficient Matrix FHE
 date: 2025-12-04 10:15:37
-tags:
-    - Cryptography
-    - Fully Homomorphic Encryption
 ---
 
 Craig Gentry (yeah the man himself) and Yongwoo Lee proposed a new FHE scheme quite recently (October 2025). The special thing about this new scheme is its algorithmic efficiency towards **Homomorphic Matrix Arithmetic**, which can be groundbreaking in Privacy-Preserving Machine Learning. So let's dive right into it. I am assuming that the reader is already familiar with the LWE problem and its ring variant (RLWE) and how we proceed to build Fully Homomorphic Cryptosystems around it.

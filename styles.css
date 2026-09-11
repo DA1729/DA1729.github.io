@@ -33,7 +33,7 @@
     --proof-opener: #5a4a3a;
     --qed: #b86535;
     --reference: #a08260;
-    --tags-sep: #c0a890;
+    --meta-sep: #c0a890;
     --footer-text: #666;
     --footer-border: #e8d5c8;
     --select-bg: rgba(217, 119, 69, 0.16);
@@ -77,7 +77,7 @@
     --proof-opener: #c4a380;
     --qed: #f5a070;
     --reference: #a89070;
-    --tags-sep: #5d4a35;
+    --meta-sep: #5d4a35;
     --footer-text: #9a8970;
     --footer-border: #3a2e25;
     --select-bg: rgba(245, 160, 112, 0.20);
@@ -207,7 +207,7 @@ nav.topnav {
     font-family: var(--font-sans);
     font-size: 0.82em;
     letter-spacing: 0.01em;
-    color: var(--tags-sep);
+    color: var(--meta-sep);
     line-height: 2;
 }
 
@@ -251,15 +251,6 @@ nav.topnav a:hover {
     color: var(--muted-warm);
     font-size: 0.9em;
     font-style: italic;
-}
-
-.post-list .post-tags {
-    font-size: 0.85em;
-    color: var(--muted-warm);
-}
-
-.post-list .post-tags span {
-    margin-right: 0.4em;
 }
 
 /* Month grouping on listing pages: a quiet time divider above each group. */
@@ -344,15 +335,6 @@ nav.topnav a:hover {
     font-size: 0.95em;
     font-style: italic;
     margin-top: 0;
-}
-
-.post-tags-line {
-    color: var(--muted-warm);
-    font-size: 0.9em;
-}
-
-.post-tags-line span {
-    margin-right: 0.4em;
 }
 
 .post-content img {
@@ -465,11 +447,6 @@ footer {
     font-size: 0.9em;
 }
 
-/* Tags page */
-.tag-group h3 {
-    margin-top: 1.2em;
-}
-
 /* Theorems index */
 .theorem-topic {
     margin: 2em 0;
@@ -518,13 +495,9 @@ footer {
     color: var(--muted-warm);
 }
 
-.theorem-meta .theorem-tags span {
-    margin-right: 0.35em;
-}
-
 .theorem-meta .theorem-sep {
     margin: 0 0.4em;
-    color: var(--tags-sep);
+    color: var(--meta-sep);
 }
 
 .theorem-meta a {
@@ -593,9 +566,7 @@ footer {
 
 /* --- type & interaction polish --- */
 .post-list .post-meta,
-.post-list .post-tags,
 .post-meta-line,
-.post-tags-line,
 .theorem-meta,
 footer {
     font-family: var(--font-sans);
