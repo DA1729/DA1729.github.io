@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shouts &mdash; Daksh</title>
+    <title>Speculations &mdash; Daksh</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js"></script>
     <style>
@@ -112,14 +112,14 @@
         <a href="notes.html">Notes</a> |
         <a href="reading.html">Reading List</a> |
         <a href="gallery.html">Clicks &amp; Doodles</a> |
-        <a href="shouts.html">Shouts</a>
+        <a href="shouts.html">Speculations</a>
     </nav>
 
     <hr>
 
     <div class="shouts-wrap">
-        <h2 id="shouts-heading">Shouts</h2>
-        <p><em>Attempt to make this website more autistic, here is my absolutely centralized social media.</em></p>
+        <h2 id="shouts-heading">Speculations</h2>
+        <p><em>I always keep thinking about speculative theories and analogies. A lot of them just get lost within my thoughts eventually, so this page is for me to conveniently make quick notes of them.</em></p>
 
         <div id="compose">
             <textarea id="compose-text" maxlength="1000" placeholder="what&rsquo;s the thought?" rows="2"></textarea>
@@ -131,7 +131,7 @@
                 <span class="compose-left">
                     <span id="char-count">0</span>/1000 &middot; <a id="lock-link">lock</a> &middot; <a id="attach-link" class="attach">photo</a>
                 </span>
-                <button id="shout-btn" disabled>Shout</button>
+                <button id="shout-btn" disabled>Speculate</button>
             </div>
         </div>
         <input type="file" id="compose-file" accept="image/*">
@@ -321,14 +321,14 @@
                 cursor = data.nextCursor;
                 if (!cursor) { done = true; }
                 if (done && feed.children.length === 0) {
-                    status.textContent = "No shouts yet.";
+                    status.textContent = "No speculations yet.";
                 } else if (done) {
                     status.textContent = "— the beginning —";
                 } else {
                     status.textContent = "";
                 }
             } catch (e) {
-                status.textContent = "Couldn't load shouts.";
+                status.textContent = "Couldn't load speculations.";
             } finally {
                 loading = false;
             }
@@ -377,7 +377,7 @@
         }
 
         async function removeShout(id, el) {
-            if (!confirm("Delete this shout?")) return;
+            if (!confirm("Delete this speculation?")) return;
             try {
                 const res = await fetch(`${API_BASE}/shouts/${id}`, {
                     method: "DELETE",
@@ -464,7 +464,7 @@
 
         // ---- boot -------------------------------------------------------------
         if (!configured) {
-            status.textContent = "Shouts backend isn't wired up yet.";
+            status.textContent = "Speculations backend isn't wired up yet.";
         } else {
             const io = new IntersectionObserver(entries => {
                 if (entries.some(e => e.isIntersecting)) loadMore();
