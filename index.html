@@ -50,22 +50,46 @@
 
       footer { flex-shrink: 0; }
 
-      /* One epigraph resting in the space above the footer: quiet enough not to
-         compete with the masthead, set apart enough to be read on its own. */
+      /* One epigraph, ghosted into the page rather than printed on top of it.
+         Narrow screens keep it in flow above the footer; once the window is
+         wide enough to have real margins, it floats out into the left one. */
       .home-epigraph {
+        --ghost: #cdc5ba;
         flex-shrink: 0;
         max-width: 38em; margin: 0 auto 2.4em;
         text-align: center;
+        color: var(--ghost);
       }
+      [data-theme="dark"] .home-epigraph { --ghost: #3f362c; }
+
       .home-epigraph blockquote {
         border-left: none; margin: 0; padding: 0;
         font-size: 1.06em; line-height: 1.55;
+        color: inherit;
       }
       .home-epigraph .attrib {
         display: block; margin-top: 0.7em;
         font-family: var(--font-sans); font-style: normal;
         font-variant: small-caps; letter-spacing: 0.1em;
-        font-size: 0.7em; color: var(--muted-warm);
+        font-size: 0.7em; color: inherit; opacity: 0.85;
+      }
+
+      /* 1420px is the narrowest window where a 150px note plus its gap still
+         clears the left edge of the screen; below that it stays in flow. */
+      @media (min-width: 1420px) {
+        .home-epigraph {
+          position: absolute;
+          top: 50%; transform: translateY(-50%);
+          right: calc(100% + 30px);
+          width: 150px; max-width: none; margin: 0;
+          text-align: right;
+        }
+        .home-epigraph blockquote {
+          font-size: 0.86em; line-height: 1.72;
+        }
+        .home-epigraph .attrib {
+          margin-top: 0.9em; font-size: 0.62em;
+        }
       }
 
       .masthead { display: flex; align-items: center; justify-content: space-between; gap: 1.5em; }
