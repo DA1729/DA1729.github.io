@@ -18,7 +18,7 @@
 
       .home-main { flex: 1 1 auto; display: flex; align-items: center; padding: 1.2em 0; }
       .home-cols {
-        width: 100%;
+        width: 100%; position: relative;
         display: grid; grid-template-columns: 1.32fr 0.85fr;
         align-items: center;
       }
@@ -51,16 +51,16 @@
       footer { flex-shrink: 0; }
 
       /* One epigraph, ghosted into the page rather than printed on top of it.
-         Narrow screens keep it in flow above the footer; once the window is
-         wide enough to have real margins, it floats out into the left one. */
+         Wide windows float it into the right margin, aligned with the top of
+         the content; narrower ones keep it in flow under the two columns. */
       .home-epigraph {
-        --ghost: #cdc5ba;
-        flex-shrink: 0;
-        max-width: 38em; margin: 0 auto 2.4em;
+        --ghost: #b3a795;
+        grid-column: 1 / -1;
+        max-width: 38em; margin: 2.4em auto 0;
         text-align: center;
         color: var(--ghost);
       }
-      [data-theme="dark"] .home-epigraph { --ghost: #3f362c; }
+      [data-theme="dark"] .home-epigraph { --ghost: #5a4c3d; }
 
       .home-epigraph blockquote {
         border-left: none; margin: 0; padding: 0;
@@ -71,24 +71,24 @@
         display: block; margin-top: 0.7em;
         font-family: var(--font-sans); font-style: normal;
         font-variant: small-caps; letter-spacing: 0.1em;
-        font-size: 0.7em; color: inherit; opacity: 0.85;
+        font-size: 0.7em; color: inherit; opacity: 0.9;
       }
 
-      /* 1420px is the narrowest window where a 150px note plus its gap still
-         clears the left edge of the screen; below that it stays in flow. */
+      /* 1420px is the narrowest window where the note plus its gap still
+         clears the right edge of the screen; below that it stays in flow. */
       @media (min-width: 1420px) {
         .home-epigraph {
           position: absolute;
-          top: 50%; transform: translateY(-50%);
-          right: calc(100% + 30px);
-          width: 150px; max-width: none; margin: 0;
-          text-align: right;
+          top: 0; left: calc(100% + 30px);
+          width: min(260px, calc(50vw - 540px));
+          max-width: none; margin: 0;
+          text-align: left;
         }
         .home-epigraph blockquote {
-          font-size: 0.86em; line-height: 1.72;
+          font-size: 0.95em; line-height: 1.62;
         }
         .home-epigraph .attrib {
-          margin-top: 0.9em; font-size: 0.62em;
+          margin-top: 0.85em; font-size: 0.66em;
         }
       }
 
@@ -194,14 +194,14 @@
                     <div class="section-desc">Speculative theories and analogies, noted quickly.</div>
                 </li>
             </ul>
-        </div>
-    </div>
 
-    <div class="home-epigraph">
-        <blockquote>
-            Classes will dull your mind, destroy the potential for authentic creativity.
-            <span class="attrib">John Nash</span>
-        </blockquote>
+            <div class="home-epigraph">
+                <blockquote>
+                    Classes will dull your mind, destroy the potential for authentic creativity.
+                    <span class="attrib">John Nash</span>
+                </blockquote>
+            </div>
+        </div>
     </div>
 
     <footer>
