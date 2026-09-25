@@ -50,6 +50,24 @@
 
       footer { flex-shrink: 0; }
 
+      /* One epigraph resting in the space above the footer: quiet enough not to
+         compete with the masthead, set apart enough to be read on its own. */
+      .home-epigraph {
+        flex-shrink: 0;
+        max-width: 38em; margin: 0 auto 2.4em;
+        text-align: center;
+      }
+      .home-epigraph blockquote {
+        border-left: none; margin: 0; padding: 0;
+        font-size: 1.06em; line-height: 1.55;
+      }
+      .home-epigraph .attrib {
+        display: block; margin-top: 0.7em;
+        font-family: var(--font-sans); font-style: normal;
+        font-variant: small-caps; letter-spacing: 0.1em;
+        font-size: 0.7em; color: var(--muted-warm);
+      }
+
       .masthead { display: flex; align-items: center; justify-content: space-between; gap: 1.5em; }
       .masthead-text h1 { margin: 0 0 0.12em; }
       .masthead-text p { margin: 0; }
@@ -71,6 +89,7 @@
         .home-intro p { font-size: 1em; }
         .home-links { border-left: none; padding-left: 0; }
         .self-doodle { width: 64px; height: 64px; }
+        .home-epigraph { margin: 2.6em auto 2.4em; }
       }
     </style>
 </head>
@@ -152,6 +171,13 @@
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div class="home-epigraph">
+        <blockquote>
+            Classes will dull your mind, destroy the potential for authentic creativity.
+            <span class="attrib">John Nash</span>
+        </blockquote>
     </div>
 
     <footer>
