@@ -6,6 +6,8 @@ description: ""
 
 # How I give my exams
 
+IDK who all will read this post, so this is a "fictional" story written in first person :)
+
 Any reasonable person will not get ragebaited with what I am writing today, but if you are an "unreasonable" person, here is a short preface -- I am aware that special cases exist. Still, I cannot write about all of them, and everything I assert and conclude applies to an average/expected scenario.
 
 I don't really like people who say stuff like -- "I don't get why people do this and that." OK, they do something that's retarded from your perspective, and you are aware of that, then I believe just telling yourself they are just retarded should be enough. And at the end, we all know it's for showing off your "superiority" or to initiate a rant or discussion on it with someone who also thinks a particular thing is retarded.
