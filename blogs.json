@@ -24,12 +24,6 @@
     "description": ""
   },
   {
-    "slug": "how-i-give-my-exams",
-    "title": "How I give my exams",
-    "date": "2026-09-12",
-    "description": ""
-  },
-  {
     "slug": "a-note-on-machine-generated-proofs",
     "title": "A Note on Machine Generated Proofs",
     "date": "2026-09-09",
@@ -136,6 +130,12 @@
     "title": "The Dvole Cycle",
     "date": "2026-06-28",
     "description": "Something I wrote a while back. A theory about intelligence, clutter, and why more capable AI is not the threat everyone thinks it is."
+  },
+  {
+    "slug": "how-i-give-my-exams",
+    "title": "How I give my exams",
+    "date": "2026-06-26",
+    "description": ""
   },
   {
     "slug": "borderline-society-and-existentials",
