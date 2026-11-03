@@ -14,7 +14,7 @@ Now consider the traditional, ideal-student approach. You study a book, attend a
 
 All the nice, good-student practices.
 
-But there is a problem with how much of your time this can consume, particularly when what you eventually want to do is research across these fields.
+But there is a problem with how much of your time this can consume, particularly when what you eventually want to do is research across these fields. And I am concerned that the downside might go beyond just the time spent.
 
 ## Two kinds of mathematical confidence
 
@@ -53,6 +53,22 @@ Now, these are not just hours on a calendar. Think about where your freshest, mo
 I do not want to occupy all my mental bandwidth with technical nuances. I really don't want to. Because that gets in the way of the bigger picture I am trying to form.
 
 My hypothesis is that spending too much time proving increasingly specialized results inside one framework can leave you with too little time and attention to understand its relationships with other frameworks. I have observed something like this in people around me, and I think it is a reasonable hypothesis to put forward. I don't think I need to wait for a rigorous social-scientific experiment before raising the question.
+
+## What if these habits become a limitation?
+
+Say someone spends four years in their bachelor's and two years in their master's. That is six years spent getting familiar with these good-student practices. Even if they do a few research projects, the majority of their time may still go into working through textbooks, reproducing proofs, solving assignments, and preparing for examinations.
+
+Now, six years is a substantial amount of time to spend practicing a particular way of thinking and being rewarded for it. Meanwhile, the available tools are changing, and so are the questions about where we should put our effort and how we should reason about things.
+
+My concern is that by the time this student actually starts working as a full-time mathematician, they might struggle to even recognize what is required and what is important. Translating between multiple complex fields and setting up connections between them might feel like something alien. Not just something they haven't practiced enough, but something they don't quite know how to approach as mathematical work.
+
+For a rough linguistic analogy, think about encountering unfamiliar vowel sounds in a language like Icelandic after spending almost all your life hearing and speaking English. You might struggle to hear the distinctions, let alone pronounce them. The sounds you are familiar with do not necessarily prepare you to notice every distinction in another language.
+
+I am not saying those sounds are impossible to learn, or that this analogy proves anything about mathematical education. But it gets at the concern: being very familiar with one way of doing something does not mean another way will be immediately accessible to you. You may have to deliberately learn to notice what you were not noticing before.
+
+Similarly, a student could become exceptionally good at the mathematics they have been trained to do, while finding it difficult to see the kinds of connections their research actually needs. And if we leave this entirely to whatever mathematical maturity they are supposed to acquire later, we are assuming that the transition will more or less take care of itself.
+
+That is what genuinely concerns me. A very bright student with huge mathematical potential could possibly become blinded to what is required for research and mathematical advancement, precisely because they spent so many years doing everything a good student was supposed to do.
 
 ## What problem sets actually train
 
