@@ -56,6 +56,13 @@
                        : kindParam === "niche"    ? "niche"
                        : kindParam === "note"     ? "note"
                        :                            "post";
+            // Preserve saved links when a blog's URL changes.
+            if (kind === "blog" && slug === "institutions-are-producing-mathematical-robots-ought-to-be-defeated") {
+                const url = new URL(window.location.href);
+                url.searchParams.set("post", "concern-regarding-institutional-mathematics");
+                window.location.replace(url.href);
+                return;
+            }
             const content = document.getElementById("post-content");
             const article = document.querySelector("article");
             if (article) article.classList.add("kind-" + kind);
