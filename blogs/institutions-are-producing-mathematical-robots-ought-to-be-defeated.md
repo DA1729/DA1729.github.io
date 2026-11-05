@@ -1,10 +1,10 @@
 ---
-title: "Institutions are Producing Mathematical Robots Ought to Be Defeated"
+title: "Concern Regarding Institutional Mathematics"
 date: "2026-11-03"
 description: ""
 ---
 
-# Institutions are Producing Mathematical Robots Ought to Be Defeated
+# Concern Regarding Institutional Mathematics
 
 I genuinely think that mathematical research is facing a critical problem with how mathematics is generally taught to bachelor's and master's students.
 
